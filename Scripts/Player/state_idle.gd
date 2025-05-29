@@ -1,26 +1,27 @@
-class_name StateIdle extends PlayerState
+extends PlayerState
+class_name StateIdle
 
 @onready var run: PlayerState = $"../Run"
 
-func Enter() -> void:
-	player.UpdateAnimation("idle")
+func enter() -> void:
+	player.update_animation("idle")
 
-func Exit() -> void:
+func exit() -> void:
 	pass
 
-func Process(delta: float) -> PlayerState:
+func process(delta: float) -> PlayerState:
 	if player.move_dir != Vector2.ZERO:
 		return run
-	
+
 	player.velocity = Vector2.ZERO
-	
-	if player.SetDirection():
-		player.UpdateAnimation("idle")
-	
+
+	if player.set_direction():
+		player.update_animation("idle")
+
 	return null
 
-func Physics(delta: float) -> PlayerState:
+func physics(delta: float) -> PlayerState:
 	return null
 
-func HandleInput(event: InputEvent) -> PlayerState:
+func handle_input(event: InputEvent) -> PlayerState:
 	return null

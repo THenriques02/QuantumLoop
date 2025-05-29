@@ -1,41 +1,45 @@
-class_name PlayerStateMachine extends Node
+extends Node
+class_name PlayerStateMachine
 
-var states: Array[PlayerState]
-var prev_state: PlayerState
-var current_state: PlayerState
+var states: Array[PlayerState] = []
+var current_state: PlayerState = null
+var previous_state: PlayerState = null
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_DISABLED
 
-func _process(delta: float) -> void:
-	ChangeState(current_state.Process(delta))
+func initialize(p: Player) -> void:
+	for child in get_children():
+		if child is PlayerState:
+			var state: PlayerState = child
+			state.player = p
+			states.append(state)
 
-func _physics_process(delta: float) -> void:
-	ChangeState(current_state.Physics(delta))
-
-func _unhandled_input(event: InputEvent) -> void:
-	ChangeState(current_state.HandleInput(event))
-
-func Initialize(player: Player) -> void:
-	states = []
-	
-	for c in get_children():
-		if c is PlayerState:
-			states.append(c)
-	
 	if states.size() > 0:
-		states[0].player = player
-		ChangeState(states[0])
+		current_state = states[0]
+		current_state.enter()
 		process_mode = Node.PROCESS_MODE_INHERIT
 
-func ChangeState(new_state: PlayerState) -> void:
-	if new_state == null || new_state == current_state:
-		return
-		
+func _physics_process(delta: float) -> void:
 	if current_state:
-		current_state.Exit()
-	
-	prev_state = current_state
+		var new_state: PlayerState = current_state.physics(delta)
+		_change_state(new_state)
+
+func _process(delta: float) -> void:
+	if current_state:
+		var new_state: PlayerState = current_state.process(delta)
+		_change_state(new_state)
+
+func _unhandled_input(event: InputEvent) -> void:
+	if current_state:
+		var new_state: PlayerState = current_state.handle_input(event)
+		_change_state(new_state)
+
+func _change_state(new_state: PlayerState) -> void:
+	if new_state == null or new_state == current_state:
+		return
+
+	current_state.exit()
+	previous_state = current_state
 	current_state = new_state
-	
-	current_state.Enter()
+	current_state.enter()

@@ -1,21 +1,19 @@
-class_name PlayerState extends Node
+extends Node
+class_name PlayerState
 
-static var player: Player
- 
-func _ready() -> void:
+var player: Player
+
+func enter() -> void:
 	pass
 
-func Enter() -> void:
+func exit() -> void:
 	pass
 
-func Exit() -> void:
-	pass
-
-func Process(delta: float) -> PlayerState:
+func physics(delta: float) -> PlayerState:
 	return null
 
-func Physics(delta: float) -> PlayerState:
+func process(delta: float) -> PlayerState:
 	return null
 
-func HandleInput(event: InputEvent) -> PlayerState:
+func handle_input(event: InputEvent) -> PlayerState:
 	return null

@@ -1,28 +1,28 @@
-class_name StateRun extends PlayerState
+extends PlayerState
+class_name StateRun
 
 @onready var idle: PlayerState = $"../Idle"
-
 @export var move_speed: float = 100.0
 
-func Enter() -> void:
-	player.UpdateAnimation("idle")
+func enter() -> void:
+	player.update_animation("idle")
 
-func Exit() -> void:
+func exit() -> void:
 	pass
 
-func Process(delta: float) -> PlayerState:
+func process(delta: float) -> PlayerState:
 	if player.move_dir == Vector2.ZERO:
 		return idle
-	
+
 	player.velocity = player.move_dir * move_speed
-	
-	if player.SetDirection():
-		player.UpdateAnimation("idle")
-		
+
+	if player.set_direction():
+		player.update_animation("idle")
+
 	return null
 
-func Physics(delta: float) -> PlayerState:
+func physics(delta: float) -> PlayerState:
 	return null
 
-func HandleInput(event: InputEvent) -> PlayerState:
+func handle_input(event: InputEvent) -> PlayerState:
 	return null
