@@ -5,9 +5,10 @@ var font = preload("res://Assets/Dungeon/Roboto-VariableFont_wdth,wght.ttf")
 var Player = preload("res://Scenes/Player/player.tscn")
 @onready var stone_map = $Grass.get_node("Stone")
 @onready var grass_map = $Grass
+@onready var walls_floor_map = $Walls_Floor
 @onready var map_camera = $MapCamera
 
-var tile_size = 10 # size of tile in the TileMap
+var tile_size = 16 # size of tile in the TileMap
 var num_rooms = 100 # numer of rooms to generate
 var min_size = 30   # minimum room size ( in tiles)
 var max_size = 60  # maximum room size (in tiles )
@@ -142,7 +143,7 @@ func make_map():
 	var bottom_right = stone_map.local_to_map(full_rect.end)
 	for x in range(top_left.x, bottom_right.x):
 		for y in range(top_left.y, bottom_right.y):	
-			stone_map.set_cell(Vector2i(x, y), 0, Vector2i(0, 0))
+			walls_floor_map.set_cell(Vector2i(x, y), 0, Vector2i(1, 1))
 	
 	# carve rooms
 	var corridors = []
@@ -150,15 +151,36 @@ func make_map():
 		var s = (room.size / tile_size).floor()  # size in tiles
 		var ul = ((room.position - room.size + room.size / 2))/tile_size  # top-left in tile coords
 		
+		var count_x = 0
+		
 		for x in range(s.x-1):
+			var count_y = 0	
 			for y in range(s.y-1):
-				grass_map.set_cell(Vector2i(ul.x + x, ul.y + y), 0, Vector2i(0, 0))
+				walls_floor_map.set_cell(Vector2i(ul.x + x, ul.y + y), 0, Vector2i(1, 6))
+				if count_x == 0 and count_y == 0:
+					walls_floor_map.set_cell(Vector2i(ul.x + x, ul.y + y), 0, Vector2i(3, 0))	
+				elif count_x == s.x-2 and count_y == 0:
+					walls_floor_map.set_cell(Vector2i(ul.x + x, ul.y + y), 0, Vector2i(5, 0))
+				elif count_x == s.x-2 and count_y ==  s.y-2:
+					walls_floor_map.set_cell(Vector2i(ul.x + x, ul.y + y), 0, Vector2i(5, 3))
+				elif count_x == 0 and count_y == s.y-2:
+					walls_floor_map.set_cell(Vector2i(ul.x + x, ul.y + y), 0, Vector2i(3, 3))		
+				elif count_y == 0:
+					walls_floor_map.set_cell(Vector2i(ul.x + x, ul.y + y), 0, Vector2i(1, 2))	
+				elif count_y == s.y-2:
+					walls_floor_map.set_cell(Vector2i(ul.x + x, ul.y + y), 0, Vector2i(4, 3))	
+				elif count_x == 0:
+					walls_floor_map.set_cell(Vector2i(ul.x + x, ul.y + y), 0, Vector2i(2, 1))
+				elif count_x == s.x-2:
+					walls_floor_map.set_cell(Vector2i(ul.x + x, ul.y + y), 0, Vector2i(5, 1))	
+				count_y += 1
+			count_x += 1	
  	
 		var p = path.get_closest_point(room.position)
 		for conn in path.get_point_connections(p):
 			if not conn in corridors:
-				var start = grass_map.local_to_map(path.get_point_position(p))
-				var end = grass_map.local_to_map(path.get_point_position(conn))
+				var start = walls_floor_map.local_to_map(path.get_point_position(p))
+				var end = walls_floor_map.local_to_map(path.get_point_position(conn))
 				
 				carve_path(start, end)
 		corridors.append(p)
@@ -178,11 +200,27 @@ func carve_path(pos1, pos2):
 		y_x = pos1
 		
 	for x in range(pos1.x, pos2.x, x_diff):
-		grass_map.set_cell(Vector2i(x, x_y.y), 0,  Vector2i(0, 0))
-		grass_map.set_cell(Vector2i(x, x_y.y + y_diff), 0,  Vector2i(0, 0))
+		if walls_floor_map.get_cell_atlas_coords(Vector2i(x,x_y.y)) == Vector2i(1,6):
+			continue
+		if x_diff > 0:
+			walls_floor_map.set_cell(Vector2i(x, x_y.y - y_diff), 0,  Vector2i(1, 2))
+			walls_floor_map.set_cell(Vector2i(x, x_y.y + 2*y_diff), 0,  Vector2i(4, 3))	
+		else:
+			walls_floor_map.set_cell(Vector2i(x, x_y.y - y_diff), 0,  Vector2i(4, 3))
+			walls_floor_map.set_cell(Vector2i(x, x_y.y + 2*y_diff), 0,  Vector2i(1, 2))
+		walls_floor_map.set_cell(Vector2i(x, x_y.y), 0,  Vector2i(1, 6))
+		walls_floor_map.set_cell(Vector2i(x, x_y.y + y_diff), 0,  Vector2i(1, 6))
 	for y in range(pos1.y, pos2.y, y_diff):
-		grass_map.set_cell(Vector2i(y_x.x, y), 0, Vector2i(0, 0))
-		grass_map.set_cell(Vector2i(y_x.x + x_diff, y), 0, Vector2i(0, 0))
+		if walls_floor_map.get_cell_atlas_coords(Vector2i(y_x.x,y)) == Vector2i(1,6):
+			continue
+		if y_diff > 0:
+			walls_floor_map.set_cell(Vector2i(y_x.x - x_diff, y), 0, Vector2i(2, 1))
+			walls_floor_map.set_cell(Vector2i(y_x.x + 2*x_diff, y), 0, Vector2i(0, 1))
+		else:
+			walls_floor_map.set_cell(Vector2i(y_x.x - x_diff, y), 0, Vector2i(0, 1))	
+			walls_floor_map.set_cell(Vector2i(y_x.x + 2*x_diff, y), 0, Vector2i(2, 1))
+		walls_floor_map.set_cell(Vector2i(y_x.x, y), 0, Vector2i(1, 6))
+		walls_floor_map.set_cell(Vector2i(y_x.x + x_diff, y), 0, Vector2i(1, 6))
 		
 	
 func find_start_room():
