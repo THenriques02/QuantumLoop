@@ -193,15 +193,39 @@ func carve_path(pos1, pos2):
 	# choose either x/y or y/x
 	var x_y = pos1
 	var y_x = pos2
+	var switch = false
 	if (randi() % 2) > 0:
 		x_y = pos2
 		y_x = pos1
+		switch = true
 	
+	if x_diff > 0:
+		if walls_floor_map.get_cell_atlas_coords(Vector2i(pos1.x,x_y.y)) == Vector2i(1,1):
+			walls_floor_map.set_cell(Vector2i(pos1.x - x_diff, x_y.y), 0,  Vector2i(2, 1))
+			walls_floor_map.set_cell(Vector2i(pos1.x - x_diff, x_y.y + y_diff), 0,  Vector2i(2, 1))
+			
+	else:
+		if walls_floor_map.get_cell_atlas_coords(Vector2i(pos1.x,x_y.y)) == Vector2i(1,1):
+			walls_floor_map.set_cell(Vector2i(pos1.x - x_diff, x_y.y), 0,  Vector2i(0, 1))
+			walls_floor_map.set_cell(Vector2i(pos1.x - x_diff, x_y.y + y_diff), 0,  Vector2i(0, 1))
+	
+	if y_diff > 0:
+		if walls_floor_map.get_cell_atlas_coords(Vector2i(y_x.x, pos1.y)) == Vector2i(1,1):
+			walls_floor_map.set_cell(Vector2i(y_x.x, pos1.y - y_diff), 0, Vector2i(1, 2))
+			walls_floor_map.set_cell(Vector2i(y_x.x + x_diff, pos1.y - y_diff), 0, Vector2i(1, 2))
+	else:
+		if walls_floor_map.get_cell_atlas_coords(Vector2i(y_x.x, pos1.y)) == Vector2i(1,1):
+			walls_floor_map.set_cell(Vector2i(y_x.x, pos1.y - y_diff), 0, Vector2i(1, 0))
+			walls_floor_map.set_cell(Vector2i(y_x.x + x_diff, pos1.y - y_diff), 0, Vector2i(1, 0))
+
+		
+
+
 	for x in range(pos1.x, pos2.x, x_diff):
-		if walls_floor_map.get_cell_atlas_coords(Vector2i(x,x_y.y)) == Vector2i(1,6):
+		if walls_floor_map.get_cell_atlas_coords(Vector2i(x,x_y.y)) == Vector2i(1,6) and walls_floor_map.get_cell_atlas_coords(Vector2i(x,x_y.y + y_diff)) == Vector2i(1,6):
 			continue
 		var tile_2y_diff =  walls_floor_map.get_cell_atlas_coords(Vector2i(x,x_y.y + 2 * y_diff))
-		var tile_neg_y_diff =  walls_floor_map.get_cell_atlas_coords(Vector2i(x,x_y.y  - y_diff))
+		var tile_neg_y_diff =  walls_floor_map.get_cell_atlas_coords(Vector2i(x,x_y.y - y_diff))
 		
 		if y_diff > 0:
 			# Walls
@@ -234,12 +258,11 @@ func carve_path(pos1, pos2):
 			elif tile_neg_y_diff == Vector2i(5,1):
 				walls_floor_map.set_cell(Vector2i(x, x_y.y - y_diff), 0,  Vector2i(0, 0))								
 		
-		
 		walls_floor_map.set_cell(Vector2i(x, x_y.y), 0,  Vector2i(1, 6))
 		walls_floor_map.set_cell(Vector2i(x, x_y.y + y_diff), 0,  Vector2i(1, 6))
 	
 	for y in range(pos1.y, pos2.y, y_diff):
-		if walls_floor_map.get_cell_atlas_coords(Vector2i(y_x.x,y)) == Vector2i(1,6):
+		if walls_floor_map.get_cell_atlas_coords(Vector2i(y_x.x,y)) == Vector2i(1,6) and walls_floor_map.get_cell_atlas_coords(Vector2i(y_x.x + x_diff,y)) == Vector2i(1,6):
 			continue	
 		
 		var tile_2x_diff =  walls_floor_map.get_cell_atlas_coords(Vector2i(y_x.x + 2 * x_diff,y))
@@ -277,6 +300,7 @@ func carve_path(pos1, pos2):
 		
 		walls_floor_map.set_cell(Vector2i(y_x.x, y), 0, Vector2i(1, 6))
 		walls_floor_map.set_cell(Vector2i(y_x.x + x_diff, y), 0, Vector2i(1, 6))
+	
 	
 func find_start_room():
 	var min_x = INF
