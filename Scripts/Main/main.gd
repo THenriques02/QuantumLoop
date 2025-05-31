@@ -197,55 +197,84 @@ func carve_path(pos1, pos2):
 		x_y = pos2
 		y_x = pos1
 	
-	for x in range(pos1.x, pos2.x + x_diff, x_diff):
-		var current_atlas_coords_x =  walls_floor_map.get_cell_atlas_coords(Vector2i(x,x_y.y))
-		if current_atlas_coords_x == Vector2i(1,6):
+	for x in range(pos1.x, pos2.x, x_diff):
+		if walls_floor_map.get_cell_atlas_coords(Vector2i(x,x_y.y)) == Vector2i(1,6):
 			continue
-		if current_atlas_coords_x == Vector2i(1,2):
-			walls_floor_map.set_cell(Vector2i(x, x_y.y - y_diff), 0, Vector2i(2, 2))
-			walls_floor_map.set_cell(Vector2i(x, x_y.y + 2*y_diff), 0, Vector2i(0, 2))
-		elif current_atlas_coords_x == Vector2i(4,3):
-			walls_floor_map.set_cell(Vector2i(x, x_y.y - y_diff), 0, Vector2i(2, 0))
-			walls_floor_map.set_cell(Vector2i(x, x_y.y + 2*y_diff), 0, Vector2i(0, 0))
-		elif current_atlas_coords_x == Vector2i(2,1):
-			walls_floor_map.set_cell(Vector2i(x, x_y.y - y_diff), 0, Vector2i(2, 0))
-			walls_floor_map.set_cell(Vector2i(x, x_y.y + 2*y_diff), 0, Vector2i(2, 2))
-		elif current_atlas_coords_x == Vector2i(5,1):	
-			walls_floor_map.set_cell(Vector2i(x, x_y.y - y_diff), 0, Vector2i(0, 0))
-			walls_floor_map.set_cell(Vector2i(x, x_y.y + 2*y_diff), 0, Vector2i(0, 2))
-		else:	
-			if x_diff < 0:
+		var tile_2y_diff =  walls_floor_map.get_cell_atlas_coords(Vector2i(x,x_y.y + 2 * y_diff))
+		var tile_neg_y_diff =  walls_floor_map.get_cell_atlas_coords(Vector2i(x,x_y.y  - y_diff))
+		
+		if y_diff > 0:
+			# Walls
+			if tile_2y_diff == Vector2i(1,1):
+				walls_floor_map.set_cell(Vector2i(x, x_y.y + 2 * y_diff), 0,  Vector2i(4, 3))
+			elif tile_2y_diff == Vector2i(2,1):
+				walls_floor_map.set_cell(Vector2i(x, x_y.y + 2 * y_diff), 0,  Vector2i(2, 0))
+			elif tile_2y_diff == Vector2i(5,1):
+				walls_floor_map.set_cell(Vector2i(x, x_y.y + 2 * y_diff), 0,  Vector2i(0, 0))
+			
+			if 	tile_neg_y_diff == Vector2i(1,1):
 				walls_floor_map.set_cell(Vector2i(x, x_y.y - y_diff), 0,  Vector2i(1, 2))
-				walls_floor_map.set_cell(Vector2i(x, x_y.y + 2*y_diff), 0,  Vector2i(4, 3))	
-			else:
+			elif tile_neg_y_diff == Vector2i(2,1):
+				walls_floor_map.set_cell(Vector2i(x, x_y.y - y_diff), 0,  Vector2i(2, 2))
+			elif tile_neg_y_diff == Vector2i(5,1):
+				walls_floor_map.set_cell(Vector2i(x, x_y.y - y_diff), 0,  Vector2i(0, 2))
+				
+		else:
+			if tile_2y_diff == Vector2i(1,1):
+				walls_floor_map.set_cell(Vector2i(x, x_y.y + 2 * y_diff), 0,  Vector2i(1, 2))
+			elif tile_2y_diff == Vector2i(2,1):
+				walls_floor_map.set_cell(Vector2i(x, x_y.y + 2 * y_diff), 0,  Vector2i(2, 2))
+			elif tile_2y_diff == Vector2i(5,1):
+				walls_floor_map.set_cell(Vector2i(x, x_y.y + 2 * y_diff), 0,  Vector2i(0, 2))
+				
+			if 	tile_neg_y_diff == Vector2i(1,1):
 				walls_floor_map.set_cell(Vector2i(x, x_y.y - y_diff), 0,  Vector2i(4, 3))
-				walls_floor_map.set_cell(Vector2i(x, x_y.y + 2*y_diff), 0,  Vector2i(1, 2))
+			elif tile_neg_y_diff == Vector2i(2,1):
+				walls_floor_map.set_cell(Vector2i(x, x_y.y - y_diff), 0,  Vector2i(2, 0))
+			elif tile_neg_y_diff == Vector2i(5,1):
+				walls_floor_map.set_cell(Vector2i(x, x_y.y - y_diff), 0,  Vector2i(0, 0))								
+		
+		
 		walls_floor_map.set_cell(Vector2i(x, x_y.y), 0,  Vector2i(1, 6))
 		walls_floor_map.set_cell(Vector2i(x, x_y.y + y_diff), 0,  Vector2i(1, 6))
 	
-	for y in range(pos1.y, pos2.y + y_diff, y_diff):
-		var current_atlas_coords_y =  walls_floor_map.get_cell_atlas_coords(Vector2i(y_x.x,y))
-		if current_atlas_coords_y == Vector2i(1,6):
-			continue
-		if current_atlas_coords_y == Vector2i(1,2):
-			walls_floor_map.set_cell(Vector2i(y_x.x - x_diff, y), 0, Vector2i(2, 2))
-			walls_floor_map.set_cell(Vector2i(y_x.x + 2*x_diff, y), 0, Vector2i(0, 2))
-		elif current_atlas_coords_y == Vector2i(4,3):
-			walls_floor_map.set_cell(Vector2i(y_x.x - x_diff, y), 0, Vector2i(2, 0))
-			walls_floor_map.set_cell(Vector2i(y_x.x + 2*x_diff, y), 0, Vector2i(0, 0))
-		elif current_atlas_coords_y == Vector2i(2,1):
-			walls_floor_map.set_cell(Vector2i(y_x.x - x_diff, y), 0, Vector2i(2, 0))
-			walls_floor_map.set_cell(Vector2i(y_x.x + 2*x_diff, y), 0, Vector2i(2, 2))
-		elif current_atlas_coords_y == Vector2i(5,1):
-			walls_floor_map.set_cell(Vector2i(y_x.x - x_diff, y), 0, Vector2i(0, 0))
-			walls_floor_map.set_cell(Vector2i(y_x.x + 2*x_diff, y), 0, Vector2i(0, 2))	
-		else:	
-			if y_diff > 0:
+	for y in range(pos1.y, pos2.y, y_diff):
+		if walls_floor_map.get_cell_atlas_coords(Vector2i(y_x.x,y)) == Vector2i(1,6):
+			continue	
+		
+		var tile_2x_diff =  walls_floor_map.get_cell_atlas_coords(Vector2i(y_x.x + 2 * x_diff,y))
+		var tile_neg_x_diff =  walls_floor_map.get_cell_atlas_coords(Vector2i(y_x.x - x_diff,y))
+		
+		if x_diff > 0:
+			if tile_2x_diff == Vector2i(1,1):
+				walls_floor_map.set_cell(Vector2i(y_x.x + 2 * x_diff, y), 0, Vector2i(0, 1))
+			elif tile_2x_diff == Vector2i(1,2):
+				walls_floor_map.set_cell(Vector2i(y_x.x + 2 * x_diff, y), 0, Vector2i(0, 2))
+			elif tile_2x_diff == Vector2i(4,3):
+				walls_floor_map.set_cell(Vector2i(y_x.x + 2 * x_diff, y), 0, Vector2i(0, 0))
+				
+			if tile_neg_x_diff == Vector2i(1,1):
 				walls_floor_map.set_cell(Vector2i(y_x.x - x_diff, y), 0, Vector2i(2, 1))
-				walls_floor_map.set_cell(Vector2i(y_x.x + 2*x_diff, y), 0, Vector2i(0, 1))
-			else:
-				walls_floor_map.set_cell(Vector2i(y_x.x - x_diff, y), 0, Vector2i(0, 1))	
-				walls_floor_map.set_cell(Vector2i(y_x.x + 2*x_diff, y), 0, Vector2i(2, 1))
+			elif tile_neg_x_diff == Vector2i(1,2):
+				walls_floor_map.set_cell(Vector2i(y_x.x - x_diff, y), 0, Vector2i(2, 2))
+			elif tile_neg_x_diff == Vector2i(4,3):
+				walls_floor_map.set_cell(Vector2i(y_x.x - x_diff, y), 0, Vector2i(2, 0))
+		
+		else:	
+			if tile_2x_diff == Vector2i(1,1):
+				walls_floor_map.set_cell(Vector2i(y_x.x + 2 * x_diff, y), 0, Vector2i(2, 1))
+			elif tile_2x_diff == Vector2i(1,2):
+				walls_floor_map.set_cell(Vector2i(y_x.x + 2 * x_diff, y), 0, Vector2i(2, 2))
+			elif tile_2x_diff == Vector2i(4,3):
+				walls_floor_map.set_cell(Vector2i(y_x.x + 2 * x_diff, y), 0, Vector2i(2, 0))
+				
+			if tile_neg_x_diff == Vector2i(1,1):
+				walls_floor_map.set_cell(Vector2i(y_x.x - x_diff, y), 0, Vector2i(0, 1))
+			elif tile_neg_x_diff == Vector2i(1,2):
+				walls_floor_map.set_cell(Vector2i(y_x.x - x_diff, y), 0, Vector2i(0, 2))
+			elif tile_neg_x_diff == Vector2i(4,3):
+				walls_floor_map.set_cell(Vector2i(y_x.x - x_diff, y), 0, Vector2i(0, 0))
+		
 		walls_floor_map.set_cell(Vector2i(y_x.x, y), 0, Vector2i(1, 6))
 		walls_floor_map.set_cell(Vector2i(y_x.x + x_diff, y), 0, Vector2i(1, 6))
 	
