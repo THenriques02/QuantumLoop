@@ -3,17 +3,15 @@ extends Node2D
 var Room = preload("res://Scenes/Dungeon/Room.tscn")
 var font = preload("res://Assets/Dungeon/Roboto-VariableFont_wdth,wght.ttf")
 var Player = preload("res://Scenes/Player/player.tscn")
-@onready var stone_map = $Grass.get_node("Stone")
-@onready var grass_map = $Grass
 @onready var walls_floor_map = $Walls_Floor
 @onready var map_camera = $MapCamera
 
 var tile_size = 16 # size of tile in the TileMap
 var num_rooms = 100 # numer of rooms to generate
-var min_size = 30   # minimum room size ( in tiles)
-var max_size = 60  # maximum room size (in tiles )
+var min_size = 20   # minimum room size ( in tiles)
+var max_size = 40  # maximum room size (in tiles )
 var hspread = 20   # horizontal spread ( in pixels )
-var cull = 0.75     # chance to cull the room
+var cull = 0.5     # chance to cull the room
 
 var path           # AStar pathfinding object
 var start_room = null
@@ -129,8 +127,7 @@ func _input(event):
 
 
 func make_map():
-	stone_map.clear()
-	grass_map.clear()
+	walls_floor_map.clear()
 	find_start_room()
 	find_end_room()
 	
@@ -139,8 +136,8 @@ func make_map():
 	for room in $Rooms.get_children():
 		var r = Rect2(room.position - room.size / 2 , room.size)
 		full_rect = full_rect.merge(r)
-	var top_left = stone_map.local_to_map(full_rect.position)
-	var bottom_right = stone_map.local_to_map(full_rect.end)
+	var top_left = walls_floor_map.local_to_map(full_rect.position)
+	var bottom_right = walls_floor_map.local_to_map(full_rect.end)
 	for x in range(top_left.x, bottom_right.x):
 		for y in range(top_left.y, bottom_right.y):	
 			walls_floor_map.set_cell(Vector2i(x, y), 0, Vector2i(1, 1))
@@ -175,7 +172,8 @@ func make_map():
 					walls_floor_map.set_cell(Vector2i(ul.x + x, ul.y + y), 0, Vector2i(5, 1))	
 				count_y += 1
 			count_x += 1	
- 	
+
+	for room in $Rooms.get_children():
 		var p = path.get_closest_point(room.position)
 		for conn in path.get_point_connections(p):
 			if not conn in corridors:
@@ -190,7 +188,7 @@ func carve_path(pos1, pos2):
 	var x_diff = sign(pos2.x - pos1.x)
 	var y_diff = sign(pos2.y - pos1.y)
 	if x_diff == 0: x_diff = pow(-1.0, randi() % 2)
-	if y_diff == 0: y_diff = pow(-1.0, randi() % 2)
+	if y_diff == 0: y_diff = pow(-1.0, randi() % 2)	
 	
 	# choose either x/y or y/x
 	var x_y = pos1
@@ -198,30 +196,58 @@ func carve_path(pos1, pos2):
 	if (randi() % 2) > 0:
 		x_y = pos2
 		y_x = pos1
-		
-	for x in range(pos1.x, pos2.x, x_diff):
-		if walls_floor_map.get_cell_atlas_coords(Vector2i(x,x_y.y)) == Vector2i(1,6):
+	
+	for x in range(pos1.x, pos2.x + x_diff, x_diff):
+		var current_atlas_coords_x =  walls_floor_map.get_cell_atlas_coords(Vector2i(x,x_y.y))
+		if current_atlas_coords_x == Vector2i(1,6):
 			continue
-		if x_diff > 0:
-			walls_floor_map.set_cell(Vector2i(x, x_y.y - y_diff), 0,  Vector2i(1, 2))
-			walls_floor_map.set_cell(Vector2i(x, x_y.y + 2*y_diff), 0,  Vector2i(4, 3))	
-		else:
-			walls_floor_map.set_cell(Vector2i(x, x_y.y - y_diff), 0,  Vector2i(4, 3))
-			walls_floor_map.set_cell(Vector2i(x, x_y.y + 2*y_diff), 0,  Vector2i(1, 2))
+		if current_atlas_coords_x == Vector2i(1,2):
+			walls_floor_map.set_cell(Vector2i(x, x_y.y - y_diff), 0, Vector2i(2, 2))
+			walls_floor_map.set_cell(Vector2i(x, x_y.y + 2*y_diff), 0, Vector2i(0, 2))
+		elif current_atlas_coords_x == Vector2i(4,3):
+			walls_floor_map.set_cell(Vector2i(x, x_y.y - y_diff), 0, Vector2i(2, 0))
+			walls_floor_map.set_cell(Vector2i(x, x_y.y + 2*y_diff), 0, Vector2i(0, 0))
+		elif current_atlas_coords_x == Vector2i(2,1):
+			walls_floor_map.set_cell(Vector2i(x, x_y.y - y_diff), 0, Vector2i(2, 0))
+			walls_floor_map.set_cell(Vector2i(x, x_y.y + 2*y_diff), 0, Vector2i(2, 2))
+		elif current_atlas_coords_x == Vector2i(5,1):	
+			walls_floor_map.set_cell(Vector2i(x, x_y.y - y_diff), 0, Vector2i(0, 0))
+			walls_floor_map.set_cell(Vector2i(x, x_y.y + 2*y_diff), 0, Vector2i(0, 2))
+		else:	
+			if x_diff < 0:
+				walls_floor_map.set_cell(Vector2i(x, x_y.y - y_diff), 0,  Vector2i(1, 2))
+				walls_floor_map.set_cell(Vector2i(x, x_y.y + 2*y_diff), 0,  Vector2i(4, 3))	
+			else:
+				walls_floor_map.set_cell(Vector2i(x, x_y.y - y_diff), 0,  Vector2i(4, 3))
+				walls_floor_map.set_cell(Vector2i(x, x_y.y + 2*y_diff), 0,  Vector2i(1, 2))
 		walls_floor_map.set_cell(Vector2i(x, x_y.y), 0,  Vector2i(1, 6))
 		walls_floor_map.set_cell(Vector2i(x, x_y.y + y_diff), 0,  Vector2i(1, 6))
-	for y in range(pos1.y, pos2.y, y_diff):
-		if walls_floor_map.get_cell_atlas_coords(Vector2i(y_x.x,y)) == Vector2i(1,6):
+	
+	for y in range(pos1.y, pos2.y + y_diff, y_diff):
+		var current_atlas_coords_y =  walls_floor_map.get_cell_atlas_coords(Vector2i(y_x.x,y))
+		if current_atlas_coords_y == Vector2i(1,6):
 			continue
-		if y_diff > 0:
-			walls_floor_map.set_cell(Vector2i(y_x.x - x_diff, y), 0, Vector2i(2, 1))
-			walls_floor_map.set_cell(Vector2i(y_x.x + 2*x_diff, y), 0, Vector2i(0, 1))
-		else:
-			walls_floor_map.set_cell(Vector2i(y_x.x - x_diff, y), 0, Vector2i(0, 1))	
-			walls_floor_map.set_cell(Vector2i(y_x.x + 2*x_diff, y), 0, Vector2i(2, 1))
+		if current_atlas_coords_y == Vector2i(1,2):
+			walls_floor_map.set_cell(Vector2i(y_x.x - x_diff, y), 0, Vector2i(2, 2))
+			walls_floor_map.set_cell(Vector2i(y_x.x + 2*x_diff, y), 0, Vector2i(0, 2))
+		elif current_atlas_coords_y == Vector2i(4,3):
+			walls_floor_map.set_cell(Vector2i(y_x.x - x_diff, y), 0, Vector2i(2, 0))
+			walls_floor_map.set_cell(Vector2i(y_x.x + 2*x_diff, y), 0, Vector2i(0, 0))
+		elif current_atlas_coords_y == Vector2i(2,1):
+			walls_floor_map.set_cell(Vector2i(y_x.x - x_diff, y), 0, Vector2i(2, 0))
+			walls_floor_map.set_cell(Vector2i(y_x.x + 2*x_diff, y), 0, Vector2i(2, 2))
+		elif current_atlas_coords_y == Vector2i(5,1):
+			walls_floor_map.set_cell(Vector2i(y_x.x - x_diff, y), 0, Vector2i(0, 0))
+			walls_floor_map.set_cell(Vector2i(y_x.x + 2*x_diff, y), 0, Vector2i(0, 2))	
+		else:	
+			if y_diff > 0:
+				walls_floor_map.set_cell(Vector2i(y_x.x - x_diff, y), 0, Vector2i(2, 1))
+				walls_floor_map.set_cell(Vector2i(y_x.x + 2*x_diff, y), 0, Vector2i(0, 1))
+			else:
+				walls_floor_map.set_cell(Vector2i(y_x.x - x_diff, y), 0, Vector2i(0, 1))	
+				walls_floor_map.set_cell(Vector2i(y_x.x + 2*x_diff, y), 0, Vector2i(2, 1))
 		walls_floor_map.set_cell(Vector2i(y_x.x, y), 0, Vector2i(1, 6))
 		walls_floor_map.set_cell(Vector2i(y_x.x + x_diff, y), 0, Vector2i(1, 6))
-		
 	
 func find_start_room():
 	var min_x = INF
