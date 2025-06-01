@@ -3,8 +3,8 @@ extends Node2D
 var Room = preload("res://Scenes/Dungeon/Room.tscn")
 var font = preload("res://Assets/Dungeon/Roboto-VariableFont_wdth,wght.ttf")
 var Player = preload("res://Scenes/Player/player.tscn")
+var ui = preload("res://Scenes/UI/control.tscn")
 @onready var walls_floor_map = $Walls_Floor
-@onready var map_camera = $MapCamera
 
 var tile_size = 16 # size of tile in the TileMap
 var num_rooms = 100 # numer of rooms to generate
@@ -122,6 +122,12 @@ func _input(event):
 		var cam = player.get_node("Camera2D")
 		if cam:
 			cam.make_current()
+		
+		var map_cam = self.get_node("Camera2D")	
+		ui = ui.instantiate()
+		ui.get_node("UI/SubViewportContainer/SubViewport").set_player(player)
+		ui.get_node("UI/SubViewportContainer/SubViewport").set_world(get_tree().root.world_2d)
+		add_child(ui)
 
 		play_mode = true	
 
@@ -231,6 +237,8 @@ func carve_path(pos1, pos2):
 			# Walls
 			if tile_2y_diff == Vector2i(1,1):
 				walls_floor_map.set_cell(Vector2i(x, x_y.y + 2 * y_diff), 0,  Vector2i(4, 3))
+			elif tile_2y_diff == Vector2i(3,3) or tile_2y_diff == Vector2i(5,3):
+				walls_floor_map.set_cell(Vector2i(x, x_y.y + 2 * y_diff), 0,  Vector2i(4, 3))	
 			elif tile_2y_diff == Vector2i(2,1):
 				walls_floor_map.set_cell(Vector2i(x, x_y.y + 2 * y_diff), 0,  Vector2i(2, 0))
 			elif tile_2y_diff == Vector2i(5,1):
@@ -238,6 +246,8 @@ func carve_path(pos1, pos2):
 			
 			if 	tile_neg_y_diff == Vector2i(1,1):
 				walls_floor_map.set_cell(Vector2i(x, x_y.y - y_diff), 0,  Vector2i(1, 2))
+			elif tile_neg_y_diff == Vector2i(3,0) or tile_neg_y_diff == Vector2i(5,0):
+				walls_floor_map.set_cell(Vector2i(x, x_y.y - y_diff), 0,  Vector2i(1, 2))	
 			elif tile_neg_y_diff == Vector2i(2,1):
 				walls_floor_map.set_cell(Vector2i(x, x_y.y - y_diff), 0,  Vector2i(2, 2))
 			elif tile_neg_y_diff == Vector2i(5,1):
@@ -246,6 +256,8 @@ func carve_path(pos1, pos2):
 		else:
 			if tile_2y_diff == Vector2i(1,1):
 				walls_floor_map.set_cell(Vector2i(x, x_y.y + 2 * y_diff), 0,  Vector2i(1, 2))
+			elif tile_2y_diff == Vector2i(3,0) or tile_2y_diff == Vector2i(5,0):
+				walls_floor_map.set_cell(Vector2i(x, x_y.y + 2 * y_diff), 0,  Vector2i(1, 2))	
 			elif tile_2y_diff == Vector2i(2,1):
 				walls_floor_map.set_cell(Vector2i(x, x_y.y + 2 * y_diff), 0,  Vector2i(2, 2))
 			elif tile_2y_diff == Vector2i(5,1):
@@ -253,6 +265,8 @@ func carve_path(pos1, pos2):
 				
 			if 	tile_neg_y_diff == Vector2i(1,1):
 				walls_floor_map.set_cell(Vector2i(x, x_y.y - y_diff), 0,  Vector2i(4, 3))
+			elif tile_neg_y_diff == Vector2i(3,3) or tile_neg_y_diff == Vector2i(5,3):
+				walls_floor_map.set_cell(Vector2i(x, x_y.y - y_diff), 0,  Vector2i(4, 3))	
 			elif tile_neg_y_diff == Vector2i(2,1):
 				walls_floor_map.set_cell(Vector2i(x, x_y.y - y_diff), 0,  Vector2i(2, 0))
 			elif tile_neg_y_diff == Vector2i(5,1):
@@ -314,5 +328,4 @@ func find_end_room():
 	for room in $Rooms.get_children():
 		if room.position.x > max_x:
 			max_x = room.position.x
-			end_room = room		
-	
+			end_room = room	
