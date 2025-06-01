@@ -16,6 +16,7 @@ func physics(delta: float) -> EnemyState:
 
 	if to_player.length() < 4.0:
 		enemy.velocity = Vector2.ZERO
+		enemy.move_dir = to_player.normalized()  # still update for animation direction
 		enemy.update_animation("idle")
 		return null
 
