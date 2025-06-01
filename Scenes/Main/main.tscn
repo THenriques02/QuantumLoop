@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://ctmbay86g2nvb"]
 
-[ext_resource type="Script" uid="uid://1v0u2jqyq1qc" path="res://Scripts/Main/main.gd" id="1_qw60k"]
-[ext_resource type="Script" uid="uid://b2oxqf845es6u" path="res://Scripts/Main/camera_2d.gd" id="2_qw60k"]
+[ext_resource type="Script" path="res://Scripts/Main/main.gd" id="1_qw60k"]
+[ext_resource type="Script" path="res://Scripts/Main/camera_2d.gd" id="2_qw60k"]
 [ext_resource type="Texture2D" uid="uid://djk8ljwujjmcl" path="res://Assets/Dungeon/pixel_dungeon/PNG/walls_floor.png" id="4_5yls4"]
 [ext_resource type="Texture2D" uid="uid://0f7d1d60pdc6" path="res://Assets/Dungeon/pixel_dungeon/PNG/Objects.png" id="4_p6jpk"]
 [ext_resource type="FontFile" uid="uid://n3al8dqosow8" path="res://Assets/Dungeon/Nasalization Rg.otf" id="5_p6jpk"]

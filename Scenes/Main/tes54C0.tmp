@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://5rkyvcu5dfks"]
+
+[ext_resource type="PackedScene" uid="uid://cjutlarv06cxk" path="res://Scenes/Player/player.tscn" id="1_1fva5"]
+[ext_resource type="PackedScene" uid="uid://cwuv8g7gi6a3j" path="res://Scenes/Enemies/slime.tscn" id="2_fodvn"]
+
+[node name="Test" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_1fva5")]
+position = Vector2(-33, -10)
+
+[node name="Slime" parent="." instance=ExtResource("2_fodvn")]
+position = Vector2(-23, 39)

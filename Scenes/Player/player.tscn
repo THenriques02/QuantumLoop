@@ -1,10 +1,10 @@
 [gd_scene load_steps=17 format=3 uid="uid://cjutlarv06cxk"]
 
 [ext_resource type="Texture2D" uid="uid://cyyrwpt4yxpev" path="res://Assets/Player/player.png" id="1_17twk"]
-[ext_resource type="Script" uid="uid://cs4ishnr5c4i3" path="res://Scripts/Player/player.gd" id="2_56n2e"]
-[ext_resource type="Script" uid="uid://e7fcgheel0ir" path="res://Scripts/Player/player_state_machine.gd" id="2_nqn2g"]
-[ext_resource type="Script" uid="uid://cu085hy4h4o7j" path="res://Scripts/Player/state_idle.gd" id="3_i5stl"]
-[ext_resource type="Script" uid="uid://fc0xeilv1fog" path="res://Scripts/Player/state_run.gd" id="4_0k2tq"]
+[ext_resource type="Script" path="res://Scripts/Player/player.gd" id="2_56n2e"]
+[ext_resource type="Script" path="res://Scripts/Player/player_state_machine.gd" id="2_nqn2g"]
+[ext_resource type="Script" path="res://Scripts/Player/state_idle.gd" id="3_i5stl"]
+[ext_resource type="Script" path="res://Scripts/Player/state_run.gd" id="4_0k2tq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ao7q3"]
 radius = 5.09902
@@ -162,24 +162,26 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2w12b"]
 _data = {
-&"RESET": SubResource("Animation_pbdrn"),
-&"idle_diag_down": SubResource("Animation_5dghy"),
-&"idle_diag_up": SubResource("Animation_wy8ys"),
-&"idle_down": SubResource("Animation_agi4u"),
-&"idle_up": SubResource("Animation_g2k7n"),
-&"run_diag_down": SubResource("Animation_pfwgb"),
-&"run_diag_up": SubResource("Animation_snjuh"),
-&"run_down": SubResource("Animation_0j1cf"),
-&"run_up": SubResource("Animation_4rum1")
+"RESET": SubResource("Animation_pbdrn"),
+"idle_diag_down": SubResource("Animation_5dghy"),
+"idle_diag_up": SubResource("Animation_wy8ys"),
+"idle_down": SubResource("Animation_agi4u"),
+"idle_up": SubResource("Animation_g2k7n"),
+"run_diag_down": SubResource("Animation_pfwgb"),
+"run_diag_up": SubResource("Animation_snjuh"),
+"run_down": SubResource("Animation_0j1cf"),
+"run_up": SubResource("Animation_4rum1")
 }
 
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(0, -12)
+collision_layer = 2
+collision_mask = 7
 script = ExtResource("2_56n2e")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, 0.5)
-scale = Vector2(1.005, 1)
+position = Vector2(0, 1.78814e-07)
+scale = Vector2(1, 1.01924)
 texture = ExtResource("1_17twk")
 hframes = 8
 vframes = 8
@@ -190,7 +192,7 @@ shape = SubResource("CircleShape2D_ao7q3")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-&"": SubResource("AnimationLibrary_2w12b")
+"": SubResource("AnimationLibrary_2w12b")
 }
 
 [node name="StateMachine" type="Node" parent="."]
@@ -201,6 +203,7 @@ script = ExtResource("3_i5stl")
 
 [node name="Run" type="Node" parent="StateMachine"]
 script = ExtResource("4_0k2tq")
+move_speed = 200.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(3, 3)
