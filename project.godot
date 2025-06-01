@@ -11,14 +11,18 @@ config_version=5
 [application]
 
 config/name="QuantumLoop"
-run/main_scene="res://Scenes/Main/main.tscn"
+run/main_scene="uid://bvjlsmvmkw6hv"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=1980
+window/size/viewport_width=1920
 window/size/viewport_height=1080
+
+[global_group]
+
+main_scene_ready=""
 
 [input]
 

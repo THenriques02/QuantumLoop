@@ -7,6 +7,7 @@ var ui = preload("res://Scenes/UI/control.tscn")
 @onready var walls_floor_map = $Walls_Floor
 
 var tile_size = 16 # size of tile in the TileMap
+var margin_tiles = 500
 var num_rooms = 100 # numer of rooms to generate
 var min_size = 20   # minimum room size ( in tiles)
 var max_size = 40  # maximum room size (in tiles )
@@ -21,7 +22,10 @@ var player = null
 
 func _ready():
 	randomize()
-	make_rooms()
+	await make_rooms()
+	await make_map()
+	$Background.visible = false
+	$Loading.visible = false
 	
 func make_rooms():
 	for i in range(num_rooms):
@@ -72,8 +76,7 @@ func find_mst(nodes):
 		
 	return path				
 			
-		
-		
+"""		
 func _draw():
 	if start_room:
 		draw_string(font, start_room.position, "start", 0, -1, 16, Color(1, 1, 1))
@@ -92,8 +95,10 @@ func _draw():
 		
 func _process(delta):
 	queue_redraw()
+"""
 		
 func _input(event):
+	"""
 	if event.is_action_pressed('ui_select'):
 		if play_mode:
 			var map_cam = self.get_node("Camera2D")
@@ -108,9 +113,13 @@ func _input(event):
 		start_room = null
 		end_room = null	
 		make_rooms()
+	
 	if event.is_action_pressed(('ui_focus_next')):
 		make_map()
+	"""
 	if event.is_action_pressed('ui_cancel'):
+		get_tree().quit()		
+	if event.is_action_pressed('ui_accept'):
 		for room in $Rooms.get_children():
 			room.get_node("CollisionShape2D").disabled = true
 		player = Player.instantiate()
@@ -142,6 +151,10 @@ func make_map():
 	for room in $Rooms.get_children():
 		var r = Rect2(room.position - room.size / 2 , room.size)
 		full_rect = full_rect.merge(r)
+	
+	var margin_pixels = tile_size * margin_tiles
+	full_rect = full_rect.grow(margin_pixels)
+	
 	var top_left = walls_floor_map.local_to_map(full_rect.position)
 	var bottom_right = walls_floor_map.local_to_map(full_rect.end)
 	for x in range(top_left.x, bottom_right.x):
@@ -188,6 +201,8 @@ func make_map():
 				
 				carve_path(start, end)
 		corridors.append(p)
+	
+	get_tree().call_group("main_scene_ready","change_scene")
 						 
 func carve_path(pos1, pos2):
 	# Carve a path between 2 points

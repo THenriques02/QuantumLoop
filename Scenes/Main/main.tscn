@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://ctmbay86g2nvb"]
+[gd_scene load_steps=11 format=3 uid="uid://ctmbay86g2nvb"]
 
 [ext_resource type="Script" uid="uid://1v0u2jqyq1qc" path="res://Scripts/Main/main.gd" id="1_qw60k"]
 [ext_resource type="Script" uid="uid://b2oxqf845es6u" path="res://Scripts/Main/camera_2d.gd" id="2_qw60k"]
 [ext_resource type="Texture2D" uid="uid://djk8ljwujjmcl" path="res://Assets/Dungeon/pixel_dungeon/PNG/walls_floor.png" id="4_5yls4"]
 [ext_resource type="Texture2D" uid="uid://0f7d1d60pdc6" path="res://Assets/Dungeon/pixel_dungeon/PNG/Objects.png" id="4_p6jpk"]
+[ext_resource type="FontFile" uid="uid://n3al8dqosow8" path="res://Assets/Dungeon/Nasalization Rg.otf" id="5_p6jpk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p6jpk"]
 texture = ExtResource("4_5yls4")
@@ -456,7 +457,10 @@ texture_region_size = Vector2i(16, 23)
 [sub_resource type="TileSet" id="TileSet_xlvfx"]
 sources/0 = SubResource("TileSetAtlasSource_2a143")
 
-[node name="main" type="Node2D"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2a143"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="main" type="Node2D" groups=["main_scene_ready"]]
 script = ExtResource("1_qw60k")
 
 [node name="Rooms" type="Node" parent="."]
@@ -470,3 +474,26 @@ tile_set = SubResource("TileSet_2a143")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_set = SubResource("TileSet_xlvfx")
+
+[node name="Background" type="Panel" parent="."]
+custom_minimum_size = Vector2(19200, 10800)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2a143")
+
+[node name="Loading" type="Label" parent="." groups=["main_scene_ready"]]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_p6jpk")
+theme_override_font_sizes/font_size = 2640
+text = "Loading"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="ready" from="." to="." method="_on_ready"]
