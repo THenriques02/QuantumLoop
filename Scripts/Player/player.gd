@@ -22,6 +22,7 @@ var directions: Array = [
 
 func _ready() -> void:
 	state_machine.initialize(self)
+	add_to_group("player")
 
 func _process(delta: float) -> void:
 	move_dir.x = Input.get_action_strength("right") - Input.get_action_strength("left")
