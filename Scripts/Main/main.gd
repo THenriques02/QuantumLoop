@@ -24,7 +24,8 @@ var player = null
 var era = 0
 var eras_rooms = {}
 var eras_paths = {}
-
+var path_switch = []
+var switch_index = 0
 
 func _ready():
 	randomize()
@@ -237,11 +238,19 @@ func carve_path(pos1, pos2):
 	# choose either x/y or y/x
 	var x_y = pos1
 	var y_x = pos2
-	var switch = false
-	if (randi() % 2) > 0:
-		x_y = pos2
-		y_x = pos1
-		switch = true
+	if eras_paths.has(era):
+		var values = eras_paths[era]
+		if values[1][switch_index]:
+			x_y = pos2
+			y_x = pos1
+		switch_index += 1	
+	else:	
+		var switch = false
+		if (randi() % 2) > 0:
+			x_y = pos2
+			y_x = pos1
+			switch = true
+		path_switch.append(switch)	
 	
 	if x_diff > 0:
 		if walls_floor_map.get_cell_atlas_coords(Vector2i(pos1.x,x_y.y)) == Vector2i(1,1):
@@ -380,7 +389,9 @@ func player_passed():
 
 func store_era():
 	if not eras_rooms.has(era):
-		eras_paths[era] = path
+		eras_paths[era] = []
+		eras_paths[era].append(path)
+		eras_paths[era].append(path_switch)
 		eras_rooms[era] = []
 		for room in $Rooms.get_children():
 			eras_rooms[era].append([Vector2i(int(room.position.x),int(room.position.y)),room.size])
@@ -399,11 +410,14 @@ func new_dungeon():
 		n.freeze = false
 		n.queue_free()
 	path = null
+	path_switch = []
+	switch_index = 0
 	start_room = null
 	end_room = null	
 	walls_floor_map.clear()
 	if eras_rooms.has(era):
-		path = eras_paths[era]
+		path = eras_paths[era][0]
+		path_switch = eras_paths[era][1]
 		for values in eras_rooms[era]:
 			var r = Room.instantiate()
 			r.make_room(values[0],values[1])
