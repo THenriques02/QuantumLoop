@@ -13,6 +13,7 @@ var min_size = 20   # minimum room size ( in tiles)
 var max_size = 40  # maximum room size (in tiles )
 var hspread = 20   # horizontal spread ( in pixels )
 var cull = 0.5     # chance to cull the room
+var seed = randi()
 
 var path           # AStar pathfinding object
 var start_room = null
@@ -20,12 +21,18 @@ var end_room = null
 var play_mode = null
 var player = null
 
+var era = 0
+var eras_rooms = {}
+var eras_paths = {}
+
+
 func _ready():
 	randomize()
 	await make_rooms()
 	await make_map()
 	$Background.visible = false
-	$Loading.visible = false
+	$Maintext.visible = false
+	$Subtext.visible = false
 	
 func make_rooms():
 	for i in range(num_rooms):
@@ -76,7 +83,7 @@ func find_mst(nodes):
 		
 	return path				
 			
-"""		
+"""
 func _draw():
 	if start_room:
 		draw_string(font, start_room.position, "start", 0, -1, 16, Color(1, 1, 1))
@@ -95,8 +102,7 @@ func _draw():
 		
 func _process(delta):
 	queue_redraw()
-"""
-		
+"""		
 func _input(event):
 	"""
 	if event.is_action_pressed('ui_select'):
@@ -113,10 +119,24 @@ func _input(event):
 		start_room = null
 		end_room = null	
 		make_rooms()
-	
+
 	if event.is_action_pressed(('ui_focus_next')):
 		make_map()
-	"""
+	"""	
+	if event.is_action_pressed("ui_page_down"):
+		$Maintext.text = "You Died"
+		$Subtext.text = "Forward to the Past"
+		$Background.visible = true
+		$Maintext.visible = true
+		$Subtext.visible = true
+		player_died()
+	if event.is_action_pressed("ui_page_up"):
+		$Maintext.text = "You Survived"
+		$Subtext.text = "Back to the Future"
+		$Background.visible = true
+		$Maintext.visible = true
+		$Subtext.visible = true
+		player_passed()	
 	if event.is_action_pressed('ui_cancel'):
 		get_tree().quit()		
 	if event.is_action_pressed('ui_accept'):
@@ -143,6 +163,7 @@ func _input(event):
 
 func make_map():
 	walls_floor_map.clear()
+	await(get_tree().create_timer(1.1).timeout) 
 	find_start_room()
 	find_end_room()
 	
@@ -202,7 +223,9 @@ func make_map():
 				carve_path(start, end)
 		corridors.append(p)
 	
-	get_tree().call_group("main_scene_ready","change_scene")
+	$Background.visible = false
+	$Maintext.visible = false
+	$Subtext.visible = false
 						 
 func carve_path(pos1, pos2):
 	# Carve a path between 2 points
@@ -344,3 +367,48 @@ func find_end_room():
 		if room.position.x > max_x:
 			max_x = room.position.x
 			end_room = room	
+
+func player_died():
+	store_era()
+	era -= 1
+	new_dungeon()
+	
+func player_passed():
+	store_era()
+	era += 1
+	new_dungeon()
+
+func store_era():
+	if not eras_rooms.has(era):
+		eras_paths[era] = path
+		eras_rooms[era] = []
+		for room in $Rooms.get_children():
+			eras_rooms[era].append([Vector2i(int(room.position.x),int(room.position.y)),room.size])
+	
+func new_dungeon():
+	if play_mode:
+		var map_cam = self.get_node("Camera2D")
+		if map_cam:
+			map_cam.make_current()
+		
+		player.queue_free()
+		play_mode = false
+
+	for n in $Rooms.get_children():
+		n.get_node("CollisionShape2D").disabled = false
+		n.freeze = false
+		n.queue_free()
+	path = null
+	start_room = null
+	end_room = null	
+	walls_floor_map.clear()
+	if eras_rooms.has(era):
+		path = eras_paths[era]
+		for values in eras_rooms[era]:
+			var r = Room.instantiate()
+			r.make_room(values[0],values[1])
+			$Rooms.add_child(r) 
+
+	else:	
+		await make_rooms()
+	await make_map()
