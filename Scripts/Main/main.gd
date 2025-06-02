@@ -3,8 +3,12 @@ extends Node2D
 var Room = preload("res://Scenes/Dungeon/Room.tscn")
 var font = preload("res://Assets/Dungeon/Roboto-VariableFont_wdth,wght.ttf")
 var Player = preload("res://Scenes/Player/player.tscn")
-var ui = preload("res://Scenes/UI/control.tscn")
+var Corpse = preload("res://Scenes/Dungeon/corpse.tscn")
+var Ui = preload("res://Scenes/UI/control.tscn")
+var ui_instance
 @onready var walls_floor_map = $Walls_Floor
+
+
 
 var tile_size = 16 # size of tile in the TileMap
 var margin_tiles = 500
@@ -26,6 +30,7 @@ var eras_rooms = {}
 var eras_paths = {}
 var path_switch = []
 var switch_index = 0
+var eras_corpses = {}
 
 func _ready():
 	randomize()
@@ -147,6 +152,12 @@ func _input(event):
 		add_child(player)
 		player.position = start_room.position
 		
+		if eras_corpses.has(era):
+			for c_pos in eras_corpses[era]:
+				var corpse = Corpse.instantiate()
+				corpse.position = c_pos
+				$Corpses.add_child(corpse)
+		
 		await get_tree().create_timer(0.1).timeout
 		
 		var cam = player.get_node("Camera2D")
@@ -154,10 +165,10 @@ func _input(event):
 			cam.make_current()
 		
 		var map_cam = self.get_node("Camera2D")	
-		ui = ui.instantiate()
-		ui.get_node("UI/SubViewportContainer/SubViewport").set_player(player)
-		ui.get_node("UI/SubViewportContainer/SubViewport").set_world(get_tree().root.world_2d)
-		add_child(ui)
+		ui_instance = Ui.instantiate()
+		ui_instance.get_node("UI/SubViewportContainer/SubViewport").set_player(player)
+		ui_instance.get_node("UI/SubViewportContainer/SubViewport").set_world(get_tree().root.world_2d)
+		$minimap.add_child(ui_instance)
 
 		play_mode = true	
 
@@ -379,6 +390,7 @@ func find_end_room():
 
 func player_died():
 	store_era()
+	store_corpse()
 	era -= 1
 	new_dungeon()
 	
@@ -395,13 +407,23 @@ func store_era():
 		eras_rooms[era] = []
 		for room in $Rooms.get_children():
 			eras_rooms[era].append([Vector2i(int(room.position.x),int(room.position.y)),room.size])
-	
+
+func store_corpse():
+	if not eras_corpses.has(era):
+		eras_corpses[era] = []
+	eras_corpses[era].append(player.position)
+	for corpse in $Corpses.get_children():
+		corpse.queue_free()
+			
 func new_dungeon():
 	if play_mode:
 		var map_cam = self.get_node("Camera2D")
 		if map_cam:
 			map_cam.make_current()
 		
+		for camera in $minimap.get_children():
+			camera.queue_free()
+			
 		player.queue_free()
 		play_mode = false
 

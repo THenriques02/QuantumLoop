@@ -316,6 +316,10 @@ script = ExtResource("1_qw60k")
 
 [node name="Rooms" type="Node" parent="."]
 
+[node name="Corpses" type="Node" parent="."]
+
+[node name="minimap" type="Node" parent="."]
+
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.1, 0.1)
 script = ExtResource("2_qw60k")
