@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cjutlarv06cxk"]
+[gd_scene load_steps=22 format=3 uid="uid://cjutlarv06cxk"]
 
 [ext_resource type="Texture2D" uid="uid://cyyrwpt4yxpev" path="res://Assets/Player/player.png" id="1_17twk"]
 [ext_resource type="Script" uid="uid://cs4ishnr5c4i3" path="res://Scripts/Player/player.gd" id="2_56n2e"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" uid="uid://fc0xeilv1fog" path="res://Scripts/Player/state_run.gd" id="4_0k2tq"]
 [ext_resource type="PackedScene" uid="uid://bycrdl123smhx" path="res://Scenes/Components/health_component.tscn" id="6_a6dlo"]
 [ext_resource type="PackedScene" uid="uid://b1jhewo6rw78i" path="res://Scenes/Components/hitbox_component.tscn" id="7_4sybp"]
+[ext_resource type="PackedScene" uid="uid://dq5tdlh2ryyu2" path="res://Scenes/Weapons/revolver.tscn" id="8_5jul8"]
+[ext_resource type="PackedScene" uid="uid://c3bdlrfwspavj" path="res://Scenes/UI/healthbar.tscn" id="9_va7fw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ao7q3"]
 radius = 5.09902
@@ -223,3 +225,12 @@ shape = SubResource("CapsuleShape2D_78xoc")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(3, 3)
+
+[node name="Revolver" parent="." instance=ExtResource("8_5jul8")]
+position = Vector2(7, 7)
+
+[node name="HealthBar" parent="." instance=ExtResource("9_va7fw")]
+offset_left = -12.0
+offset_top = -13.0
+offset_right = 12.0
+offset_bottom = -12.0
