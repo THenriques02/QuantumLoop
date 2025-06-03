@@ -1,0 +1,172 @@
+[gd_scene load_steps=20 format=3 uid="uid://dtd4e6tjb2k8"]
+
+[ext_resource type="Texture2D" uid="uid://cb828rdn3g1u6" path="res://Assets/Enemies/Knight.png" id="1_38npn"]
+[ext_resource type="Script" path="res://Scripts/Enemies/enemy.gd" id="1_ewnv7"]
+[ext_resource type="Script" path="res://Scripts/Enemies/enemy_state_machine.gd" id="3_occjv"]
+[ext_resource type="Script" path="res://Scripts/Enemies/state_idle.gd" id="4_ew3kn"]
+[ext_resource type="Script" path="res://Scripts/Enemies/state_wander.gd" id="5_bfinn"]
+[ext_resource type="Script" path="res://Scripts/Enemies/state_persue.gd" id="6_m6bng"]
+[ext_resource type="PackedScene" uid="uid://bycrdl123smhx" path="res://Scenes/Components/health_component.tscn" id="7_wnexg"]
+[ext_resource type="PackedScene" uid="uid://b1jhewo6rw78i" path="res://Scenes/Components/hitbox_component.tscn" id="8_fyhj5"]
+[ext_resource type="PackedScene" uid="uid://8icgu3rrerpu" path="res://Scenes/Components/attack_component.tscn" id="9_bdbfo"]
+[ext_resource type="PackedScene" uid="uid://c3bdlrfwspavj" path="res://Scenes/UI/healthbar.tscn" id="10_7l708"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_if7hu"]
+radius = 5.0
+height = 12.0
+
+[sub_resource type="Animation" id="Animation_dm12e"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_0hnbk"]
+resource_name = "idle_diag_down"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.75),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [8, 9]
+}
+
+[sub_resource type="Animation" id="Animation_brtni"]
+resource_name = "idle_diag_up"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.75),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [24, 25]
+}
+
+[sub_resource type="Animation" id="Animation_5dfja"]
+resource_name = "idle_down"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.75),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_bfgku"]
+resource_name = "idle_up"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.75),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [16, 17]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_10tj3"]
+_data = {
+"RESET": SubResource("Animation_dm12e"),
+"idle_diag_down": SubResource("Animation_0hnbk"),
+"idle_diag_up": SubResource("Animation_brtni"),
+"idle_down": SubResource("Animation_5dfja"),
+"idle_up": SubResource("Animation_bfgku")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_n0o2k"]
+radius = 6.0
+height = 18.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tgeid"]
+radius = 6.0
+height = 18.0
+
+[node name="Knight" type="CharacterBody2D"]
+script = ExtResource("1_ewnv7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -12)
+texture = ExtResource("1_38npn")
+hframes = 8
+vframes = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -6)
+shape = SubResource("CapsuleShape2D_if7hu")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_10tj3")
+}
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("3_occjv")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("4_ew3kn")
+
+[node name="Wander" type="Node" parent="StateMachine"]
+script = ExtResource("5_bfinn")
+
+[node name="Pursue" type="Node" parent="StateMachine"]
+script = ExtResource("6_m6bng")
+
+[node name="HealthComponent" parent="." instance=ExtResource("7_wnexg")]
+max_health = 200.0
+
+[node name="HitboxComponent" parent="." instance=ExtResource("8_fyhj5")]
+collision_layer = 4
+collision_mask = 2
+health_path = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(0, -9)
+shape = SubResource("CapsuleShape2D_n0o2k")
+
+[node name="attack_component" parent="." instance=ExtResource("9_bdbfo")]
+collision_layer = 8
+attack_damage = 50.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="attack_component"]
+position = Vector2(0, -9)
+shape = SubResource("CapsuleShape2D_tgeid")
+
+[node name="HealthBar" parent="." instance=ExtResource("10_7l708")]
+offset_left = -10.0
+offset_top = -24.0
+offset_right = 10.0
+offset_bottom = -23.0

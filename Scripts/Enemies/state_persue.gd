@@ -7,7 +7,7 @@ func enter() -> void:
 	enemy.update_animation("jump")
 
 func process(delta: float) -> EnemyState:
-	if not enemy.has_line_of_sights_to(enemy.player):
+	if not enemy.has_line_of_sight_to(enemy.player):
 		return idle
 	return null
 
