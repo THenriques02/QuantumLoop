@@ -313,7 +313,7 @@ sources/0 = SubResource("TileSetAtlasSource_p6jpk")
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2a143"]
 bg_color = Color(0, 0, 0, 1)
 
-[node name="main" type="Node2D" groups=["main_scene_ready"]]
+[node name="main" type="Node2D" groups=["player_died"]]
 script = ExtResource("1_qw60k")
 
 [node name="Rooms" type="Node" parent="."]
@@ -333,6 +333,8 @@ script = ExtResource("2_qw60k")
 [node name="Walls_Floor" type="TileMapLayer" parent="."]
 tile_set = SubResource("TileSet_2a143")
 
+[node name="Cursor" parent="." instance=ExtResource("5_rujyf")]
+
 [node name="Background" type="Panel" parent="."]
 custom_minimum_size = Vector2(19200, 10800)
 anchors_preset = 15
@@ -342,7 +344,8 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_2a143")
 
-[node name="Maintext" type="Label" parent="." groups=["main_scene_ready"]]
+[node name="Maintext" type="Label" parent="."]
+z_index = 2
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -354,7 +357,8 @@ text = "Loading"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Subtext" type="Label" parent="." groups=["main_scene_ready"]]
+[node name="Subtext" type="Label" parent="."]
+z_index = 2
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -368,7 +372,5 @@ theme_override_fonts/font = ExtResource("5_p6jpk")
 theme_override_font_sizes/font_size = 500
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="Cursor" parent="." instance=ExtResource("5_rujyf")]
 
 [connection signal="ready" from="." to="." method="_on_ready"]
