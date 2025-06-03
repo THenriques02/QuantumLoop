@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://8icgu3rrerpu" path="res://Scenes/Components/attack_component.tscn" id="2_vl2s6"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bea2w"]
-radius = 1.0
+radius = 2.0
 height = 6.0
 
 [node name="PistolBullet" type="Node2D"]
@@ -26,4 +26,5 @@ is_projectile = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="attack_component"]
 rotation = 1.5708
+scale = Vector2(0.8, 1.2)
 shape = SubResource("CapsuleShape2D_bea2w")

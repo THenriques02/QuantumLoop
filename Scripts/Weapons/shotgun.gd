@@ -6,9 +6,10 @@ extends Node2D
 @onready var shoot_timer: Timer = $ShootSpeedTimer
 
 @export var radius: float = 1.0
-@export var shoot_speed: float = 4.0
+@export var shoot_speed: float = 1.0  # Slower than revolver
+@export var spread_angle_degrees: float = 15.0  # Total spread arc
 
-const BULLET = preload("res://Scenes/Weapons/pistol_bullet.tscn")
+const SHELL = preload("res://Scenes/Weapons/shotgun_shell.tscn")
 const DEAD_ZONE: float = 0.2
 
 var player: Player
@@ -34,7 +35,6 @@ func _process(delta: float) -> void:
 
 	move_dir = controller_dir.normalized() if controller_dir.length() > DEAD_ZONE else (mouse_dir - player_pos).normalized()
 
-
 	global_position = player_pos + move_dir * radius
 	look_at(mouse_dir)
 
@@ -52,18 +52,25 @@ func shoot() -> void:
 	can_shoot = false
 	shoot_timer.start()
 
-	var bullet = BULLET.instantiate()
-	var bullet_container = get_tree().get_root().find_child("BulletContainer", true, false)
+	var shell_container = get_tree().root.find_child("BulletContainer", true, false)
+	if not shell_container:
+		shell_container = get_tree().root
 
-	if bullet_container:
-		bullet_container.add_child(bullet)
-	else:
-		get_tree().root.add_child(bullet)
+	var base_direction = (get_global_mouse_position() - muzzle.global_position).normalized()
+	var base_angle = base_direction.angle()
 
-	var direction = (get_global_mouse_position() - muzzle.global_position).normalized()
-	bullet.global_position = muzzle.global_position
-	bullet.rotation = direction.angle()
-	bullet.direction = direction
+	for i in range(5):
+		var offset = lerp(-spread_angle_degrees / 2, spread_angle_degrees / 2, i / 4.0)
+		var shell = SHELL.instantiate()
+
+		var angle_offset_rad = deg_to_rad(offset)
+		var direction = Vector2.RIGHT.rotated(base_angle + angle_offset_rad)
+
+		shell.global_position = muzzle.global_position
+		shell.rotation = direction.angle()
+		shell.direction = direction
+
+		shell_container.add_child(shell)
 
 func _on_shoot_speed_timer_timeout() -> void:
 	can_shoot = true

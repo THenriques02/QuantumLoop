@@ -14,12 +14,12 @@ texture = ExtResource("1_orl7l")
 
 [node name="RHand" type="Sprite2D" parent="Shotgun"]
 position = Vector2(5.33333, 0)
-scale = Vector2(1.25, 1.25)
+scale = Vector2(1.33, 1.33)
 texture = ExtResource("2_xvtdo")
 
 [node name="LHand" type="Sprite2D" parent="Shotgun"]
 position = Vector2(-9.33333, 1.33333)
-scale = Vector2(1.25, 1.25)
+scale = Vector2(1.33, 1.33)
 texture = ExtResource("2_xvtdo")
 
 [node name="Marker2D" type="Marker2D" parent="Shotgun"]
