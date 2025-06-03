@@ -182,7 +182,6 @@ radius = 6.0
 height = 20.0
 
 [node name="Player" type="CharacterBody2D"]
-position = Vector2(0, -12)
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("2_56n2e")
@@ -227,6 +226,7 @@ shape = SubResource("CapsuleShape2D_78xoc")
 zoom = Vector2(3, 3)
 
 [node name="Revolver" parent="." instance=ExtResource("8_5jul8")]
+visible = false
 position = Vector2(7, 7)
 
 [node name="HealthBar" parent="." instance=ExtResource("9_va7fw")]
