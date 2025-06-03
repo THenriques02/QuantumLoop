@@ -18,6 +18,8 @@ func damage(attack: Attack) -> void:
 		emit_signal("died")
 		if not get_parent().is_in_group("player"):
 			die()
+		else:
+			emit_signal("player_died")	
 
 func die() -> void:
 	get_parent().queue_free()
