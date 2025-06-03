@@ -5,6 +5,7 @@ var font = preload("res://Assets/Dungeon/Roboto-VariableFont_wdth,wght.ttf")
 var Player = preload("res://Scenes/Player/player.tscn")
 var Corpse = preload("res://Scenes/Dungeon/corpse.tscn")
 var Ui = preload("res://Scenes/UI/control.tscn")
+var Slime = preload("res://Scenes/Enemies/slime.tscn")
 var ui_instance
 @onready var walls_floor_map = $Walls_Floor
 
@@ -148,6 +149,10 @@ func _input(event):
 	if event.is_action_pressed('ui_accept'):
 		for room in $Rooms.get_children():
 			room.get_node("CollisionShape2D").disabled = true
+			for e in range(randi_range(3, 8)):
+				var slime = Slime.instantiate()
+				slime.position = room.position
+				$Enemies.add_child(slime)
 		player = Player.instantiate()
 		add_child(player)
 		player.position = start_room.position

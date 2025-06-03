@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://bhh4si3omulsx"]
+
+[ext_resource type="Script" path="res://Scripts/Weapons/pistol_bullet.gd" id="1_iflrq"]
+[ext_resource type="Texture2D" uid="uid://xul64nixgokv" path="res://Assets/Weapons/Bullets/PistolAmmoBig.png" id="1_w7pmb"]
+[ext_resource type="PackedScene" uid="uid://8icgu3rrerpu" path="res://Scenes/Components/attack_component.tscn" id="2_vl2s6"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bea2w"]
+radius = 1.0
+height = 6.0
+
+[node name="PistolBullet" type="Node2D"]
+script = ExtResource("1_iflrq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_w7pmb")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+
+[node name="LifetimeTimer" type="Timer" parent="."]
+
+[node name="attack_component" parent="." instance=ExtResource("2_vl2s6")]
+collision_layer = 2
+collision_mask = 4
+is_projectile = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="attack_component"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_bea2w")

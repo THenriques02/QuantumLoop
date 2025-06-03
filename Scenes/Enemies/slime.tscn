@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cwuv8g7gi6a3j"]
+[gd_scene load_steps=23 format=3 uid="uid://cwuv8g7gi6a3j"]
 
 [ext_resource type="Script" path="res://Scripts/Enemies/enemy.gd" id="1_ijxjy"]
 [ext_resource type="Texture2D" uid="uid://b8p70r6s0d5fq" path="res://Assets/Enemies/slime.png" id="1_ilx44"]
@@ -6,10 +6,12 @@
 [ext_resource type="Script" path="res://Scripts/Enemies/state_idle.gd" id="4_q05mg"]
 [ext_resource type="Script" path="res://Scripts/Enemies/state_wander.gd" id="5_qimjb"]
 [ext_resource type="Script" path="res://Scripts/Enemies/state_persue.gd" id="6_e18wf"]
+[ext_resource type="PackedScene" uid="uid://bycrdl123smhx" path="res://Scenes/Components/health_component.tscn" id="7_ubl3j"]
+[ext_resource type="PackedScene" uid="uid://b1jhewo6rw78i" path="res://Scenes/Components/hitbox_component.tscn" id="8_rkd0k"]
+[ext_resource type="PackedScene" uid="uid://8icgu3rrerpu" path="res://Scenes/Components/attack_component.tscn" id="9_6jdpq"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lb55m"]
-radius = 4.0
-height = 14.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_u07xb"]
+radius = 6.0
 
 [sub_resource type="Animation" id="Animation_cdjn7"]
 length = 0.001
@@ -171,6 +173,12 @@ _data = {
 "jump_up": SubResource("Animation_7o6nq")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_e7ji4"]
+radius = 6.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f7dm8"]
+radius = 6.0
+
 [node name="Slime" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 7
@@ -184,9 +192,9 @@ vframes = 4
 frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -4)
+position = Vector2(0, -5)
 rotation = 1.5708
-shape = SubResource("CapsuleShape2D_lb55m")
+shape = SubResource("CircleShape2D_u07xb")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -204,3 +212,23 @@ script = ExtResource("5_qimjb")
 
 [node name="Pursue" type="Node" parent="StateMachine"]
 script = ExtResource("6_e18wf")
+
+[node name="HealthComponent" parent="." instance=ExtResource("7_ubl3j")]
+max_health = 30.0
+
+[node name="HitboxComponent" parent="." instance=ExtResource("8_rkd0k")]
+collision_layer = 4
+collision_mask = 2
+health_path = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(0, -5)
+rotation = 1.5708
+shape = SubResource("CircleShape2D_e7ji4")
+
+[node name="attack_component" parent="." instance=ExtResource("9_6jdpq")]
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="attack_component"]
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_f7dm8")

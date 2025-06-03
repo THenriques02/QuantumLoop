@@ -37,12 +37,11 @@ func get_closest_direction(vector: Vector2) -> int:
 
 func anim_direction(vector: Vector2) -> String:
 	if vector == Vector2.ZERO:
-		# Default to down if no movement
-		return "down"
+		return "down"  # Default animation direction when idle
 
 	var index = get_closest_direction(vector)
 
-	# Flip sprite if facing left
+	# Flip sprite horizontally if facing left directions
 	if index in [5, 6, 7]:
 		sprite.scale.x = -1
 	else:
@@ -73,16 +72,21 @@ func has_line_of_sight_to(target: Node2D) -> bool:
 	if to_target.length() > detection_radius:
 		return false
 
+	# Exclude self and all children to avoid self-intersection
+	var exclude_nodes = [self]
+	for child in get_children():
+		exclude_nodes.append(child)
+
+	# Create query without overriding collision_mask to respect inspector layers
 	var query = PhysicsRayQueryParameters2D.create(global_position, target.global_position)
-	query.exclude = [self]
-	query.collision_mask = 1 | 2  # walls (1) and player (2)
+	query.exclude = exclude_nodes
+	# No query.collision_mask set here; uses physics layers from nodes themselves
 
 	var result = get_world_2d().direct_space_state.intersect_ray(query)
 
 	if result.is_empty():
-		return true
+		return true  # Nothing blocking line of sight
 
 	var hit = result["collider"]
-
-	# Allow for hitting a child of the player
-	return hit == target or hit.get_parent() == target
+	# Allow for hitting the player or their child nodes
+	return hit == target or hit.is_in_group("player") or hit.get_parent() == target

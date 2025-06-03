@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c14s3obscfmml"
-path="res://.godot/imported/crosssair.png-1c74c44745dba5293fc0a5eb656ecb9b.ctex"
+uid="uid://biw34tgtyvqyi"
+path="res://.godot/imported/cursor.png-ecc844c065a48d7053dacd9363482c60.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/crosssair.png"
-dest_files=["res://.godot/imported/crosssair.png-1c74c44745dba5293fc0a5eb656ecb9b.ctex"]
+source_file="res://Assets/UI/cursor.png"
+dest_files=["res://.godot/imported/cursor.png-ecc844c065a48d7053dacd9363482c60.ctex"]
 
 [params]
 

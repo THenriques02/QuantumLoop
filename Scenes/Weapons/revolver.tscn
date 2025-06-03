@@ -1,16 +1,24 @@
-[gd_scene load_steps=3 format=3 uid="uid://dq5tdlh2ryyu2"]
+[gd_scene load_steps=4 format=3 uid="uid://dq5tdlh2ryyu2"]
 
 [ext_resource type="Texture2D" uid="uid://cbr3v6bbata86" path="res://Assets/Player/hand.png" id="1_70gfv"]
+[ext_resource type="Script" path="res://Scripts/Weapons/revolver.gd" id="1_xvr7b"]
 [ext_resource type="Texture2D" uid="uid://ciq2axp5o5rig" path="res://Assets/Weapons/Guns/Revolver.png" id="2_7g205"]
 
 [node name="Revolver" type="Node2D"]
-
-[node name="Hand" type="Sprite2D" parent="."]
-z_index = 1
-position = Vector2(6.5, -4.5)
-texture = ExtResource("1_70gfv")
+script = ExtResource("1_xvr7b")
 
 [node name="Revolver" type="Sprite2D" parent="."]
-position = Vector2(10, -5)
+position = Vector2(4, -1)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("2_7g205")
+
+[node name="Marker2D" type="Marker2D" parent="Revolver"]
+position = Vector2(12, -2.66667)
+
+[node name="Hand" type="Sprite2D" parent="Revolver"]
+z_index = 1
+position = Vector2(-5.33333, 1.33333)
+scale = Vector2(1.33333, 1.33333)
+texture = ExtResource("1_70gfv")
+
+[node name="ShootSpeedTimer" type="Timer" parent="."]
