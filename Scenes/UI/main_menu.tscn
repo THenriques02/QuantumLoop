@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://bvjlsmvmkw6hv"]
 
 [ext_resource type="Texture2D" uid="uid://dmsgud011qya2" path="res://Assets/UI/main_menu_image.png" id="1_i2xx2"]
-[ext_resource type="Script" path="res://Scripts/UI/main_menu.gd" id="1_o14dv"]
+[ext_resource type="Script" uid="uid://b566t2qe7u0fy" path="res://Scripts/UI/main_menu.gd" id="1_o14dv"]
 [ext_resource type="FontFile" uid="uid://n3al8dqosow8" path="res://Assets/Dungeon/Nasalization Rg.otf" id="2_o14dv"]
 [ext_resource type="Texture2D" uid="uid://br4o7bpql2gwl" path="res://Assets/Player/player - Copy.png" id="3_u7lva"]
 
@@ -87,9 +87,9 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 50
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i2xx2")
 theme_override_styles/hover = SubResource("StyleBoxFlat_i2xx2")
@@ -102,9 +102,9 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 50
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i2xx2")
 theme_override_styles/hover = SubResource("StyleBoxFlat_i2xx2")
@@ -118,9 +118,9 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 50
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i2xx2")
 theme_override_styles/hover = SubResource("StyleBoxFlat_i2xx2")

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bhh4si3omulsx"]
 
-[ext_resource type="Script" path="res://Scripts/Weapons/pistol_bullet.gd" id="1_iflrq"]
+[ext_resource type="Script" uid="uid://b0jm4jveilyrf" path="res://Scripts/Weapons/pistol_bullet.gd" id="1_iflrq"]
 [ext_resource type="Texture2D" uid="uid://xul64nixgokv" path="res://Assets/Weapons/Bullets/PistolAmmoBig.png" id="1_w7pmb"]
 [ext_resource type="PackedScene" uid="uid://8icgu3rrerpu" path="res://Scenes/Components/attack_component.tscn" id="2_vl2s6"]
 

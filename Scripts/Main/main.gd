@@ -6,6 +6,7 @@ var Player = preload("res://Scenes/Player/player.tscn")
 var Corpse = preload("res://Scenes/Dungeon/corpse.tscn")
 var Ui = preload("res://Scenes/UI/control.tscn")
 var Slime = preload("res://Scenes/Enemies/slime.tscn")
+var Chest = preload("res://Scenes/Dungeon/chest.tscn")
 var ui_instance
 @onready var walls_floor_map = $Walls_Floor
 
@@ -153,6 +154,12 @@ func _input(event):
 				var slime = Slime.instantiate()
 				slime.position = room.position
 				$Enemies.add_child(slime)
+			
+			for a in range(1):
+				var asset = Chest.instantiate()
+				asset.position = room.position 
+				$Objects.add_child(asset)
+				
 		player = Player.instantiate()
 		add_child(player)
 		player.position = start_room.position
@@ -431,7 +438,13 @@ func new_dungeon():
 			
 		player.queue_free()
 		play_mode = false
-
+		
+	for e in $Enemies.get_children():
+		e.queue_free()
+	
+	for o in $Objects.get_children():
+		o.queue_free()	
+		
 	for n in $Rooms.get_children():
 		n.get_node("CollisionShape2D").disabled = false
 		n.freeze = false
