@@ -1,8 +1,8 @@
-class_name Revolver
+class_name Shotgun
 extends Node2D
 
 @onready var sprite: Sprite2D = $Sprite2D
-@onready var muzzle: Marker2D = $Revolver/Marker2D
+@onready var muzzle: Marker2D = $Shotgun/Marker2D
 @onready var shoot_timer: Timer = $ShootSpeedTimer
 
 @export var radius: float = 1.0
@@ -34,18 +34,13 @@ func _process(delta: float) -> void:
 
 	move_dir = controller_dir.normalized() if controller_dir.length() > DEAD_ZONE else (mouse_dir - player_pos).normalized()
 
+
 	global_position = player_pos + move_dir * radius
 	look_at(mouse_dir)
 
 	rotation_degrees = wrap(rotation_degrees, 0, 360)
 	scale.y = -1 if rotation_degrees > 90 and rotation_degrees < 270 else 1
-
-	# Adjust revolver Z index based on player's look direction
-	var anim_dir := player.anim_direction(player.look_dir)
-	if anim_dir == "up" or anim_dir == "diag_up":
-		z_index = player.z_index - 1  # Behind player
-	else:
-		z_index = player.z_index + 1  # In front of player
+	z_index = player.z_index - 1 if move_dir.y < 0 else player.z_index + 1
 
 	if Input.is_action_just_pressed("shoot"):
 		shoot()

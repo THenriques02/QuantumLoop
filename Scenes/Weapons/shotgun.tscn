@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://d3v1r6ux8ixsy"]
+
+[ext_resource type="Texture2D" uid="uid://bn3qm418kvmv0" path="res://Assets/Weapons/Guns/SawedOffShotgun.png" id="1_orl7l"]
+[ext_resource type="Script" uid="uid://cw5joex8vhnyx" path="res://Scripts/Weapons/shotgun.gd" id="1_vm7cu"]
+[ext_resource type="Texture2D" uid="uid://cbr3v6bbata86" path="res://Assets/Player/hand.png" id="2_xvtdo"]
+
+[node name="Shotgun" type="Node2D"]
+script = ExtResource("1_vm7cu")
+
+[node name="Shotgun" type="Sprite2D" parent="."]
+position = Vector2(7, -1)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("1_orl7l")
+
+[node name="RHand" type="Sprite2D" parent="Shotgun"]
+position = Vector2(5.33333, 0)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("2_xvtdo")
+
+[node name="LHand" type="Sprite2D" parent="Shotgun"]
+position = Vector2(-9.33333, 1.33333)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("2_xvtdo")
+
+[node name="Marker2D" type="Marker2D" parent="Shotgun"]
+position = Vector2(17.3333, -2.66667)
+
+[node name="ShootSpeedTimer" type="Timer" parent="."]
