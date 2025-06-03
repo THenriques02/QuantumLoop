@@ -7,6 +7,7 @@ var Corpse = preload("res://Scenes/Dungeon/corpse.tscn")
 var Ui = preload("res://Scenes/UI/control.tscn")
 var Slime = preload("res://Scenes/Enemies/slime.tscn")
 var Knight = preload("res://Scenes/Enemies/knight.tscn")
+var Boss_Knight = preload("res://Scenes/Enemies/boss_knight.tscn")
 var Chest = preload("res://Scenes/Dungeon/chest.tscn")
 var Health = preload("res://Scenes/Loot/health_potion.tscn")
 var Ammo = preload("res://Scenes/Loot/ammo.tscn")
@@ -106,6 +107,10 @@ func i_died():
 	_show_death_ui()
 	player_died()
 
+func boss_died():
+	_show_survive_ui()
+	player_passed()
+
 func _show_death_ui():
 	$Maintext.text = "You Died"
 	$Subtext.text = "Forward to the Past"
@@ -122,7 +127,12 @@ func _show_survive_ui():
 
 func spawn_enemies():
 	for room in$Rooms.get_children():
-		if room != start_room:
+		if room == end_room:
+			var boss = Boss_Knight.instantiate()
+			boss.position = room.position
+			$Enemies.add_child(boss)
+			
+		elif room != start_room:	
 			var enemy_count = randi_range(5, 10)
 			for i in range(enemy_count):
 				var enemy

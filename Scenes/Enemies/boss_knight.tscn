@@ -1,15 +1,15 @@
-[gd_scene load_steps=20 format=3 uid="uid://dtd4e6tjb2k8"]
+[gd_scene load_steps=20 format=3 uid="uid://du8sbtfgix8x3"]
 
-[ext_resource type="Texture2D" uid="uid://cb828rdn3g1u6" path="res://Assets/Enemies/Knight.png" id="1_38npn"]
-[ext_resource type="Script" uid="uid://dloke04p406ot" path="res://Scripts/Enemies/enemy.gd" id="1_ewnv7"]
-[ext_resource type="Script" uid="uid://m0rbuo1pf0ag" path="res://Scripts/Enemies/enemy_state_machine.gd" id="3_occjv"]
-[ext_resource type="Script" uid="uid://bxjjhjiceblpo" path="res://Scripts/Enemies/state_idle.gd" id="4_ew3kn"]
-[ext_resource type="Script" uid="uid://p1r6a6tg6yxi" path="res://Scripts/Enemies/state_wander.gd" id="5_bfinn"]
-[ext_resource type="Script" uid="uid://cs25aiyny3y3k" path="res://Scripts/Enemies/state_persue.gd" id="6_m6bng"]
-[ext_resource type="PackedScene" uid="uid://bycrdl123smhx" path="res://Scenes/Components/health_component.tscn" id="7_wnexg"]
-[ext_resource type="PackedScene" uid="uid://b1jhewo6rw78i" path="res://Scenes/Components/hitbox_component.tscn" id="8_fyhj5"]
-[ext_resource type="PackedScene" uid="uid://8icgu3rrerpu" path="res://Scenes/Components/attack_component.tscn" id="9_bdbfo"]
-[ext_resource type="PackedScene" uid="uid://c3bdlrfwspavj" path="res://Scenes/UI/healthbar.tscn" id="10_7l708"]
+[ext_resource type="Script" uid="uid://dloke04p406ot" path="res://Scripts/Enemies/enemy.gd" id="1_fddkl"]
+[ext_resource type="Texture2D" uid="uid://ec3jlq8g35xo" path="res://Assets/Enemies/Knight_Boss.png" id="2_fddkl"]
+[ext_resource type="Script" uid="uid://m0rbuo1pf0ag" path="res://Scripts/Enemies/enemy_state_machine.gd" id="3_3npri"]
+[ext_resource type="Script" uid="uid://bxjjhjiceblpo" path="res://Scripts/Enemies/state_idle.gd" id="4_e43wu"]
+[ext_resource type="Script" uid="uid://p1r6a6tg6yxi" path="res://Scripts/Enemies/state_wander.gd" id="5_evcog"]
+[ext_resource type="Script" uid="uid://cs25aiyny3y3k" path="res://Scripts/Enemies/state_persue.gd" id="6_bsd04"]
+[ext_resource type="PackedScene" uid="uid://bycrdl123smhx" path="res://Scenes/Components/health_component.tscn" id="7_x6mie"]
+[ext_resource type="PackedScene" uid="uid://b1jhewo6rw78i" path="res://Scenes/Components/hitbox_component.tscn" id="8_umsoo"]
+[ext_resource type="PackedScene" uid="uid://8icgu3rrerpu" path="res://Scenes/Components/attack_component.tscn" id="9_kwe5v"]
+[ext_resource type="PackedScene" uid="uid://c3bdlrfwspavj" path="res://Scenes/UI/healthbar.tscn" id="10_bgjfy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_if7hu"]
 radius = 5.0
@@ -115,12 +115,12 @@ height = 18.0
 radius = 6.0
 height = 18.0
 
-[node name="Knight" type="CharacterBody2D"]
-script = ExtResource("1_ewnv7")
+[node name="Boss_Knight" type="CharacterBody2D" groups=["player_died"]]
+script = ExtResource("1_fddkl")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -12)
-texture = ExtResource("1_38npn")
+texture = ExtResource("2_fddkl")
 hframes = 8
 vframes = 8
 
@@ -134,21 +134,21 @@ libraries = {
 }
 
 [node name="StateMachine" type="Node" parent="."]
-script = ExtResource("3_occjv")
+script = ExtResource("3_3npri")
 
 [node name="Idle" type="Node" parent="StateMachine"]
-script = ExtResource("4_ew3kn")
+script = ExtResource("4_e43wu")
 
 [node name="Wander" type="Node" parent="StateMachine"]
-script = ExtResource("5_bfinn")
+script = ExtResource("5_evcog")
 
 [node name="Pursue" type="Node" parent="StateMachine"]
-script = ExtResource("6_m6bng")
+script = ExtResource("6_bsd04")
 
-[node name="HealthComponent" parent="." instance=ExtResource("7_wnexg")]
-max_health = 200.0
+[node name="HealthComponent" parent="." instance=ExtResource("7_x6mie")]
+max_health = 20000.0
 
-[node name="HitboxComponent" parent="." instance=ExtResource("8_fyhj5")]
+[node name="HitboxComponent" parent="." instance=ExtResource("8_umsoo")]
 collision_layer = 4
 collision_mask = 2
 health_path = NodePath("../HealthComponent")
@@ -157,7 +157,7 @@ health_path = NodePath("../HealthComponent")
 position = Vector2(0, -9)
 shape = SubResource("CapsuleShape2D_n0o2k")
 
-[node name="attack_component" parent="." instance=ExtResource("9_bdbfo")]
+[node name="attack_component" parent="." instance=ExtResource("9_kwe5v")]
 collision_layer = 8
 attack_damage = 50.0
 
@@ -165,7 +165,7 @@ attack_damage = 50.0
 position = Vector2(0, -9)
 shape = SubResource("CapsuleShape2D_tgeid")
 
-[node name="HealthBar" parent="." instance=ExtResource("10_7l708")]
+[node name="HealthBar" parent="." instance=ExtResource("10_bgjfy")]
 offset_left = -10.0
 offset_top = -24.0
 offset_right = 10.0

@@ -17,7 +17,11 @@ func damage(attack: Attack) -> void:
 	if current_health <= 0:
 		emit_signal("died")
 		if not get_parent().is_in_group("player"):
-			die()
+			if not get_parent().is_in_group("boss"):
+				die()
+			else:
+				get_tree().call_group("player_died","boss_died")
+				die()	
 		else:
 			get_tree().call_group("player_died","i_died")
 

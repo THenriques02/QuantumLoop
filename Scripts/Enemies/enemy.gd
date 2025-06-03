@@ -23,6 +23,8 @@ var cardinal_directions: Array = [
 
 func _ready() -> void:
 	state_machine.initialize(self)
+	if self.name == "Boss_Knight":
+		add_to_group("boss")
 
 func get_closest_direction(vector: Vector2) -> int:
 	vector = vector.normalized()
