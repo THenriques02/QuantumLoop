@@ -9,6 +9,7 @@ var Slime = preload("res://Scenes/Enemies/slime.tscn")
 var Knight = preload("res://Scenes/Enemies/knight.tscn")
 var Chest = preload("res://Scenes/Dungeon/chest.tscn")
 var Health = preload("res://Scenes/Loot/health_potion.tscn")
+var Ammo = preload("res://Scenes/Loot/ammo.tscn")
 
 @onready var walls_floor_map = $Walls_Floor
 
@@ -150,14 +151,22 @@ func spawn_objects():
 			var num_objects = randi_range(1, 5)
 			for i in range(num_objects):
 				var object = Chest.instantiate()
-				var loot = Health.instantiate()
+				
 				var half_w = room.size.x / 2 - tile_size
 				var half_h = room.size.y / 2 - tile_size
 				var rx = room.position.x + randf_range(-half_w, half_w)
 				var ry = room.position.y + randf_range(-half_h, half_h)
-				loot.position = Vector2(rx, ry)
+				
+				if randf() < 0.3:
+					var loot
+					if randf() < 0.5:
+						loot = Health.instantiate()
+					else:
+						loot = Ammo.instantiate()	
+					loot.position = Vector2(rx, ry)
+					$Objects.add_child(loot)
+				
 				object.position = Vector2(rx, ry)
-				$Objects.add_child(loot)
 				$Objects.add_child(object)
 
 func make_rooms():

@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://btyu7w2jtqabu"]
+
+[ext_resource type="Texture2D" uid="uid://gfm8qo117mxe" path="res://Assets/Loot/ammo.png" id="1_ugoch"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_u07xb"]
+radius = 6.0
+
+[node name="healt_potion" type="CharacterBody2D"]
+collision_layer = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-1.19209e-07, -8)
+scale = Vector2(0.631579, 0.615385)
+texture = ExtResource("1_ugoch")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -6)
+rotation = 1.5708
+shape = SubResource("CircleShape2D_u07xb")
