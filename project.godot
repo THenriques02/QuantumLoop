@@ -51,6 +51,22 @@ shoot={
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"canceled":false,"pressed":false,"double_click":false,"script":null)
 ]
 }
+look_right={
+"deadzone": 0.2,
+"events": []
+}
+look_left={
+"deadzone": 0.2,
+"events": []
+}
+look_up={
+"deadzone": 0.2,
+"events": []
+}
+look_down={
+"deadzone": 0.2,
+"events": []
+}
 
 [layer_names]
 

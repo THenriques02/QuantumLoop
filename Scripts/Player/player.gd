@@ -24,7 +24,7 @@ func _ready() -> void:
 	state_machine.initialize(self)
 	add_to_group("player")
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	move_dir.x = Input.get_action_strength("right") - Input.get_action_strength("left")
 	move_dir.y = Input.get_action_strength("down") - Input.get_action_strength("up")
 	
@@ -33,7 +33,7 @@ func _process(delta: float) -> void:
 
 	look_dir = (get_global_mouse_position() - global_position).normalized()
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	move_and_slide()
 
 func get_closest_direction(vector: Vector2) -> int:

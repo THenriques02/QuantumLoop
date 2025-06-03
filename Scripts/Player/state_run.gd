@@ -10,7 +10,7 @@ func enter() -> void:
 func exit() -> void:
 	pass
 
-func process(delta: float) -> PlayerState:
+func process(_delta: float) -> PlayerState:
 	if player.move_dir == Vector2.ZERO:
 		return idle
 
@@ -21,8 +21,8 @@ func process(delta: float) -> PlayerState:
 
 	return null
 
-func physics(delta: float) -> PlayerState:
+func physics(_delta: float) -> PlayerState:
 	return null
 
-func handle_input(event: InputEvent) -> PlayerState:
+func handle_input(_event: InputEvent) -> PlayerState:
 	return null

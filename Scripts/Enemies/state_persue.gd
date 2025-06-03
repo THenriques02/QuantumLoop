@@ -6,12 +6,12 @@ class_name EnemyStatePursue
 func enter() -> void:
 	enemy.update_animation("jump")
 
-func process(delta: float) -> EnemyState:
+func process(_delta: float) -> EnemyState:
 	if not enemy.has_line_of_sight_to(enemy.player):
 		return idle
 	return null
 
-func physics(delta: float) -> EnemyState:
+func physics(_delta: float) -> EnemyState:
 	var to_player = enemy.player.global_position - enemy.global_position
 
 	if to_player.length() < 4.0:
@@ -24,5 +24,5 @@ func physics(delta: float) -> EnemyState:
 	enemy.move_dir = direction
 	enemy.velocity = direction * enemy.move_speed
 	enemy.move_and_slide()
-	enemy.update_animation("run")
+	enemy.update_animation("jump")
 	return null

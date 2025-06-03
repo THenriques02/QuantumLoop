@@ -21,7 +21,7 @@ func process(delta: float) -> EnemyState:
 		return idle
 	return null
 
-func physics(delta: float) -> EnemyState:
+func physics(_delta: float) -> EnemyState:
 	enemy.velocity = enemy.move_dir * enemy.move_speed
 	enemy.move_and_slide()
 	return null

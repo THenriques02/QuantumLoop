@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cjutlarv06cxk" path="res://Scenes/Player/player.tscn" id="1_1fva5"]
 [ext_resource type="PackedScene" uid="uid://dq5tdlh2ryyu2" path="res://Scenes/Weapons/revolver.tscn" id="2_0opke"]
 [ext_resource type="PackedScene" uid="uid://dm6nomgww3qnr" path="res://Scenes/UI/cursor.tscn" id="4_hu2pg"]
-[ext_resource type="PackedScene" uid="uid://dtd4e6tjb2k8" path="res://Scenes/Enemies/knight.tscn" id="4_idyn3"]
+[ext_resource type="PackedScene" uid="uid://cwuv8g7gi6a3j" path="res://Scenes/Enemies/slime.tscn" id="4_wfvvy"]
 
 [node name="Test" type="Node2D"]
 
@@ -15,7 +15,14 @@ position = Vector2(7, 7)
 
 [node name="Cursor" parent="." instance=ExtResource("4_hu2pg")]
 
-[node name="Knight" parent="." instance=ExtResource("4_idyn3")]
-position = Vector2(-67, -46)
-collision_layer = 4
-collision_mask = 2
+[node name="Slime" parent="." instance=ExtResource("4_wfvvy")]
+position = Vector2(-88, -52)
+
+[node name="Slime2" parent="." instance=ExtResource("4_wfvvy")]
+position = Vector2(-249, 19)
+
+[node name="Slime3" parent="." instance=ExtResource("4_wfvvy")]
+position = Vector2(-293, -173)
+
+[node name="Slime4" parent="." instance=ExtResource("4_wfvvy")]
+position = Vector2(-148, -159)
