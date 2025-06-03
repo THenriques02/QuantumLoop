@@ -5,6 +5,34 @@ class_name Player
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var state_machine: PlayerStateMachine = $StateMachine
 
+# ─────────────────────────────────────────────────────────────────────────
+# Health-related properties
+@export var max_health: int = 100
+var health: int = 100
+
+func _ready() -> void:
+	# Initialize state machine, health, and group membership
+	state_machine.initialize(self)
+	health = max_health
+	add_to_group("player")
+
+func _process(delta: float) -> void:
+	# Handle movement input
+	move_dir.x = Input.get_action_strength("right") - Input.get_action_strength("left")
+	move_dir.y = Input.get_action_strength("down") - Input.get_action_strength("up")
+	
+	if move_dir.length() > 0:
+		move_dir = move_dir.normalized()
+
+	# Face toward the mouse
+	look_dir = (get_global_mouse_position() - global_position).normalized()
+
+func _physics_process(delta: float) -> void:
+	move_and_slide()
+
+# ─────────────────────────────────────────────────────────────────────────
+# Directional animation helpers
+
 var move_dir: Vector2 = Vector2.ZERO
 var look_dir: Vector2 = Vector2.ZERO
 var cardinal_direction: Vector2 = Vector2.DOWN
@@ -19,22 +47,6 @@ var directions: Array = [
 	Vector2.LEFT,
 	Vector2(-1, -1).normalized()
 ]
-
-func _ready() -> void:
-	state_machine.initialize(self)
-	add_to_group("player")
-
-func _process(delta: float) -> void:
-	move_dir.x = Input.get_action_strength("right") - Input.get_action_strength("left")
-	move_dir.y = Input.get_action_strength("down") - Input.get_action_strength("up")
-	
-	if move_dir.length() > 0:
-		move_dir = move_dir.normalized()
-
-	look_dir = (get_global_mouse_position() - global_position).normalized()
-
-func _physics_process(delta: float) -> void:
-	move_and_slide()
 
 func get_closest_direction(vector: Vector2) -> int:
 	var closest_index: int = 0
@@ -76,3 +88,25 @@ func anim_direction(vector: Vector2) -> String:
 		7: return "diag_up"
 
 	return "down"
+
+# ─────────────────────────────────────────────────────────────────────────
+# Methods to modify health
+
+func take_damage(amount: int) -> void:
+	"""
+	Reduces health by `amount`. Clamps at zero.
+	If health reaches zero, emit a signal or handle death.
+	"""
+	health = max(health - amount, 0)
+	if health == 0:
+		# You can emit a custom `died` signal, or simply let Main.gd catch when health is zero.
+		emit_signal("died")
+
+func heal(amount: int) -> void:
+	"""
+	Increases health by `amount`. Clamps at max_health.
+	"""
+	health = min(health + amount, max_health)
+
+# Optional: signal to notify death
+signal died

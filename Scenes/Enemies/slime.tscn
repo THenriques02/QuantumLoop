@@ -1,11 +1,11 @@
 [gd_scene load_steps=18 format=3 uid="uid://cwuv8g7gi6a3j"]
 
-[ext_resource type="Script" path="res://Scripts/Enemies/enemy.gd" id="1_ijxjy"]
+[ext_resource type="Script" uid="uid://dloke04p406ot" path="res://Scripts/Enemies/enemy.gd" id="1_ijxjy"]
 [ext_resource type="Texture2D" uid="uid://b8p70r6s0d5fq" path="res://Assets/Enemies/slime.png" id="1_ilx44"]
-[ext_resource type="Script" path="res://Scripts/Enemies/enemy_state_machine.gd" id="3_yb5ll"]
-[ext_resource type="Script" path="res://Scripts/Enemies/state_idle.gd" id="4_q05mg"]
-[ext_resource type="Script" path="res://Scripts/Enemies/state_wander.gd" id="5_qimjb"]
-[ext_resource type="Script" path="res://Scripts/Enemies/state_persue.gd" id="6_e18wf"]
+[ext_resource type="Script" uid="uid://m0rbuo1pf0ag" path="res://Scripts/Enemies/enemy_state_machine.gd" id="3_yb5ll"]
+[ext_resource type="Script" uid="uid://bxjjhjiceblpo" path="res://Scripts/Enemies/state_idle.gd" id="4_q05mg"]
+[ext_resource type="Script" uid="uid://p1r6a6tg6yxi" path="res://Scripts/Enemies/state_wander.gd" id="5_qimjb"]
+[ext_resource type="Script" uid="uid://cs25aiyny3y3k" path="res://Scripts/Enemies/state_persue.gd" id="6_e18wf"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lb55m"]
 radius = 4.0
@@ -160,15 +160,15 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_k6rpt"]
 _data = {
-"RESET": SubResource("Animation_cdjn7"),
-"idle_diag_down": SubResource("Animation_la6gy"),
-"idle_diag_up": SubResource("Animation_otauh"),
-"idle_down": SubResource("Animation_fhc7m"),
-"idle_up": SubResource("Animation_b78u6"),
-"jump_diag_down": SubResource("Animation_i1mpq"),
-"jump_diag_up": SubResource("Animation_ukls7"),
-"jump_down": SubResource("Animation_6yrtf"),
-"jump_up": SubResource("Animation_7o6nq")
+&"RESET": SubResource("Animation_cdjn7"),
+&"idle_diag_down": SubResource("Animation_la6gy"),
+&"idle_diag_up": SubResource("Animation_otauh"),
+&"idle_down": SubResource("Animation_fhc7m"),
+&"idle_up": SubResource("Animation_b78u6"),
+&"jump_diag_down": SubResource("Animation_i1mpq"),
+&"jump_diag_up": SubResource("Animation_ukls7"),
+&"jump_down": SubResource("Animation_6yrtf"),
+&"jump_up": SubResource("Animation_7o6nq")
 }
 
 [node name="Slime" type="CharacterBody2D"]
@@ -190,7 +190,7 @@ shape = SubResource("CapsuleShape2D_lb55m")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_k6rpt")
+&"": SubResource("AnimationLibrary_k6rpt")
 }
 
 [node name="StateMachine" type="Node" parent="."]

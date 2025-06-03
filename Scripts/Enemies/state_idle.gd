@@ -10,13 +10,11 @@ func enter() -> void:
 	enemy.update_animation("idle")
 
 func process(delta: float) -> EnemyState:
-	# Check for player detection first
-	if enemy.has_line_of_sight_to(enemy.player):
+	var player = get_tree().get_first_node_in_group("player")
+	if player and is_instance_valid(player) and enemy.has_line_of_sight_to(player):
 		return pursue
-	
-	# Transition to wandering otherwise
 	return wander
 
 func physics(delta: float) -> EnemyState:
+	# Idle does not move
 	return null
-	
