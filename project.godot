@@ -22,7 +22,7 @@ window/size/viewport_height=1080
 
 [global_group]
 
-main_scene_ready=""
+player_died=""
 
 [input]
 

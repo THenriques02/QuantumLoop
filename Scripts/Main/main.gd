@@ -100,6 +100,10 @@ func _input(event):
 
 		play_mode = true	
 
+func i_died():
+	_show_death_ui()
+	player_died()
+
 func _show_death_ui():
 	$Maintext.text = "You Died"
 	$Subtext.text = "Forward to the Past"
@@ -125,12 +129,11 @@ func spawn_enemies():
 				else:
 					enemy = Knight.instantiate()	
 				
-				add_child(enemy)
 				var half_w = room.size.x / 2 - tile_size
 				var half_h = room.size.y / 2 - tile_size
 				var rx = room.position.x + randf_range(-half_w, half_w)
 				var ry = room.position.y + randf_range(-half_h, half_h)
-				enemy.global_position = Vector2(rx, ry)
+				enemy.position = Vector2(rx, ry)
 				$Enemies.add_child(enemy)
 
 func spawn_corpses():
@@ -146,12 +149,11 @@ func spawn_objects():
 			var num_objects = randi_range(1, 5)
 			for i in range(num_objects):
 				var object = Chest.instantiate()
-				add_child(object)
 				var half_w = room.size.x / 2 - tile_size
 				var half_h = room.size.y / 2 - tile_size
 				var rx = room.position.x + randf_range(-half_w, half_w)
 				var ry = room.position.y + randf_range(-half_h, half_h)
-				object.global_position = Vector2(rx, ry)
+				object.position = Vector2(rx, ry)
 				$Objects.add_child(object)
 
 func make_rooms():
