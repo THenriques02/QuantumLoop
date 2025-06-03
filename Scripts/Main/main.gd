@@ -6,11 +6,12 @@ var Player = preload("res://Scenes/Player/player.tscn")
 var Corpse = preload("res://Scenes/Dungeon/corpse.tscn")
 var Ui = preload("res://Scenes/UI/control.tscn")
 var Slime = preload("res://Scenes/Enemies/slime.tscn")
+var Knight = preload("res://Scenes/Enemies/knight.tscn")
 var Chest = preload("res://Scenes/Dungeon/chest.tscn")
-var ui_instance
+
 @onready var walls_floor_map = $Walls_Floor
 
-
+var ui_instance
 
 var tile_size = 16 # size of tile in the TileMap
 var margin_tiles = 500
@@ -24,7 +25,7 @@ var seed = randi()
 var path           # AStar pathfinding object
 var start_room = null
 var end_room = null
-var play_mode = null
+var play_mode = false
 var player = null
 
 var era = 0
@@ -42,6 +43,117 @@ func _ready():
 	$Maintext.visible = false
 	$Subtext.visible = false
 	
+	
+
+"""
+func _draw():
+	if start_room:
+		draw_string(font, start_room.position, "start", 0, -1, 16, Color(1, 1, 1))
+	if end_room:
+		draw_string(font, end_room.position, "end", 0, -1, 16, Color(1, 1, 1))
+	if play_mode:
+		return		
+	for room in $Rooms.get_children():
+		draw_rect(Rect2(room.position - room.size + room.size / 2, room.size), Color(0,1,0), false)
+	if path:
+		for p in path.get_point_ids():
+			for c in path.get_point_connections(p):
+				var pp = path.get_point_position(p)
+				var cp = path.get_point_position(c)
+				draw_line(pp,cp, Color(1,1,0), 5, true)	
+		
+func _process(delta):
+	queue_redraw()
+"""		
+func _input(event):
+	if event.is_action_pressed("ui_page_down") and player:
+		_show_death_ui()
+		player_died()
+		
+	if event.is_action_pressed("ui_page_up") and player:
+		_show_survive_ui()
+		player_passed()
+			
+	if event.is_action_pressed('ui_cancel'):
+		get_tree().quit()
+				
+	if event.is_action_pressed('ui_accept'):
+		spawn_enemies()
+		spawn_objects()
+		spawn_corpses()
+				
+		player = Player.instantiate()
+		add_child(player)
+		player.position = start_room.position
+		
+		await get_tree().create_timer(0.1).timeout
+		
+		var cam = player.get_node("Camera2D")
+		if cam:
+			cam.make_current()
+		
+		var map_cam = self.get_node("Camera2D")	
+		ui_instance = Ui.instantiate()
+		ui_instance.get_node("UI/SubViewportContainer/SubViewport").set_player(player)
+		ui_instance.get_node("UI/SubViewportContainer/SubViewport").set_world(get_tree().root.world_2d)
+		$minimap.add_child(ui_instance)
+
+		play_mode = true	
+
+func _show_death_ui():
+	$Maintext.text = "You Died"
+	$Subtext.text = "Forward to the Past"
+	$Background.visible = true
+	$Maintext.visible = true
+	$Subtext.visible = true
+	
+func _show_survive_ui():
+	$Maintext.text = "You Survived"
+	$Subtext.text = "Back to the Future"
+	$Background.visible = true
+	$Maintext.visible = true
+	$Subtext.visible = true	
+
+func spawn_enemies():
+	for room in$Rooms.get_children():
+		if room != start_room:
+			var enemy_count = randi_range(5, 10)
+			for i in range(enemy_count):
+				var enemy
+				if randf() < 0.5:
+					enemy = Slime.instantiate()
+				else:
+					enemy = Knight.instantiate()	
+				
+				add_child(enemy)
+				var half_w = room.size.x / 2 - tile_size
+				var half_h = room.size.y / 2 - tile_size
+				var rx = room.position.x + randf_range(-half_w, half_w)
+				var ry = room.position.y + randf_range(-half_h, half_h)
+				enemy.global_position = Vector2(rx, ry)
+				$Enemies.add_child(enemy)
+
+func spawn_corpses():
+	if eras_corpses.has(era):
+			for c_pos in eras_corpses[era]:
+				var corpse = Corpse.instantiate()
+				corpse.position = c_pos
+				$Corpses.add_child(corpse)
+
+func spawn_objects():
+	for room in $Rooms.get_children():
+		if randf() < 0.3:
+			var num_objects = randi_range(1, 5)
+			for i in range(num_objects):
+				var object = Chest.instantiate()
+				add_child(object)
+				var half_w = room.size.x / 2 - tile_size
+				var half_h = room.size.y / 2 - tile_size
+				var rx = room.position.x + randf_range(-half_w, half_w)
+				var ry = room.position.y + randf_range(-half_h, half_h)
+				object.global_position = Vector2(rx, ry)
+				$Objects.add_child(object)
+
 func make_rooms():
 	for i in range(num_rooms):
 		var pos = Vector2(randi_range(-hspread, hspread),0)
@@ -90,100 +202,6 @@ func find_mst(nodes):
 		nodes.erase(min_p)
 		
 	return path				
-			
-"""
-func _draw():
-	if start_room:
-		draw_string(font, start_room.position, "start", 0, -1, 16, Color(1, 1, 1))
-	if end_room:
-		draw_string(font, end_room.position, "end", 0, -1, 16, Color(1, 1, 1))
-	if play_mode:
-		return		
-	for room in $Rooms.get_children():
-		draw_rect(Rect2(room.position - room.size + room.size / 2, room.size), Color(0,1,0), false)
-	if path:
-		for p in path.get_point_ids():
-			for c in path.get_point_connections(p):
-				var pp = path.get_point_position(p)
-				var cp = path.get_point_position(c)
-				draw_line(pp,cp, Color(1,1,0), 5, true)	
-		
-func _process(delta):
-	queue_redraw()
-"""		
-func _input(event):
-	"""
-	if event.is_action_pressed('ui_select'):
-		if play_mode:
-			var map_cam = self.get_node("Camera2D")
-			if map_cam:
-				map_cam.make_current()
-			
-			player.queue_free()
-			play_mode = false
-		for n in $Rooms.get_children():
-			n.queue_free()
-		path = null
-		start_room = null
-		end_room = null	
-		make_rooms()
-
-	if event.is_action_pressed(('ui_focus_next')):
-		make_map()
-	"""	
-	if event.is_action_pressed("ui_page_down"):
-		$Maintext.text = "You Died"
-		$Subtext.text = "Forward to the Past"
-		$Background.visible = true
-		$Maintext.visible = true
-		$Subtext.visible = true
-		player_died()
-	if event.is_action_pressed("ui_page_up"):
-		$Maintext.text = "You Survived"
-		$Subtext.text = "Back to the Future"
-		$Background.visible = true
-		$Maintext.visible = true
-		$Subtext.visible = true
-		player_passed()	
-	if event.is_action_pressed('ui_cancel'):
-		get_tree().quit()		
-	if event.is_action_pressed('ui_accept'):
-		for room in $Rooms.get_children():
-			room.get_node("CollisionShape2D").disabled = true
-			for e in range(randi_range(3, 8)):
-				var slime = Slime.instantiate()
-				slime.position = room.position
-				$Enemies.add_child(slime)
-			
-			for a in range(1):
-				var asset = Chest.instantiate()
-				asset.position = room.position 
-				$Objects.add_child(asset)
-				
-		player = Player.instantiate()
-		add_child(player)
-		player.position = start_room.position
-		
-		if eras_corpses.has(era):
-			for c_pos in eras_corpses[era]:
-				var corpse = Corpse.instantiate()
-				corpse.position = c_pos
-				$Corpses.add_child(corpse)
-		
-		await get_tree().create_timer(0.1).timeout
-		
-		var cam = player.get_node("Camera2D")
-		if cam:
-			cam.make_current()
-		
-		var map_cam = self.get_node("Camera2D")	
-		ui_instance = Ui.instantiate()
-		ui_instance.get_node("UI/SubViewportContainer/SubViewport").set_player(player)
-		ui_instance.get_node("UI/SubViewportContainer/SubViewport").set_world(get_tree().root.world_2d)
-		$minimap.add_child(ui_instance)
-
-		play_mode = true	
-
 
 func make_map():
 	walls_floor_map.clear()
@@ -246,6 +264,9 @@ func make_map():
 				
 				carve_path(start, end)
 		corridors.append(p)
+	
+	for room in $Rooms.get_children():
+		room.get_node("CollisionShape2D").disabled = true
 	
 	$Background.visible = false
 	$Maintext.visible = false
@@ -384,8 +405,7 @@ func carve_path(pos1, pos2):
 		
 		walls_floor_map.set_cell(Vector2i(y_x.x, y), 0, Vector2i(1, 6))
 		walls_floor_map.set_cell(Vector2i(y_x.x + x_diff, y), 0, Vector2i(1, 6))
-	
-	
+		
 func find_start_room():
 	var min_x = INF
 	for room in $Rooms.get_children():
@@ -426,19 +446,18 @@ func store_corpse():
 	eras_corpses[era].append(player.position)
 	for corpse in $Corpses.get_children():
 		corpse.queue_free()
-			
-func new_dungeon():
-	if play_mode:
-		var map_cam = self.get_node("Camera2D")
-		if map_cam:
-			map_cam.make_current()
+
+func delete_assets():
+	var map_cam = self.get_node("Camera2D")
+	if map_cam:
+		map_cam.make_current()
+	
+	for camera in $minimap.get_children():
+		camera.queue_free()
 		
-		for camera in $minimap.get_children():
-			camera.queue_free()
-			
-		player.queue_free()
-		play_mode = false
-		
+	player.queue_free()
+	play_mode = false
+	
 	for e in $Enemies.get_children():
 		e.queue_free()
 	
@@ -449,12 +468,20 @@ func new_dungeon():
 		n.get_node("CollisionShape2D").disabled = false
 		n.freeze = false
 		n.queue_free()
+
+func reset_vars():
 	path = null
 	path_switch = []
 	switch_index = 0
 	start_room = null
 	end_room = null	
+			
+func new_dungeon():
+	delete_assets()
+	reset_vars()
+		
 	walls_floor_map.clear()
+	
 	if eras_rooms.has(era):
 		path = eras_paths[era][0]
 		path_switch = eras_paths[era][1]
