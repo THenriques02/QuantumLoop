@@ -226,7 +226,6 @@ shape = SubResource("CapsuleShape2D_78xoc")
 zoom = Vector2(3, 3)
 
 [node name="Revolver" parent="." instance=ExtResource("8_5jul8")]
-visible = false
 position = Vector2(7, 7)
 
 [node name="HealthBar" parent="." instance=ExtResource("9_va7fw")]

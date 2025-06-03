@@ -22,7 +22,7 @@ func _ready() -> void:
 	shoot_timer.wait_time = 1.0 / shoot_speed
 	shoot_timer.timeout.connect(_on_shoot_speed_timer_timeout)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if player:
 		player_pos = player.global_position - Vector2(6, -7.5)
 

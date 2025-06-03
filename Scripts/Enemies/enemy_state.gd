@@ -13,9 +13,9 @@ func exit() -> void:
 	pass
 
 # Per-frame processing logic (non-physics)
-func process(delta: float) -> EnemyState:
+func process(_delta: float) -> EnemyState:
 	return null
 
 # Physics-related logic (called from _physics_process)
-func physics(delta: float) -> EnemyState:
+func physics(_delta: float) -> EnemyState:
 	return null

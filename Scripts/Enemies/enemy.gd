@@ -37,28 +37,37 @@ func get_closest_direction(vector: Vector2) -> int:
 
 func anim_direction(vector: Vector2) -> String:
 	if vector == Vector2.ZERO:
-		return "down"  # Default animation direction when idle
+		return "down"
 
 	var index = get_closest_direction(vector)
 
-	# Flip sprite horizontally if facing left directions
-	if index in [5, 6, 7]:
-		sprite.scale.x = -1
-	else:
-		sprite.scale.x = 1
+	match index:
+		0:  # up
+			sprite.scale.x = 1
+			return "up"
+		1:  # diag up right
+			sprite.scale.x = 1
+			return "diag_up"
+		2:  # right
+			sprite.scale.x = 1
+			return "diag_down"
+		3:  # diag down right
+			sprite.scale.x = 1
+			return "diag_down"
+		4:  # down
+			sprite.scale.x = 1
+			return "down"
+		5:  # diag down left (mirrored)
+			sprite.scale.x = -1
+			return "diag_down"
+		6:  # left (mirrored)
+			sprite.scale.x = -1
+			return "diag_down"
+		7:  # diag up left (mirrored)
+			sprite.scale.x = -1
+			return "diag_up"
 
-	var anim_dirs = [
-		"up",        # 0: up
-		"diag_up",   # 1: diag up (right)
-		"diag_down", # 2: right
-		"diag_down", # 3: diag down (right)
-		"down",      # 4: down
-		"diag_down", # 5: diag down (left)
-		"diag_up",   # 6: left
-		"diag_up"    # 7: diag up (left)
-	]
-
-	return anim_dirs[index]
+	return "down"
 
 func update_animation(state: String) -> void:
 	var anim = state + "_" + anim_direction(move_dir)
@@ -72,21 +81,17 @@ func has_line_of_sight_to(target: Node2D) -> bool:
 	if to_target.length() > detection_radius:
 		return false
 
-	# Exclude self and all children to avoid self-intersection
 	var exclude_nodes = [self]
 	for child in get_children():
 		exclude_nodes.append(child)
 
-	# Create query without overriding collision_mask to respect inspector layers
 	var query = PhysicsRayQueryParameters2D.create(global_position, target.global_position)
 	query.exclude = exclude_nodes
-	# No query.collision_mask set here; uses physics layers from nodes themselves
 
 	var result = get_world_2d().direct_space_state.intersect_ray(query)
 
 	if result.is_empty():
-		return true  # Nothing blocking line of sight
+		return true
 
 	var hit = result["collider"]
-	# Allow for hitting the player or their child nodes
 	return hit == target or hit.is_in_group("player") or hit.get_parent() == target

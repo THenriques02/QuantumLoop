@@ -9,7 +9,7 @@ func enter() -> void:
 	enemy.velocity = Vector2.ZERO
 	enemy.update_animation("idle")
 
-func process(delta: float) -> EnemyState:
+func process(_delta: float) -> EnemyState:
 	# Check for player detection first
 	if enemy.has_line_of_sight_to(enemy.player):
 		return pursue
@@ -17,6 +17,6 @@ func process(delta: float) -> EnemyState:
 	# Transition to wandering otherwise
 	return wander
 
-func physics(delta: float) -> EnemyState:
+func physics(_delta: float) -> EnemyState:
 	return null
 	
