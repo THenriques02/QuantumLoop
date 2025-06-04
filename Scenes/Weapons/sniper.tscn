@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://cy8csixw05j1m"]
+
+[ext_resource type="Script" uid="uid://20x8hhrsm6qc" path="res://Scripts/Weapons/sniper.gd" id="1_1xopm"]
+[ext_resource type="Texture2D" uid="uid://cg0sb3xk0nqgx" path="res://Assets/Weapons/Guns/M24.png" id="1_4d81l"]
+[ext_resource type="Texture2D" uid="uid://cbr3v6bbata86" path="res://Assets/Player/hand.png" id="2_1xopm"]
+
+[node name="Sniper" type="Node2D"]
+script = ExtResource("1_1xopm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(12, -1)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("1_4d81l")
+
+[node name="RHand" type="Sprite2D" parent="Sprite2D"]
+position = Vector2(-4, 7.96281e-08)
+scale = Vector2(1.33, 1.33)
+texture = ExtResource("2_1xopm")
+
+[node name="LHand" type="Sprite2D" parent="Sprite2D"]
+position = Vector2(-16.0067, 1.32666)
+scale = Vector2(1.33, 1.33)
+texture = ExtResource("2_1xopm")
+
+[node name="Marker2D" type="Marker2D" parent="Sprite2D"]
+position = Vector2(20, -2)
+
+[node name="ShootSpeedTimer" type="Timer" parent="."]

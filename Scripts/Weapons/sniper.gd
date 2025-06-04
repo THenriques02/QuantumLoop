@@ -1,14 +1,14 @@
-class_name Revolver
+class_name Sniper
 extends Node2D
 
 @onready var sprite: Sprite2D = $Sprite2D
-@onready var muzzle: Marker2D = $Revolver/Marker2D
+@onready var muzzle: Marker2D = $Sprite2D/Marker2D
 @onready var shoot_timer: Timer = $ShootSpeedTimer
 
 @export var radius: float = 1.0
-@export var shoot_speed: float = 4.0
+@export var shoot_speed: float = 2.0
 
-const BULLET = preload("res://Scenes/Weapons/small_bullet.tscn")
+const BULLET = preload("res://Scenes/Weapons/big_bullet.tscn")
 const DEAD_ZONE: float = 0.2
 
 var player: Player
@@ -40,12 +40,12 @@ func _process(_delta: float) -> void:
 	rotation_degrees = wrap(rotation_degrees, 0, 360)
 	scale.y = -1 if rotation_degrees > 90 and rotation_degrees < 270 else 1
 
-	# Adjust revolver Z index based on player's look direction
+	# Adjust sniper Z index based on player's look direction
 	var anim_dir := player.anim_direction(player.look_dir)
 	if anim_dir == "up" or anim_dir == "diag_up":
-		z_index = player.z_index - 1  # Behind player
+		z_index = player.z_index - 1
 	else:
-		z_index = player.z_index + 1  # In front of player
+		z_index = player.z_index + 1
 
 	if Input.is_action_just_pressed("shoot"):
 		shoot()
