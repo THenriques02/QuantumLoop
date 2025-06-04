@@ -5,6 +5,7 @@ extends Node2D
 @onready var muzzle: Marker2D = $Shotgun/Marker2D
 @onready var shoot_timer: Timer = $ShootSpeedTimer
 @onready var ammo = 0
+@onready var picked = false
 
 @export var radius: float = 1.0
 @export var shoot_speed: float = 1.0  # Slower than revolver
@@ -47,7 +48,7 @@ func _process(delta: float) -> void:
 		shoot()
 
 func shoot() -> void:
-	if not can_shoot or ammo < 5:
+	if not can_shoot or ammo < 5 or !picked:
 		return
 	ammo -= 5	
 
@@ -79,3 +80,6 @@ func _on_shoot_speed_timer_timeout() -> void:
 
 func picked_ammo_shotgun():
 	ammo += 30
+	
+func picked_shotgun():
+	picked = true	

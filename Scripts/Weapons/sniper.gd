@@ -4,6 +4,8 @@ extends Node2D
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var muzzle: Marker2D = $Sprite2D/Marker2D
 @onready var shoot_timer: Timer = $ShootSpeedTimer
+@onready var ammo = 0
+@onready var picked = false
 
 @export var radius: float = 1.0
 @export var shoot_speed: float = 2.0
@@ -51,8 +53,9 @@ func _process(_delta: float) -> void:
 		shoot()
 
 func shoot() -> void:
-	if not can_shoot:
+	if not can_shoot or ammo < 1 or !picked:
 		return
+	ammo -= 1	
 
 	can_shoot = false
 	shoot_timer.start()
@@ -72,3 +75,9 @@ func shoot() -> void:
 
 func _on_shoot_speed_timer_timeout() -> void:
 	can_shoot = true
+
+func picked_ammo_sniper():
+	ammo += 8
+	
+func picked_sniper():
+	picked = true	
