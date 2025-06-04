@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://dtd4e6tjb2k8"]
+[gd_scene load_steps=25 format=3 uid="uid://dtd4e6tjb2k8"]
 
 [ext_resource type="Texture2D" uid="uid://cb828rdn3g1u6" path="res://Assets/Enemies/Knight.png" id="1_38npn"]
 [ext_resource type="Script" uid="uid://dloke04p406ot" path="res://Scripts/Enemies/enemy.gd" id="1_ewnv7"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://b1jhewo6rw78i" path="res://Scenes/Components/hitbox_component.tscn" id="8_fyhj5"]
 [ext_resource type="PackedScene" uid="uid://8icgu3rrerpu" path="res://Scenes/Components/attack_component.tscn" id="9_bdbfo"]
 [ext_resource type="PackedScene" uid="uid://c3bdlrfwspavj" path="res://Scenes/UI/healthbar.tscn" id="10_7l708"]
+[ext_resource type="Texture2D" uid="uid://dggt38esqw238" path="res://Assets/Player/Shadow.png" id="11_c1eua"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_if7hu"]
 radius = 5.0
@@ -98,8 +99,8 @@ tracks/0/keys = {
 "values": [16, 17]
 }
 
-[sub_resource type="Animation" id="Animation_st7pj"]
-resource_name = "run_up"
+[sub_resource type="Animation" id="Animation_2n3tg"]
+resource_name = "run_diag_down"
 length = 1.5
 loop_mode = 1
 tracks/0/type = "value"
@@ -112,24 +113,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.75),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [16, 17]
-}
-
-[sub_resource type="Animation" id="Animation_c1eua"]
-resource_name = "run_down"
-length = 1.5
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.75),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [0, 1]
+"values": [8, 9]
 }
 
 [sub_resource type="Animation" id="Animation_e1mfe"]
@@ -149,8 +133,8 @@ tracks/0/keys = {
 "values": [24, 25]
 }
 
-[sub_resource type="Animation" id="Animation_2n3tg"]
-resource_name = "run_diag_down"
+[sub_resource type="Animation" id="Animation_c1eua"]
+resource_name = "run_down"
 length = 1.5
 loop_mode = 1
 tracks/0/type = "value"
@@ -163,7 +147,24 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.75),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [8, 9]
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_st7pj"]
+resource_name = "run_up"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.75),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [16, 17]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_10tj3"]
@@ -244,3 +245,9 @@ offset_left = -10.0
 offset_top = -24.0
 offset_right = 10.0
 offset_bottom = -23.0
+
+[node name="Shadow" type="Sprite2D" parent="."]
+modulate = Color(0.187176, 0.187176, 0.187176, 1)
+z_index = -1
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("11_c1eua")

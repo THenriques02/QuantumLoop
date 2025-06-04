@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cjutlarv06cxk"]
+[gd_scene load_steps=26 format=3 uid="uid://cjutlarv06cxk"]
 
 [ext_resource type="Texture2D" uid="uid://cyyrwpt4yxpev" path="res://Assets/Player/player.png" id="1_17twk"]
 [ext_resource type="Script" uid="uid://cs4ishnr5c4i3" path="res://Scripts/Player/player.gd" id="2_56n2e"]
@@ -10,8 +10,9 @@
 [ext_resource type="PackedScene" uid="uid://dq5tdlh2ryyu2" path="res://Scenes/Weapons/revolver.tscn" id="8_5jul8"]
 [ext_resource type="PackedScene" uid="uid://cy8csixw05j1m" path="res://Scenes/Weapons/sniper.tscn" id="9_gk6dx"]
 [ext_resource type="PackedScene" uid="uid://c3bdlrfwspavj" path="res://Scenes/UI/healthbar.tscn" id="9_va7fw"]
-[ext_resource type="PackedScene" uid="uid://d3v1r6ux8ixsy" path="res://Scenes/Weapons/shotgun.tscn" id="10_jhyir"]
+[ext_resource type="PackedScene" uid="uid://csvknfu77302" path="res://Scenes/Weapons/shotgun.tscn" id="10_jhyir"]
 [ext_resource type="PackedScene" uid="uid://blpwdpalhuvtp" path="res://Scenes/Weapons/rifle.tscn" id="10_oikmp"]
+[ext_resource type="Texture2D" uid="uid://dggt38esqw238" path="res://Assets/Player/Shadow.png" id="13_06tpx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ao7q3"]
 radius = 5.09902
@@ -194,6 +195,13 @@ scale = Vector2(1, 1.01924)
 texture = ExtResource("1_17twk")
 hframes = 8
 vframes = 8
+
+[node name="Shadow" type="Sprite2D" parent="."]
+modulate = Color(0.147672, 0.147672, 0.147672, 1)
+z_index = -1
+position = Vector2(0, 12)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("13_06tpx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 8)
