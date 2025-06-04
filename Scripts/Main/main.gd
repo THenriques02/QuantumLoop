@@ -110,6 +110,7 @@ func _input(event):
 		ui_instance = Ui.instantiate()
 		ui_instance.get_node("UI/SubViewportContainer/SubViewport").set_player(player)
 		ui_instance.get_node("UI/SubViewportContainer/SubViewport").set_world(get_tree().root.world_2d)
+		ui_instance.get_node("UI/Status/HealthBar").set_health_component(player.get_node("HealthComponent"))
 		$minimap.add_child(ui_instance)
 
 		play_mode = true	
