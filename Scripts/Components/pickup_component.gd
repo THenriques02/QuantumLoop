@@ -20,6 +20,6 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 			get_tree().call_group("picked_loot","picked_rifle")
 			get_tree().call_group("picked_loot","picked_ammo_rifle")	
 		elif loot == "sniper":
-			get_tree().call_group("picked_loot","sniper")
+			get_tree().call_group("picked_loot","picked_sniper")
 			get_tree().call_group("picked_loot","picked_ammo_sniper")		
 		get_parent().queue_free()

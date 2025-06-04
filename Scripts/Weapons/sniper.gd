@@ -4,9 +4,12 @@ extends Node2D
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var muzzle: Marker2D = $Sprite2D/Marker2D
 @onready var shoot_timer: Timer = $ShootSpeedTimer
+@onready var ammo = 0
+@onready var picked = false
+@onready var selected = false
 
 @export var radius: float = 1.0
-@export var shoot_speed: float = 2.0
+@export var shoot_speed: float = 0.5
 
 const BULLET = preload("res://Scenes/Weapons/big_bullet.tscn")
 const DEAD_ZONE: float = 0.2
@@ -51,8 +54,9 @@ func _process(_delta: float) -> void:
 		shoot()
 
 func shoot() -> void:
-	if not can_shoot:
+	if not can_shoot or ammo < 1 or !picked or !selected:
 		return
+	ammo -= 1	
 
 	can_shoot = false
 	shoot_timer.start()
@@ -72,3 +76,21 @@ func shoot() -> void:
 
 func _on_shoot_speed_timer_timeout() -> void:
 	can_shoot = true
+
+func picked_ammo_sniper():
+	ammo += 8
+	
+func picked_sniper():
+	picked = true	
+	
+func selected_revolver():
+	selected = false
+	
+func selected_rifle():
+	selected = false		
+
+func selected_shotgun():
+	selected = false	
+	
+func selected_sniper():
+	selected = true	

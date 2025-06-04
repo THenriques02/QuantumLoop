@@ -167,25 +167,25 @@ func spawn_corpses():
 
 func spawn_objects():
 	for room in $Rooms.get_children():
-		if randf() < 1:
+		if randf() < 0.4:
 			var num_objects = randi_range(1, 5)
 			for i in range(num_objects):
 				
-				var half_w = room.size.x / 2 - tile_size
-				var half_h = room.size.y / 2 - tile_size
+				var half_w = room.size.x / 2 - (2*tile_size)
+				var half_h = room.size.y / 2 - (2*tile_size)
 				var rx = room.position.x + randf_range(-half_w, half_w)
 				var ry = room.position.y + randf_range(-half_h, half_h)
 				
 				var object
 				var loot
-				if randf() < 0:
+				if randf() < 0.9:
 					object = Chest.instantiate()
 					if randf() < 0.3:
 						if randf() < 0.5:
 							loot = Health.instantiate()
 						else:
 							loot = Ammo.instantiate()
-					loot.position = Vector2(rx, ry)
+						loot.position = Vector2(rx, ry)
 				
 				else:
 					object = Weapon_Box.instantiate()

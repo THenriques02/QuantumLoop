@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dbf3c84o02hmk" path="res://Scripts/Weapons/revolver.gd" id="1_xvr7b"]
 [ext_resource type="Texture2D" uid="uid://ciq2axp5o5rig" path="res://Assets/Weapons/Guns/Revolver.png" id="2_7g205"]
 
-[node name="Revolver" type="Node2D"]
+[node name="Revolver" type="Node2D" groups=["weapon_choice"]]
 script = ExtResource("1_xvr7b")
 
 [node name="Revolver" type="Sprite2D" parent="."]

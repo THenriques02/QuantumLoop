@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://blpwdpalhuvtp"]
+[gd_scene load_steps=4 format=3 uid="uid://b3ypykpck0usy"]
 
 [ext_resource type="Script" uid="uid://dmtf7hx510emi" path="res://Scripts/Weapons/rifle.gd" id="1_1xr0f"]
 [ext_resource type="Texture2D" uid="uid://bxwlhcpcekm2p" path="res://Assets/Weapons/Guns/M15.png" id="1_5nu30"]
 [ext_resource type="Texture2D" uid="uid://cbr3v6bbata86" path="res://Assets/Player/hand.png" id="2_1xr0f"]
 
-[node name="Rifle" type="Node2D"]
+[node name="Rifle" type="Node2D" groups=["picked_loot", "weapon_choice"]]
 script = ExtResource("1_1xr0f")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
