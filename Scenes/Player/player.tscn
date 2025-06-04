@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://b1jhewo6rw78i" path="res://Scenes/Components/hitbox_component.tscn" id="7_4sybp"]
 [ext_resource type="PackedScene" uid="uid://dq5tdlh2ryyu2" path="res://Scenes/Weapons/revolver.tscn" id="8_5jul8"]
 [ext_resource type="PackedScene" uid="uid://c3bdlrfwspavj" path="res://Scenes/UI/healthbar.tscn" id="9_va7fw"]
-[ext_resource type="PackedScene" path="res://Scenes/Weapons/shotgun.tscn" id="10_jhyir"]
+[ext_resource type="PackedScene" uid="uid://d3v1r6ux8ixsy" path="res://Scenes/Weapons/shotgun.tscn" id="10_jhyir"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ao7q3"]
 radius = 5.09902
@@ -182,9 +182,8 @@ _data = {
 radius = 6.0
 height = 20.0
 
-[node name="Player" type="CharacterBody2D" groups=["player_died"]]
-collision_layer = 2
-collision_mask = 7
+[node name="Player" type="CharacterBody2D" groups=["player", "player_died"]]
+collision_mask = 20
 script = ExtResource("2_56n2e")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

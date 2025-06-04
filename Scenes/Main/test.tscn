@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://5rkyvcu5dfks"]
 
 [ext_resource type="PackedScene" uid="uid://cjutlarv06cxk" path="res://Scenes/Player/player.tscn" id="1_1fva5"]
+[ext_resource type="PackedScene" uid="uid://cwuv8g7gi6a3j" path="res://Scenes/Enemies/slime.tscn" id="3_c52o8"]
 [ext_resource type="PackedScene" uid="uid://dm6nomgww3qnr" path="res://Scenes/UI/cursor.tscn" id="4_hu2pg"]
-[ext_resource type="PackedScene" uid="uid://dtd4e6tjb2k8" path="res://Scenes/Enemies/knight.tscn" id="4_idyn3"]
 
 [node name="Test" type="Node2D"]
 
@@ -11,14 +11,14 @@ position = Vector2(-192, -58)
 
 [node name="Cursor" parent="." instance=ExtResource("4_hu2pg")]
 
-[node name="Knight" parent="." instance=ExtResource("4_idyn3")]
-position = Vector2(-272, 43)
+[node name="Slime" parent="." instance=ExtResource("3_c52o8")]
+position = Vector2(-367, 35)
 
-[node name="Knight2" parent="." instance=ExtResource("4_idyn3")]
-position = Vector2(-119, 56)
+[node name="Slime2" parent="." instance=ExtResource("3_c52o8")]
+position = Vector2(-139, 87)
 
-[node name="Knight3" parent="." instance=ExtResource("4_idyn3")]
-position = Vector2(-196, 81)
+[node name="Slime3" parent="." instance=ExtResource("3_c52o8")]
+position = Vector2(-20, -69)
 
-[node name="Knight4" parent="." instance=ExtResource("4_idyn3")]
-position = Vector2(-328, 66)
+[node name="Slime4" parent="." instance=ExtResource("3_c52o8")]
+position = Vector2(-418, -117)
