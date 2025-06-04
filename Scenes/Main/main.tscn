@@ -306,8 +306,8 @@ texture = ExtResource("4_5yls4")
 12:22/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_2a143"]
-physics_layer_0/collision_layer = 31
-physics_layer_0/collision_mask = 31
+physics_layer_0/collision_layer = 16
+physics_layer_0/collision_mask = 15
 sources/0 = SubResource("TileSetAtlasSource_p6jpk")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2a143"]
@@ -331,6 +331,7 @@ zoom = Vector2(0.1, 0.1)
 script = ExtResource("2_qw60k")
 
 [node name="Walls_Floor" type="TileMapLayer" parent="."]
+z_index = -2
 tile_set = SubResource("TileSet_2a143")
 
 [node name="Cursor" parent="." instance=ExtResource("5_rujyf")]
