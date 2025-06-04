@@ -8,7 +8,7 @@ class_name Player
 var move_dir: Vector2 = Vector2.ZERO
 var look_dir: Vector2 = Vector2.ZERO
 var cardinal_direction: Vector2 = Vector2.DOWN
-var health_potions = 0
+var health_potions = 3
 
 var directions: Array = [
 	Vector2.UP,
@@ -57,7 +57,7 @@ func _input(event):
 		
 	if event.is_action_pressed("heal"):
 		if health_potions > 0:
-			heal()
+			$HealthComponent.heal(25)
 			health_potions -= 1	
 
 func weapon_shown(r,ri,s,sn):
