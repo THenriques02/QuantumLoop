@@ -515,8 +515,6 @@ func delete_assets():
 		o.queue_free()	
 		
 	for n in $Rooms.get_children():
-		n.get_node("CollisionShape2D").disabled = false
-		n.freeze = false
 		n.queue_free()
 
 func reset_vars():
@@ -528,6 +526,7 @@ func reset_vars():
 			
 func new_dungeon():
 	delete_assets()
+	await(get_tree().create_timer(1.1).timeout)
 	reset_vars()
 		
 	walls_floor_map.clear()

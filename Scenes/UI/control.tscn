@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://cdekitr3tl02i"]
+[gd_scene load_steps=4 format=3 uid="uid://cdekitr3tl02i"]
 
 [ext_resource type="Script" uid="uid://cry33aokl2q6d" path="res://Scripts/UI/sub_viewport.gd" id="1_p4rh7"]
+[ext_resource type="PackedScene" uid="uid://c3bdlrfwspavj" path="res://Scenes/UI/healthbar.tscn" id="2_p4rh7"]
+[ext_resource type="Texture2D" uid="uid://eb2cwt4uoqhm" path="res://Assets/Loot/health_potion.png" id="3_s1n6v"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -13,10 +15,10 @@ grow_vertical = 2
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="UI"]
-offset_left = 1639.0
-offset_top = 25.0
-offset_right = 1895.0
-offset_bottom = 281.0
+offset_left = 1649.0
+offset_top = 15.0
+offset_right = 1905.0
+offset_bottom = 271.0
 metadata/_edit_use_anchors_ = true
 
 [node name="SubViewport" type="SubViewport" parent="UI/SubViewportContainer"]
@@ -27,3 +29,37 @@ script = ExtResource("1_p4rh7")
 
 [node name="Camera2D" type="Camera2D" parent="UI/SubViewportContainer/SubViewport"]
 zoom = Vector2(0.15, 0.15)
+
+[node name="MinimapBorder" type="Panel" parent="UI"]
+z_index = -1
+offset_left = 1644.0
+offset_top = 10.0
+offset_right = 1910.0
+offset_bottom = 276.0
+
+[node name="Status" type="Panel" parent="UI"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 542.0
+offset_bottom = 42.0
+
+[node name="HealthBar" parent="UI/Status" instance=ExtResource("2_p4rh7")]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 522.0
+offset_bottom = 22.0
+
+[node name="Heals" type="Panel" parent="UI"]
+offset_left = 10.0
+offset_top = 52.0
+offset_right = 102.0
+offset_bottom = 97.0
+
+[node name="TextureRect" type="TextureRect" parent="UI/Heals"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = -2.0
+offset_right = 44.0
+offset_bottom = 38.0
+texture = ExtResource("3_s1n6v")

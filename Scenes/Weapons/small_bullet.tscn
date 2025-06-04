@@ -21,7 +21,7 @@ texture = ExtResource("1_w7pmb")
 
 [node name="attack_component" parent="." instance=ExtResource("2_vl2s6")]
 collision_layer = 2
-collision_mask = 4
+collision_mask = 20
 is_projectile = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="attack_component"]
