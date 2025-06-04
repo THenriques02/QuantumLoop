@@ -8,10 +8,10 @@
 [ext_resource type="PackedScene" uid="uid://bycrdl123smhx" path="res://Scenes/Components/health_component.tscn" id="6_a6dlo"]
 [ext_resource type="PackedScene" uid="uid://b1jhewo6rw78i" path="res://Scenes/Components/hitbox_component.tscn" id="7_4sybp"]
 [ext_resource type="PackedScene" uid="uid://dq5tdlh2ryyu2" path="res://Scenes/Weapons/revolver.tscn" id="8_5jul8"]
-[ext_resource type="PackedScene" uid="uid://cy8csixw05j1m" path="res://Scenes/Weapons/sniper.tscn" id="9_gk6dx"]
+[ext_resource type="PackedScene" uid="uid://gg64tetoevwc" path="res://Scenes/Weapons/sniper.tscn" id="9_gk6dx"]
 [ext_resource type="PackedScene" uid="uid://c3bdlrfwspavj" path="res://Scenes/UI/healthbar.tscn" id="9_va7fw"]
-[ext_resource type="PackedScene" uid="uid://d3v1r6ux8ixsy" path="res://Scenes/Weapons/shotgun.tscn" id="10_jhyir"]
-[ext_resource type="PackedScene" uid="uid://blpwdpalhuvtp" path="res://Scenes/Weapons/rifle.tscn" id="10_oikmp"]
+[ext_resource type="PackedScene" uid="uid://csvknfu77302" path="res://Scenes/Weapons/shotgun.tscn" id="10_jhyir"]
+[ext_resource type="PackedScene" uid="uid://b3ypykpck0usy" path="res://Scenes/Weapons/rifle.tscn" id="10_oikmp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ao7q3"]
 radius = 5.09902
@@ -184,7 +184,7 @@ _data = {
 radius = 6.0
 height = 20.0
 
-[node name="Player" type="CharacterBody2D" groups=["picked_loot", "player_died"]]
+[node name="Player" type="CharacterBody2D" groups=["picked_loot", "player_died", "weapon_choice"]]
 collision_mask = 21
 script = ExtResource("2_56n2e")
 
@@ -235,15 +235,12 @@ offset_bottom = -12.0
 metadata/_edit_use_anchors_ = true
 
 [node name="Sniper" parent="." instance=ExtResource("9_gk6dx")]
-visible = false
 position = Vector2(-7, 8)
 
 [node name="Rifle" parent="." instance=ExtResource("10_oikmp")]
-visible = false
 position = Vector2(-5, 8)
 
 [node name="Shotgun" parent="." instance=ExtResource("10_jhyir")]
-visible = false
 position = Vector2(-6, 7)
 
 [node name="Revolver" parent="." instance=ExtResource("8_5jul8")]

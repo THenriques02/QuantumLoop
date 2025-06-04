@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cg0sb3xk0nqgx" path="res://Assets/Weapons/Guns/M24.png" id="1_4d81l"]
 [ext_resource type="Texture2D" uid="uid://cbr3v6bbata86" path="res://Assets/Player/hand.png" id="2_1xopm"]
 
-[node name="Sniper" type="Node2D" groups=["picked_loot"]]
+[node name="Sniper" type="Node2D" groups=["picked_loot", "weapon_choice"]]
 script = ExtResource("1_1xopm")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

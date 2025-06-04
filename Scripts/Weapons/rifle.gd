@@ -6,6 +6,7 @@ extends Node2D
 @onready var shoot_timer: Timer = $ShootSpeedTimer
 @onready var ammo = 0
 @onready var picked = false
+@onready var selected = false
 
 
 @export var radius: float = 1.0
@@ -54,7 +55,7 @@ func _process(_delta: float) -> void:
 		shoot()
 
 func shoot() -> void:
-	if not can_shoot or ammo < 1 or !picked:
+	if not can_shoot or ammo < 1 or !picked or !selected:
 		return
 	ammo -= 1	
 
@@ -81,4 +82,16 @@ func picked_ammo_rifle():
 	ammo += 32
 	
 func picked_rifle():
-	picked = true		
+	picked = true
+	
+func selected_revolver():
+	selected = false
+	
+func selected_rifle():
+	selected = true		
+
+func selected_shotgun():
+	selected = false	
+	
+func selected_sniper():
+	selected = false	
