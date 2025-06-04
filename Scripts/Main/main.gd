@@ -166,7 +166,7 @@ func spawn_corpses():
 
 func spawn_objects():
 	for room in $Rooms.get_children():
-		if randf() < 1:
+		if randf() < 0.4:
 			var num_objects = randi_range(1, 5)
 			for i in range(num_objects):
 				
@@ -179,7 +179,7 @@ func spawn_objects():
 				var loot
 				if randf() < 0.9:
 					object = Chest.instantiate()
-					if randf() < 0.3:
+					if randf() < 0.4:
 						if randf() < 0.5:
 							loot = Health.instantiate()
 						else:

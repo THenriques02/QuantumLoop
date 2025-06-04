@@ -54,6 +54,11 @@ func _input(event):
 	if  event.is_action_pressed("sniper"):
 		weapon_shown(false, false, false, true)
 		get_tree().call_group("weapon_choice","selected_sniper")
+		
+	if event.is_action_pressed("heal"):
+		if health_potions > 0:
+			heal()
+			health_potions -= 1	
 
 func weapon_shown(r,ri,s,sn):
 	$Revolver.visible = r

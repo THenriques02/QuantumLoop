@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://gg64tetoevwc" path="res://Scenes/Weapons/sniper.tscn" id="9_gk6dx"]
 [ext_resource type="PackedScene" uid="uid://c3bdlrfwspavj" path="res://Scenes/UI/healthbar.tscn" id="9_va7fw"]
 [ext_resource type="PackedScene" uid="uid://csvknfu77302" path="res://Scenes/Weapons/shotgun.tscn" id="10_jhyir"]
-[ext_resource type="PackedScene" uid="uid://blpwdpalhuvtp" path="res://Scenes/Weapons/rifle.tscn" id="10_oikmp"]
+[ext_resource type="PackedScene" uid="uid://b3ypykpck0usy" path="res://Scenes/Weapons/rifle.tscn" id="10_oikmp"]
 [ext_resource type="Texture2D" uid="uid://dggt38esqw238" path="res://Assets/Player/Shadow.png" id="13_06tpx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ao7q3"]
