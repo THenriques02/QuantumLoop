@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://5r0qa8kn37mt"]
+
+[ext_resource type="Texture2D" uid="uid://ckvrxmoyi2slo" path="res://Assets/Dungeon/weapon_box.png" id="1_4j3ai"]
+[ext_resource type="PackedScene" uid="uid://bycrdl123smhx" path="res://Scenes/Components/health_component.tscn" id="2_abb2n"]
+[ext_resource type="PackedScene" uid="uid://b1jhewo6rw78i" path="res://Scenes/Components/hitbox_component.tscn" id="3_f6h74"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4j3ai"]
+size = Vector2(16, 22)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_psm68"]
+size = Vector2(16, 22)
+
+[node name="weapon_box" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 7
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-1.19209e-07, -8)
+scale = Vector2(0.631579, 0.615385)
+texture = ExtResource("1_4j3ai")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -9)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_4j3ai")
+
+[node name="HealthComponent" parent="." instance=ExtResource("2_abb2n")]
+max_health = 10.0
+
+[node name="HitboxComponent" parent="." instance=ExtResource("3_f6h74")]
+collision_layer = 4
+collision_mask = 2
+health_path = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(0, -9)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_psm68")

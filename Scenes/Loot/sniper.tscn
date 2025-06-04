@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://hhye8hbyo1xy"]
+
+[ext_resource type="Script" uid="uid://cpfrwopjwrjuv" path="res://Scripts/Loot/sniper.gd" id="1_lh1b4"]
+[ext_resource type="Texture2D" uid="uid://cg0sb3xk0nqgx" path="res://Assets/Weapons/Guns/M24.png" id="2_lh1b4"]
+[ext_resource type="PackedScene" uid="uid://dnpefp4irehtm" path="res://Scenes/Components/pickedup_component.tscn" id="3_mhl4y"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1xidb"]
+radius = 4.0
+height = 24.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mhl4y"]
+radius = 5.0
+height = 26.0
+
+[node name="sniper" type="CharacterBody2D" groups=["picked_loot"]]
+collision_layer = 4
+script = ExtResource("1_lh1b4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(2, -6)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_lh1b4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -6)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_1xidb")
+
+[node name="pickedup_component" parent="." instance=ExtResource("3_mhl4y")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pickedup_component"]
+position = Vector2(0, -6)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_mhl4y")

@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://vqwbtj1q6w2k"]
+
+[ext_resource type="Script" uid="uid://bpvxctubwvwbk" path="res://Scripts/Loot/shotgun.gd" id="1_wnjre"]
+[ext_resource type="Texture2D" uid="uid://bn3qm418kvmv0" path="res://Assets/Weapons/Guns/SawedOffShotgun.png" id="2_wnjre"]
+[ext_resource type="PackedScene" uid="uid://dnpefp4irehtm" path="res://Scenes/Components/pickedup_component.tscn" id="3_g6a3x"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_525pn"]
+radius = 3.0
+height = 20.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g6a3x"]
+radius = 4.0
+height = 22.0
+
+[node name="shotgun" type="CharacterBody2D" groups=["picked_loot"]]
+collision_layer = 4
+script = ExtResource("1_wnjre")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1.42109e-14, -5)
+scale = Vector2(0.631579, 0.615385)
+texture = ExtResource("2_wnjre")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_525pn")
+
+[node name="pickedup_component" parent="." instance=ExtResource("3_g6a3x")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pickedup_component"]
+position = Vector2(0, -5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_g6a3x")
