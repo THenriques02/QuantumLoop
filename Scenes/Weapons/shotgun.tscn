@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://d3v1r6ux8ixsy"]
+[gd_scene load_steps=4 format=3 uid="uid://csvknfu77302"]
 
 [ext_resource type="Texture2D" uid="uid://bn3qm418kvmv0" path="res://Assets/Weapons/Guns/SawedOffShotgun.png" id="1_orl7l"]
 [ext_resource type="Script" uid="uid://cw5joex8vhnyx" path="res://Scripts/Weapons/shotgun.gd" id="1_vm7cu"]
 [ext_resource type="Texture2D" uid="uid://cbr3v6bbata86" path="res://Assets/Player/hand.png" id="2_xvtdo"]
 
-[node name="Shotgun" type="Node2D"]
+[node name="Shotgun" type="Node2D" groups=["picked_loot"]]
 script = ExtResource("1_vm7cu")
 
 [node name="Shotgun" type="Sprite2D" parent="."]
