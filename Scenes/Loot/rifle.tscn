@@ -12,7 +12,7 @@ height = 20.0
 radius = 5.0
 height = 22.0
 
-[node name="rifle" type="CharacterBody2D" groups=["picked_loot"]]
+[node name="rifle" type="StaticBody2D" groups=["picked_loot"]]
 collision_layer = 4
 script = ExtResource("1_isde3")
 

@@ -55,8 +55,7 @@ func _ready():
 	$Background.visible = false
 	$Maintext.visible = false
 	$Subtext.visible = false
-	
-	
+		
 
 """
 func _draw():
@@ -167,7 +166,7 @@ func spawn_corpses():
 
 func spawn_objects():
 	for room in $Rooms.get_children():
-		if randf() < 0.4:
+		if randf() < 1:
 			var num_objects = randi_range(1, 5)
 			for i in range(num_objects):
 				

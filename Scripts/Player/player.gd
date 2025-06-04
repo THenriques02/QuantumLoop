@@ -42,22 +42,18 @@ func _input(event):
 	if  event.is_action_pressed("revolver"):
 		weapon_shown(true, false, false, false)
 		get_tree().call_group("weapon_choice","selected_revolver")
-		print("a")
 		
 	if  event.is_action_pressed("rifle"):
 		weapon_shown(false, true, false, false)
 		get_tree().call_group("weapon_choice","selected_rifle")
-		print("b")
 		
 	if  event.is_action_pressed("shotgun"):
 		weapon_shown(false, false, true, false)
 		get_tree().call_group("weapon_choice","selected_shotgun")
-		print("c")
 		
 	if  event.is_action_pressed("sniper"):
 		weapon_shown(false, false, false, true)
 		get_tree().call_group("weapon_choice","selected_sniper")
-		print("d")
 
 func weapon_shown(r,ri,s,sn):
 	$Revolver.visible = r

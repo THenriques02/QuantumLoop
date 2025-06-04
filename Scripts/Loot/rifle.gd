@@ -1,3 +1,3 @@
-extends CharacterBody2D
+extends StaticBody2D
 
 var item_type = "rifle"
