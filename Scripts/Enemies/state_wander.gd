@@ -10,7 +10,7 @@ var wander_duration := 1.5
 func enter() -> void:
 	wander_timer = 0.0
 	enemy.move_dir = enemy.cardinal_directions[randi() % enemy.cardinal_directions.size()]
-	enemy.update_animation("jump")
+	enemy.update_animation("run")
 
 func process(delta: float) -> EnemyState:
 	if enemy.has_line_of_sight_to(enemy.player):

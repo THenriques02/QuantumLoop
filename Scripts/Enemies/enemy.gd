@@ -3,11 +3,11 @@ class_name Enemy
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var state_machine: EnemyStateMachine = $StateMachine
-@onready var player: Player = get_tree().get_first_node_in_group("player")
 
 @export var move_speed: float = 40.0
 @export var detection_radius: float = 200.0
 
+var player: Player
 var move_dir: Vector2 = Vector2.ZERO
 
 var cardinal_directions: Array = [
@@ -22,7 +22,11 @@ var cardinal_directions: Array = [
 ]
 
 func _ready() -> void:
+	await get_tree().process_frame  # Wait one frame so the player enters the scene tree
+	player = get_tree().get_first_node_in_group("player")
+
 	state_machine.initialize(self)
+
 	if self.name == "Boss_Knight":
 		add_to_group("boss")
 
@@ -44,28 +48,28 @@ func anim_direction(vector: Vector2) -> String:
 	var index = get_closest_direction(vector)
 
 	match index:
-		0:  # up
+		0:
 			sprite.scale.x = 1
 			return "up"
-		1:  # diag up right
+		1:
 			sprite.scale.x = 1
 			return "diag_up"
-		2:  # right
+		2:
 			sprite.scale.x = 1
 			return "diag_down"
-		3:  # diag down right
+		3:
 			sprite.scale.x = 1
 			return "diag_down"
-		4:  # down
+		4:
 			sprite.scale.x = 1
 			return "down"
-		5:  # diag down left (mirrored)
+		5:
 			sprite.scale.x = -1
 			return "diag_down"
-		6:  # left (mirrored)
+		6:
 			sprite.scale.x = -1
 			return "diag_down"
-		7:  # diag up left (mirrored)
+		7:
 			sprite.scale.x = -1
 			return "diag_up"
 
@@ -89,11 +93,11 @@ func has_line_of_sight_to(target: Node2D) -> bool:
 
 	var query = PhysicsRayQueryParameters2D.create(global_position, target.global_position)
 	query.exclude = exclude_nodes
-
 	var result = get_world_2d().direct_space_state.intersect_ray(query)
 
 	if result.is_empty():
 		return true
 
 	var hit = result["collider"]
-	return hit == target or hit.is_in_group("player") or hit.get_parent() == target
+	var can_see = hit == target or hit.is_in_group("player") or hit.get_parent() == target
+	return can_see

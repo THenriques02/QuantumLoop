@@ -13,11 +13,9 @@ var health_potions = 0
 var directions: Array = [
 	Vector2.UP,
 	Vector2(1, -1).normalized(),
-	Vector2.RIGHT,
 	Vector2(1, 1).normalized(),
 	Vector2.DOWN,
 	Vector2(-1, 1).normalized(),
-	Vector2.LEFT,
 	Vector2(-1, -1).normalized()
 ]
 
@@ -38,45 +36,52 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 
 func get_closest_direction(vector: Vector2) -> int:
-	var closest_index: int = 0
-	var closest_dot: float = -1.0
-	
+	vector = vector.normalized()
+	var best_index := 0
+	var best_dot := -1.0
 	for i in range(directions.size()):
-		var dot: float = vector.dot(directions[i])
-		if dot > closest_dot:
-			closest_dot = dot
-			closest_index = i
-	
-	return closest_index
+		var dot := vector.dot(directions[i])
+		if dot > best_dot:
+			best_dot = dot
+			best_index = i
+	return best_index
 
 func set_direction() -> bool:
 	var old_dir: Vector2 = cardinal_direction
 	cardinal_direction = directions[get_closest_direction(look_dir)]
 	return old_dir != cardinal_direction
 
+func anim_direction(vector: Vector2) -> String:
+	if vector == Vector2.ZERO:
+		return "down"
+
+	var index = get_closest_direction(vector)
+
+	match index:
+		0:  # up
+			sprite.scale.x = 1
+			return "up"
+		1:  # diag up right
+			sprite.scale.x = 1
+			return "diag_up"
+		2:  # diag down right
+			sprite.scale.x = 1
+			return "diag_down"
+		3:  # down
+			sprite.scale.x = 1
+			return "down"
+		4:  # diag down left (mirrored)
+			sprite.scale.x = -1
+			return "diag_down"
+		5:  # diag up left (mirrored)
+			sprite.scale.x = -1
+			return "diag_up"
+
+	return "down"
+
 func update_animation(state: String) -> void:
 	var animation_name: String = state + "_" + anim_direction(look_dir)
 	animation_player.play(animation_name)
-
-func anim_direction(vector: Vector2) -> String:
-	var closest_index: int = get_closest_direction(vector)
-
-	if closest_index < 5:
-		sprite.scale.x = 1
-	else:
-		sprite.scale.x = -1
-
-	match closest_index:
-		0: return "up"
-		1: return "diag_up"
-		2: return "right"
-		3: return "diag_down"
-		4: return "down"
-		5: return "diag_down"
-		6: return "right"
-		7: return "diag_up"
-
-	return "down"
 
 func picked_health():
 	health_potions += 1
