@@ -8,6 +8,10 @@ class_name Player
 var move_dir: Vector2 = Vector2.ZERO
 var look_dir: Vector2 = Vector2.ZERO
 var cardinal_direction: Vector2 = Vector2.DOWN
+var health_potions = 0
+var ammo_shotgun = 0
+var ammo_sniper = 0
+var ammo_rifle = 0
 
 var directions: Array = [
 	Vector2.UP,
@@ -76,3 +80,11 @@ func anim_direction(vector: Vector2) -> String:
 		7: return "diag_up"
 
 	return "down"
+
+func picked_health():
+	health_potions += 1
+	
+func picked_ammo():
+	ammo_shotgun += 32
+	ammo_sniper += 16
+	ammo_rifle += 64

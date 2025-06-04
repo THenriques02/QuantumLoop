@@ -167,14 +167,14 @@ func spawn_objects():
 				var rx = room.position.x + randf_range(-half_w, half_w)
 				var ry = room.position.y + randf_range(-half_h, half_h)
 				
-				if randf() < 0.3:
-					var loot
-					if randf() < 0.5:
-						loot = Health.instantiate()
-					else:
-						loot = Ammo.instantiate()	
-					loot.position = Vector2(rx, ry)
-					$Objects.add_child(loot)
+				#if randf() < 0.5:
+				var loot
+				if randf() < 0.5:
+					loot = Health.instantiate()
+				else:
+					loot = Ammo.instantiate()	
+				loot.position = Vector2(rx, ry)
+				$Objects.add_child(loot)
 				
 				object.position = Vector2(rx, ry)
 				$Objects.add_child(object)

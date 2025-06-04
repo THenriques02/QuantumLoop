@@ -1,16 +1,25 @@
 [gd_scene load_steps=5 format=3 uid="uid://0qw2wdlay075"]
 
 [ext_resource type="Texture2D" uid="uid://eb2cwt4uoqhm" path="res://Assets/Loot/health_potion.png" id="1_8tn45"]
-[ext_resource type="PackedScene" uid="uid://dnpefp4irehtm" path="res://Scenes/Components/pickedup_component.tscn" id="3_e0bc3"]
+[ext_resource type="Script" uid="uid://c8h21cdumwe6m" path="res://Scripts/Loot/health_potion.gd" id="1_vindq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_u07xb"]
 radius = 6.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_01dlj"]
-radius = 6.0
+[sub_resource type="GDScript" id="GDScript_8tn45"]
+script/source = "extends CollisionShape2D
+
+func _ready() -> void:
+	area_entered.connect(_on_hitbox_area_entered)
+
+func _on_hitbox_area_entered(area: CollisionShape2D) -> void:
+	get_tree().call_group(\"picked_loot\",\"picked_health\")
+	
+"
 
 [node name="health_potion" type="CharacterBody2D" groups=["picked_loot"]]
 collision_layer = 4
+script = ExtResource("1_vindq")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-1.19209e-07, -8)
@@ -21,9 +30,4 @@ texture = ExtResource("1_8tn45")
 position = Vector2(0, -6)
 rotation = 1.5708
 shape = SubResource("CircleShape2D_u07xb")
-
-[node name="pickedup_component" parent="." instance=ExtResource("3_e0bc3")]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="pickedup_component"]
-position = Vector2(0, -6)
-shape = SubResource("CircleShape2D_01dlj")
+script = SubResource("GDScript_8tn45")
