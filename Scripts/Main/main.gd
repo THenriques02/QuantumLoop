@@ -3,8 +3,10 @@ extends Node2D
 var Room = preload("res://Scenes/Dungeon/Room.tscn")
 var font = preload("res://Assets/Dungeon/Roboto-VariableFont_wdth,wght.ttf")
 var Player = preload("res://Scenes/Player/player.tscn")
-var Corpse = preload("res://Scenes/Dungeon/corpse.tscn")
 var Ui = preload("res://Scenes/UI/control.tscn")
+
+#Corpse
+var Corpse_Loot = preload("res://Scenes/Loot/corpse_loot.tscn")
 
 #Enemies
 var Slime = preload("res://Scenes/Enemies/slime.tscn")
@@ -160,9 +162,9 @@ func spawn_enemies():
 func spawn_corpses():
 	if eras_corpses.has(era):
 			for c_pos in eras_corpses[era]:
-				var corpse = Corpse.instantiate()
-				corpse.position = c_pos
-				$Corpses.add_child(corpse)
+				var all_loot = Corpse_Loot.instantiate()
+				all_loot.position = c_pos
+				$Corpses.add_child(all_loot)
 
 func spawn_objects():
 	for room in $Rooms.get_children():

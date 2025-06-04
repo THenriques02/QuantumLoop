@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://c743xgjk3lpyo"]
+
+[ext_resource type="Script" uid="uid://7w2yj3f4gxti" path="res://Scripts/Loot/corpse_loot.gd" id="1_utevt"]
+[ext_resource type="Texture2D" uid="uid://cskucxpcrxujm" path="res://Assets/Dungeon/corpse.png" id="2_4jm54"]
+[ext_resource type="PackedScene" uid="uid://dnpefp4irehtm" path="res://Scenes/Components/pickedup_component.tscn" id="3_whuvu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_u07xb"]
+radius = 6.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4jm54"]
+radius = 8.0
+height = 18.0
+
+[node name="corpse_loot" type="StaticBody2D" groups=["picked_loot"]]
+collision_layer = 4
+script = ExtResource("1_utevt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(2, -11.5)
+scale = Vector2(1, 1.125)
+texture = ExtResource("2_4jm54")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, -8)
+rotation = 1.5708
+shape = SubResource("CircleShape2D_u07xb")
+
+[node name="pickedup_component" parent="." instance=ExtResource("3_whuvu")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pickedup_component"]
+position = Vector2(1, -8)
+shape = SubResource("CapsuleShape2D_4jm54")
