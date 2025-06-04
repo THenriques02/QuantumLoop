@@ -4,7 +4,7 @@ class_name EnemyStatePursue
 @onready var idle: EnemyState = $"../Idle"
 
 func enter() -> void:
-	enemy.update_animation("jump")
+	enemy.update_animation("run")
 
 func process(_delta: float) -> EnemyState:
 	if not enemy.has_line_of_sight_to(enemy.player):
@@ -24,5 +24,5 @@ func physics(_delta: float) -> EnemyState:
 	enemy.move_dir = direction
 	enemy.velocity = direction * enemy.move_speed
 	enemy.move_and_slide()
-	enemy.update_animation("jump")
+	enemy.update_animation("run")
 	return null
