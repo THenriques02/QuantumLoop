@@ -10,7 +10,7 @@ size = Vector2(16, 22)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_psm68"]
 size = Vector2(16, 22)
 
-[node name="weapon_box" type="CharacterBody2D"]
+[node name="weapon_box" type="StaticBody2D"]
 collision_layer = 4
 collision_mask = 7
 
