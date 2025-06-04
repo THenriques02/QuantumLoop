@@ -5,12 +5,22 @@ var font = preload("res://Assets/Dungeon/Roboto-VariableFont_wdth,wght.ttf")
 var Player = preload("res://Scenes/Player/player.tscn")
 var Corpse = preload("res://Scenes/Dungeon/corpse.tscn")
 var Ui = preload("res://Scenes/UI/control.tscn")
+
+#Enemies
 var Slime = preload("res://Scenes/Enemies/slime.tscn")
 var Knight = preload("res://Scenes/Enemies/knight.tscn")
 var Boss_Knight = preload("res://Scenes/Enemies/boss_knight.tscn")
+
+#Objects
 var Chest = preload("res://Scenes/Dungeon/chest.tscn")
+var Weapon_Box = preload("res://Scenes/Dungeon/weapon_box.tscn")
+
+#loot
 var Health = preload("res://Scenes/Loot/health_potion.tscn")
 var Ammo = preload("res://Scenes/Loot/ammo.tscn")
+var Loot_Rifle = preload("res://Scenes/Loot/rifle.tscn")
+var Loot_Shotgun = preload("res://Scenes/Loot/shotgun.tscn")
+var Loot_Sniper = preload("res://Scenes/Loot/sniper.tscn")
 
 @onready var walls_floor_map = $Walls_Floor
 
@@ -157,23 +167,38 @@ func spawn_corpses():
 
 func spawn_objects():
 	for room in $Rooms.get_children():
-		if randf() < 0.3:
+		if randf() < 1:
 			var num_objects = randi_range(1, 5)
 			for i in range(num_objects):
-				var object = Chest.instantiate()
 				
 				var half_w = room.size.x / 2 - tile_size
 				var half_h = room.size.y / 2 - tile_size
 				var rx = room.position.x + randf_range(-half_w, half_w)
 				var ry = room.position.y + randf_range(-half_h, half_h)
 				
-				if randf() < 0.3:
-					var loot
-					if randf() < 0.5:
-						loot = Health.instantiate()
-					else:
-						loot = Ammo.instantiate()
+				var object
+				var loot
+				if randf() < 0:
+					object = Chest.instantiate()
+					if randf() < 0.3:
+						if randf() < 0.5:
+							loot = Health.instantiate()
+						else:
+							loot = Ammo.instantiate()
 					loot.position = Vector2(rx, ry)
+				
+				else:
+					object = Weapon_Box.instantiate()
+					var perc = randf()
+					if perc < 0.3:
+						loot = Loot_Rifle.instantiate()
+					elif perc < 0.6:
+						loot = Loot_Shotgun.instantiate()
+					else:
+						loot = Loot_Sniper.instantiate()
+					loot.position = Vector2(rx, ry)
+				
+				if loot:
 					$Objects.add_child(loot)
 				
 				object.position = Vector2(rx, ry)
