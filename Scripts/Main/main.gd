@@ -518,7 +518,9 @@ func player_passed():
 	boss_killed_score()
 	store_era()
 	era += 1
-	difficulty_modifier += 1
+	if negative_eras <= 0:
+		difficulty_modifier += 1
+	negative_eras -= 1	
 	new_dungeon()
 
 func store_era():
