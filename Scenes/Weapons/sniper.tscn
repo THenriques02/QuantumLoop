@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://gg64tetoevwc"]
+[gd_scene load_steps=7 format=3 uid="uid://gg64tetoevwc"]
 
 [ext_resource type="Script" uid="uid://20x8hhrsm6qc" path="res://Scripts/Weapons/sniper.gd" id="1_1xopm"]
 [ext_resource type="Texture2D" uid="uid://cg0sb3xk0nqgx" path="res://Assets/Weapons/Guns/M24.png" id="1_4d81l"]
 [ext_resource type="Texture2D" uid="uid://cbr3v6bbata86" path="res://Assets/Player/hand.png" id="2_1xopm"]
 [ext_resource type="AudioStream" uid="uid://cxu0150djha0y" path="res://Assets/Music/sniper_shot.mp3" id="4_od7cl"]
 [ext_resource type="AudioStream" uid="uid://cv117275s7e4n" path="res://Assets/Music/shotgun_reload.wav" id="5_raopi"]
+[ext_resource type="AudioStream" uid="uid://d3b6adlihiqa0" path="res://Assets/Music/dry_fire.wav" id="6_t5is0"]
 
 [node name="Sniper" type="Node2D" groups=["picked_loot", "weapon_choice"]]
 script = ExtResource("1_1xopm")
@@ -37,4 +38,8 @@ bus = &"SFX"
 [node name="GrabBullets" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_raopi")
 volume_db = 10.0
+bus = &"SFX"
+
+[node name="DryFire" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_t5is0")
 bus = &"SFX"

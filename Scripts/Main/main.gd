@@ -26,6 +26,7 @@ var Loot_Sniper = preload("res://Scenes/Loot/sniper.tscn")
 
 @onready var walls_floor_map = $Walls_Floor
 @onready var death: AudioStreamPlayer2D = $Death
+@onready var next_level: AudioStreamPlayer2D = $NextLevel
 
 var ui_instance
 
@@ -504,6 +505,7 @@ func player_died():
 	new_dungeon()
 	
 func player_passed():
+	next_level.play()
 	store_era()
 	era += 1
 	difficulty_modifier += 1

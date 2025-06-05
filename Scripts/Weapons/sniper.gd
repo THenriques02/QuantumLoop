@@ -9,6 +9,7 @@ extends Node2D
 @onready var selected = false
 @onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 @onready var grab_bullets: AudioStreamPlayer2D = $GrabBullets
+@onready var dry_fire: AudioStreamPlayer2D = $DryFire
 
 @export var radius: float = 1.0
 @export var shoot_speed: float = 0.5
@@ -59,6 +60,8 @@ func _process(_delta: float) -> void:
 
 func shoot() -> void:
 	if not can_shoot or ammo < 1 or !picked or !selected:
+		if ammo < 1 and selected and picked:
+			dry_fire.play()
 		return
 	
 	audio_stream_player_2d.play()
