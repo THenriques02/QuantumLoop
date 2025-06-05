@@ -1,0 +1,156 @@
+[gd_scene load_steps=12 format=3 uid="uid://cfr5qqtavfvug"]
+
+[ext_resource type="Texture2D" uid="uid://dmsgud011qya2" path="res://Assets/UI/main_menu_image.png" id="1_1oisp"]
+[ext_resource type="Script" uid="uid://b0pq385r3y16k" path="res://Scripts/UI/high_scores.gd" id="1_506ka"]
+[ext_resource type="Texture2D" uid="uid://br4o7bpql2gwl" path="res://Assets/Player/player - Copy.png" id="2_506ka"]
+[ext_resource type="AudioStream" uid="uid://cw7ckhp8gs32w" path="res://Assets/Music/MenuMusic.wav" id="3_jg8n4"]
+[ext_resource type="FontFile" uid="uid://n3al8dqosow8" path="res://Assets/Dungeon/Nasalization Rg.otf" id="5_jg8n4"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2fjp3"]
+texture = ExtResource("1_1oisp")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3o4dp"]
+texture = ExtResource("2_506ka")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jg8n4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2fjp3"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3o4dp"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wgd2m"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+shadow_size = 10
+
+[node name="HighScores" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_506ka")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_2fjp3")
+
+[node name="Panel2" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 1535.0
+offset_top = 750.0
+offset_right = 1813.0
+offset_bottom = 1013.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_3o4dp")
+
+[node name="MenuMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_jg8n4")
+volume_db = 5.0
+autoplay = true
+bus = &"Music"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -440.5
+offset_top = -501.0
+offset_right = 440.5
+offset_bottom = -319.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 10
+theme_override_constants/shadow_offset_y = 10
+theme_override_fonts/font = ExtResource("5_jg8n4")
+theme_override_font_sizes/font_size = 115
+text = "High Scores"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="back" type="Button" parent="."]
+offset_left = 50.0
+offset_top = 941.0
+offset_right = 289.0
+offset_bottom = 1034.0
+size_flags_vertical = 3
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 50
+theme_override_styles/focus = SubResource("StyleBoxEmpty_jg8n4")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2fjp3")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3o4dp")
+theme_override_styles/normal = SubResource("StyleBoxFlat_wgd2m")
+text = "Back
+"
+
+[node name="Background" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -310.0
+offset_top = -326.0
+offset_right = 328.0
+offset_bottom = 400.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 50
+theme_override_styles/focus = SubResource("StyleBoxEmpty_jg8n4")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2fjp3")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3o4dp")
+theme_override_styles/normal = SubResource("StyleBoxFlat_wgd2m")
+text = "
+"
+
+[node name="Scores" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -274.0
+offset_top = -286.0
+offset_right = 290.0
+offset_bottom = 362.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 50
+clip_text = true
+text_overrun_behavior = 1
+
+[connection signal="pressed" from="back" to="." method="_on_back_pressed"]
