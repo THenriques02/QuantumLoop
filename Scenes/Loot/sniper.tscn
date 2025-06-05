@@ -13,6 +13,7 @@ radius = 5.0
 height = 26.0
 
 [node name="sniper" type="StaticBody2D" groups=["picked_loot"]]
+z_index = -1
 collision_layer = 4
 script = ExtResource("1_lh1b4")
 

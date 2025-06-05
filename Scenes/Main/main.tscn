@@ -335,6 +335,7 @@ z_index = -2
 tile_set = SubResource("TileSet_2a143")
 
 [node name="Cursor" parent="." instance=ExtResource("5_rujyf")]
+z_index = 3
 
 [node name="Background" type="Panel" parent="."]
 custom_minimum_size = Vector2(19200, 10800)

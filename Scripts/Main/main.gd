@@ -166,10 +166,17 @@ func spawn_enemies():
 
 func spawn_corpses():
 	if eras_corpses.has(era):
-			for c_pos in eras_corpses[era]:
-				var all_loot = Corpse_Loot.instantiate()
-				all_loot.position = c_pos
-				$Corpses.add_child(all_loot)
+			for corpses in eras_corpses[era]:
+				var corpse_loot = Corpse_Loot.instantiate()
+				corpse_loot.position = corpses[0]
+				corpse_loot.set_health_potions(corpses[1])
+				corpse_loot.set_rifle(corpses[2])
+				corpse_loot.set_rifle_ammo(corpses[3])
+				corpse_loot.set_shotgun(corpses[4])
+				corpse_loot.set_shotgun_ammo(corpses[5])
+				corpse_loot.set_sniper(corpses[6])
+				corpse_loot.set_sniper_ammo(corpses[7])
+				$Corpses.add_child(corpse_loot)
 
 func spawn_objects():
 	for room in $Rooms.get_children():
@@ -499,7 +506,14 @@ func store_era():
 func store_corpse():
 	if not eras_corpses.has(era):
 		eras_corpses[era] = []
-	eras_corpses[era].append(player.position)
+	eras_corpses[era].append([Vector2i(int(player.position.x),int(player.position.y)),
+	player.health_potions,
+	player.get_node("Rifle").picked,
+	player.get_node("Rifle").ammo,
+	player.get_node("Shotgun").picked,
+	player.get_node("Shotgun").ammo,
+	player.get_node("Sniper").picked,
+	player.get_node("Sniper").ammo])
 	for corpse in $Corpses.get_children():
 		corpse.queue_free()
 

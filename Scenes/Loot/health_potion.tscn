@@ -11,6 +11,7 @@ radius = 6.0
 radius = 7.0
 
 [node name="health_potion" type="StaticBody2D" groups=["picked_loot"]]
+z_index = -1
 collision_layer = 4
 script = ExtResource("1_vindq")
 

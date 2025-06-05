@@ -11,7 +11,8 @@ radius = 6.0
 radius = 8.0
 height = 18.0
 
-[node name="corpse_loot" type="StaticBody2D" groups=["picked_loot"]]
+[node name="corpse_loot" type="CharacterBody2D" groups=["picked_loot"]]
+z_index = -1
 collision_layer = 4
 script = ExtResource("1_utevt")
 

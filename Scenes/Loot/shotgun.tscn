@@ -13,6 +13,7 @@ radius = 4.0
 height = 22.0
 
 [node name="shotgun" type="StaticBody2D" groups=["picked_loot"]]
+z_index = -1
 collision_layer = 4
 script = ExtResource("1_wnjre")
 
