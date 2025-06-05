@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://ctmbay86g2nvb"]
+[gd_scene load_steps=10 format=3 uid="uid://ctmbay86g2nvb"]
 
 [ext_resource type="Script" uid="uid://1v0u2jqyq1qc" path="res://Scripts/Main/main.gd" id="1_qw60k"]
 [ext_resource type="Script" uid="uid://b2oxqf845es6u" path="res://Scripts/Main/camera_2d.gd" id="2_qw60k"]
 [ext_resource type="Texture2D" uid="uid://djk8ljwujjmcl" path="res://Assets/Dungeon/pixel_dungeon/PNG/walls_floor.png" id="4_5yls4"]
 [ext_resource type="FontFile" uid="uid://n3al8dqosow8" path="res://Assets/Dungeon/Nasalization Rg.otf" id="5_p6jpk"]
 [ext_resource type="PackedScene" uid="uid://dm6nomgww3qnr" path="res://Scenes/UI/cursor.tscn" id="5_rujyf"]
+[ext_resource type="AudioStream" uid="uid://r3xhpv51elne" path="res://Assets/Music/Death.mp3" id="6_2a143"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p6jpk"]
 texture = ExtResource("4_5yls4")
@@ -374,5 +375,10 @@ theme_override_fonts/font = ExtResource("5_p6jpk")
 theme_override_font_sizes/font_size = 500
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Death" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_2a143")
+volume_db = 10.0
+bus = &"SFX"
 
 [connection signal="ready" from="." to="." method="_on_ready"]

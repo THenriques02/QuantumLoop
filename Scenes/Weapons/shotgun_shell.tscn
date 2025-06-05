@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://cpdvkhjbnnr8j"]
 
 [ext_resource type="Texture2D" uid="uid://o6gt74otnyk" path="res://Assets/Weapons/Bullets/ShotgunShellBig.png" id="1_7jp0i"]
-[ext_resource type="Script" uid="uid://c2ewcm5w3igrb" path="res://Scripts/Weapons/shotgun_shell.gd" id="1_x84a7"]
+[ext_resource type="Script" path="res://Scripts/Weapons/shotgun_shell.gd" id="1_x84a7"]
 [ext_resource type="PackedScene" uid="uid://8icgu3rrerpu" path="res://Scenes/Components/attack_component.tscn" id="2_31vbp"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x84a7"]

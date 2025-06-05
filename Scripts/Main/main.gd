@@ -25,6 +25,7 @@ var Loot_Shotgun = preload("res://Scenes/Loot/shotgun.tscn")
 var Loot_Sniper = preload("res://Scenes/Loot/sniper.tscn")
 
 @onready var walls_floor_map = $Walls_Floor
+@onready var death: AudioStreamPlayer2D = $Death
 
 var ui_instance
 
@@ -43,12 +44,21 @@ var end_room = null
 var play_mode = false
 var player = null
 
+var difficulty_modifier = 0
 var era = 0
 var eras_rooms = {}
 var eras_paths = {}
 var path_switch = []
 var switch_index = 0
 var eras_corpses = {}
+
+var base_min_enemies = 5
+var base_max_enemies = 10
+var base_slime_percentage = 0.8
+
+var base_loot_box_percentage = 0.6
+var base_loot_percentage = 0.6
+var base_non_loot_weapons_percentage = 0.7
 
 func _ready():
 	randomize()
@@ -146,19 +156,20 @@ func spawn_enemies():
 		if room == end_room:
 			var boss = Boss_Knight.instantiate()
 			boss.position = room.position
+			#boss.get_node("HealthComponent").health *= 1 + (difficulty_modifier*0.25)
 			$Enemies.add_child(boss)
 			
 		elif room != start_room:	
-			var enemy_count = randi_range(5, 10)
+			var enemy_count = randi_range(base_min_enemies + int(floor(0.2 * difficulty_modifier)) , base_max_enemies + 1 * difficulty_modifier)
 			for i in range(enemy_count):
 				var enemy
-				if randf() < 0.5:
+				if randf() < max(base_slime_percentage - 0.025 * difficulty_modifier, 0.4):
 					enemy = Slime.instantiate()
 				else:
 					enemy = Knight.instantiate()	
 				
-				var half_w = room.size.x / 2 - tile_size
-				var half_h = room.size.y / 2 - tile_size
+				var half_w = room.size.x / 2 - ( 2 * tile_size)
+				var half_h = room.size.y / 2 - ( 2 * tile_size)
 				var rx = room.position.x + randf_range(-half_w, half_w)
 				var ry = room.position.y + randf_range(-half_h, half_h)
 				enemy.position = Vector2(rx, ry)
@@ -180,20 +191,20 @@ func spawn_corpses():
 
 func spawn_objects():
 	for room in $Rooms.get_children():
-		if randf() < 0.5:
+		if randf() < max(base_loot_box_percentage - 0.025 * difficulty_modifier, 0.25):
 			var num_objects = randi_range(1, 5)
 			for i in range(num_objects):
 				
-				var half_w = room.size.x / 2 - (2*tile_size)
-				var half_h = room.size.y / 2 - (2*tile_size)
+				var half_w = room.size.x / 2 - ( 2 * tile_size)
+				var half_h = room.size.y / 2 - ( 2 * tile_size)
 				var rx = room.position.x + randf_range(-half_w, half_w)
 				var ry = room.position.y + randf_range(-half_h, half_h)
 				
 				var object
 				var loot
-				if randf() < 0.8:
+				if randf() < min(base_non_loot_weapons_percentage + 0.01 * difficulty_modifier, 0.95):
 					object = Chest.instantiate()
-					if randf() < 0.6:
+					if randf() < max(base_loot_percentage - 0.025 * difficulty_modifier, 0.25):
 						if randf() < 0.6:
 							loot = Health.instantiate()
 						else:
@@ -203,9 +214,9 @@ func spawn_objects():
 				else:
 					object = Weapon_Box.instantiate()
 					var perc = randf()
-					if perc < 0.3:
+					if perc < 0.5:
 						loot = Loot_Rifle.instantiate()
-					elif perc < 0.6:
+					elif perc < 0.8:
 						loot = Loot_Shotgun.instantiate()
 					else:
 						loot = Loot_Sniper.instantiate()
@@ -484,14 +495,17 @@ func find_end_room():
 			end_room = room	
 
 func player_died():
+	death.play()
 	store_era()
 	store_corpse()
 	era -= 1
+	difficulty_modifier = min(difficulty_modifier - 1, 0)
 	new_dungeon()
 	
 func player_passed():
 	store_era()
 	era += 1
+	difficulty_modifier += 1
 	new_dungeon()
 
 func store_era():

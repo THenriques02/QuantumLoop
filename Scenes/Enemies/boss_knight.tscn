@@ -149,7 +149,7 @@ script = ExtResource("5_evcog")
 script = ExtResource("6_bsd04")
 
 [node name="HealthComponent" parent="." instance=ExtResource("7_x6mie")]
-max_health = 20000.0
+max_health = 1000.0
 
 [node name="HitboxComponent" parent="." instance=ExtResource("8_umsoo")]
 collision_layer = 4
