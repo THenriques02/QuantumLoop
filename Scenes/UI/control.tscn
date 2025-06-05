@@ -1,8 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://cdekitr3tl02i"]
+[gd_scene load_steps=12 format=3 uid="uid://cdekitr3tl02i"]
 
 [ext_resource type="Script" uid="uid://cry33aokl2q6d" path="res://Scripts/UI/sub_viewport.gd" id="1_p4rh7"]
 [ext_resource type="PackedScene" uid="uid://c3bdlrfwspavj" path="res://Scenes/UI/healthbar.tscn" id="2_p4rh7"]
 [ext_resource type="Texture2D" uid="uid://eb2cwt4uoqhm" path="res://Assets/Loot/health_potion.png" id="3_s1n6v"]
+[ext_resource type="FontFile" uid="uid://n3al8dqosow8" path="res://Assets/Dungeon/Nasalization Rg.otf" id="4_qsnfn"]
+[ext_resource type="Script" uid="uid://hcy4jal4k5yd" path="res://Scripts/UI/heals.gd" id="5_vw0tp"]
+[ext_resource type="Texture2D" uid="uid://xul64nixgokv" path="res://Assets/Weapons/Bullets/PistolAmmoBig.png" id="6_y25jp"]
+[ext_resource type="Texture2D" uid="uid://o6gt74otnyk" path="res://Assets/Weapons/Bullets/ShotgunShellBig.png" id="7_35785"]
+[ext_resource type="Script" uid="uid://dcquaf7bwp5xc" path="res://Scripts/UI/rifle_ammo.gd" id="7_o75o0"]
+[ext_resource type="Texture2D" uid="uid://bwvgfmlbjstnk" path="res://Assets/Weapons/Bullets/RifleAmmoBig.png" id="8_o75o0"]
+[ext_resource type="Script" uid="uid://mgdm4tgwqomu" path="res://Scripts/UI/shotgun_ammo.gd" id="9_o75o0"]
+[ext_resource type="Script" uid="uid://b7rfnyki1j2i6" path="res://Scripts/UI/sniper_ammo.gd" id="11_4bwep"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -63,3 +71,125 @@ offset_top = -2.0
 offset_right = 44.0
 offset_bottom = 38.0
 texture = ExtResource("3_s1n6v")
+
+[node name="Label" type="Label" parent="UI/Heals"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.696
+anchor_top = 0.5
+anchor_right = 0.696
+anchor_bottom = 0.5
+offset_left = -27.032
+offset_top = -16.5
+offset_right = 26.968
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_qsnfn")
+theme_override_font_sizes/font_size = 26
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("5_vw0tp")
+
+[node name="RifleAmmo" type="Panel" parent="UI"]
+offset_left = 1808.0
+offset_top = 1020.0
+offset_right = 1900.0
+offset_bottom = 1065.0
+
+[node name="TextureRect" type="TextureRect" parent="UI/RifleAmmo"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 2.0
+offset_right = 90.0
+offset_bottom = 42.0
+texture = ExtResource("6_y25jp")
+
+[node name="Label" type="Label" parent="UI/RifleAmmo"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.696
+anchor_top = 0.5
+anchor_right = 0.696
+anchor_bottom = 0.5
+offset_left = -62.032
+offset_top = -15.5
+offset_right = -8.03201
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_qsnfn")
+theme_override_font_sizes/font_size = 26
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("7_o75o0")
+
+[node name="ShotgunAmmo" type="Panel" parent="UI"]
+offset_left = 1808.0
+offset_top = 968.0
+offset_right = 1900.0
+offset_bottom = 1013.0
+
+[node name="TextureRect" type="TextureRect" parent="UI/ShotgunAmmo"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 2.0
+offset_right = 90.0
+offset_bottom = 42.0
+texture = ExtResource("7_35785")
+
+[node name="Label" type="Label" parent="UI/ShotgunAmmo"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.696
+anchor_top = 0.5
+anchor_right = 0.696
+anchor_bottom = 0.5
+offset_left = -62.032
+offset_top = -15.5
+offset_right = -8.03201
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_qsnfn")
+theme_override_font_sizes/font_size = 26
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("9_o75o0")
+
+[node name="SniperAmmo" type="Panel" parent="UI"]
+offset_left = 1809.0
+offset_top = 915.0
+offset_right = 1901.0
+offset_bottom = 960.0
+
+[node name="TextureRect" type="TextureRect" parent="UI/SniperAmmo"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 2.0
+offset_right = 90.0
+offset_bottom = 42.0
+texture = ExtResource("8_o75o0")
+
+[node name="Label" type="Label" parent="UI/SniperAmmo"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.696
+anchor_top = 0.5
+anchor_right = 0.696
+anchor_bottom = 0.5
+offset_left = -62.032
+offset_top = -15.5
+offset_right = -8.03201
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_qsnfn")
+theme_override_font_sizes/font_size = 26
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+script = ExtResource("11_4bwep")

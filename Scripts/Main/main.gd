@@ -111,6 +111,10 @@ func _input(event):
 		ui_instance.get_node("UI/SubViewportContainer/SubViewport").set_player(player)
 		ui_instance.get_node("UI/SubViewportContainer/SubViewport").set_world(get_tree().root.world_2d)
 		ui_instance.get_node("UI/Status/HealthBar").set_health_component(player.get_node("HealthComponent"))
+		ui_instance.get_node("UI/Heals/Label").connect_player(player)
+		ui_instance.get_node("UI/RifleAmmo/Label").connect_rifle(player.get_node("Rifle"))
+		ui_instance.get_node("UI/ShotgunAmmo/Label").connect_shotgun(player.get_node("Shotgun"))
+		ui_instance.get_node("UI/SniperAmmo/Label").connect_sniper(player.get_node("Sniper"))
 		$minimap.add_child(ui_instance)
 
 		play_mode = true	
@@ -169,7 +173,7 @@ func spawn_corpses():
 
 func spawn_objects():
 	for room in $Rooms.get_children():
-		if randf() < 0.4:
+		if randf() < 1:
 			var num_objects = randi_range(1, 5)
 			for i in range(num_objects):
 				
@@ -180,7 +184,7 @@ func spawn_objects():
 				
 				var object
 				var loot
-				if randf() < 0.9:
+				if randf() < 0:
 					object = Chest.instantiate()
 					if randf() < 0.4:
 						if randf() < 0.5:

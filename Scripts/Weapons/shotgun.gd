@@ -15,6 +15,8 @@ extends Node2D
 const SHELL = preload("res://Scenes/Weapons/shotgun_shell.tscn")
 const DEAD_ZONE: float = 0.2
 
+signal shotgun_ammo_changed(new_value: int)
+
 var player: Player
 var can_shoot: bool = true
 var move_dir: Vector2 = Vector2.ZERO
@@ -49,9 +51,10 @@ func _process(delta: float) -> void:
 		shoot()
 
 func shoot() -> void:
-	if not can_shoot or ammo < 5 or !picked or !selected:
+	if not can_shoot or ammo < 1 or !picked or !selected:
 		return
-	ammo -= 5	
+	ammo -= 1
+	emit_signal("shotgun_ammo_changed", ammo)		
 
 	can_shoot = false
 	shoot_timer.start()
@@ -80,7 +83,8 @@ func _on_shoot_speed_timer_timeout() -> void:
 	can_shoot = true
 
 func picked_ammo_shotgun():
-	ammo += 30
+	ammo += 6
+	emit_signal("shotgun_ammo_changed", ammo)	
 	
 func picked_shotgun():
 	picked = true	
