@@ -12,6 +12,8 @@ extends Node2D
 @export var radius: float = 1.0
 @export var shoot_speed: float = 8.0  # Faster than revolver
 
+signal rifle_ammo_changed(new_value: int)
+
 const BULLET = preload("res://Scenes/Weapons/small_bullet.tscn")
 const DEAD_ZONE: float = 0.2
 
@@ -57,7 +59,8 @@ func _process(_delta: float) -> void:
 func shoot() -> void:
 	if not can_shoot or ammo < 1 or !picked or !selected:
 		return
-	ammo -= 1	
+	ammo -= 1
+	emit_signal("rifle_ammo_changed", ammo)	
 
 	can_shoot = false
 	shoot_timer.start()
@@ -80,6 +83,7 @@ func _on_shoot_speed_timer_timeout() -> void:
 	
 func picked_ammo_rifle():
 	ammo += 32
+	emit_signal("rifle_ammo_changed", ammo)	
 	
 func picked_rifle():
 	picked = true

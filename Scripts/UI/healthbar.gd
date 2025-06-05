@@ -47,3 +47,17 @@ func _on_died() -> void:
 
 func _on_timer_timeout() -> void:
 	damage_bar.value = health
+	
+func set_health_component(comp):
+	damage_bar = $DamageBar
+	timer = $Timer
+	health_component = comp
+	max_health = health_component.max_health
+	max_value = max_health
+	health = max_health
+	value = health
+	damage_bar.max_value = max_health
+	damage_bar.value = health
+	
+	health_component.connect("health_changed", Callable(self, "_on_health_changed"))
+	health_component.connect("died", Callable(self, "_on_died"))

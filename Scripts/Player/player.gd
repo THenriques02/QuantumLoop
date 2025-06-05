@@ -10,6 +10,8 @@ var look_dir: Vector2 = Vector2.ZERO
 var cardinal_direction: Vector2 = Vector2.DOWN
 var health_potions = 3
 
+signal health_potions_changed(new_value: int)
+
 var directions: Array = [
 	Vector2.UP,
 	Vector2(1, -1).normalized(),
@@ -59,6 +61,7 @@ func _input(event):
 		if health_potions > 0:
 			$HealthComponent.heal(25)
 			health_potions -= 1	
+			emit_signal("health_potions_changed", health_potions)
 
 func weapon_shown(r,ri,s,sn):
 	$Revolver.visible = r
@@ -117,3 +120,4 @@ func update_animation(state: String) -> void:
 
 func picked_health():
 	health_potions += 1
+	emit_signal("health_potions_changed", health_potions)
