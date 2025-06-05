@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://ctmbay86g2nvb"]
+[gd_scene load_steps=10 format=3 uid="uid://ctmbay86g2nvb"]
 
 [ext_resource type="Script" uid="uid://1v0u2jqyq1qc" path="res://Scripts/Main/main.gd" id="1_qw60k"]
 [ext_resource type="Script" uid="uid://b2oxqf845es6u" path="res://Scripts/Main/camera_2d.gd" id="2_qw60k"]
 [ext_resource type="Texture2D" uid="uid://djk8ljwujjmcl" path="res://Assets/Dungeon/pixel_dungeon/PNG/walls_floor.png" id="4_5yls4"]
 [ext_resource type="FontFile" uid="uid://n3al8dqosow8" path="res://Assets/Dungeon/Nasalization Rg.otf" id="5_p6jpk"]
 [ext_resource type="PackedScene" uid="uid://dm6nomgww3qnr" path="res://Scenes/UI/cursor.tscn" id="5_rujyf"]
+[ext_resource type="AudioStream" uid="uid://cw7ckhp8gs32w" path="res://Assets/Music/high tech lab.wav" id="6_2a143"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p6jpk"]
 texture = ExtResource("4_5yls4")
@@ -315,6 +316,11 @@ bg_color = Color(0, 0, 0, 1)
 
 [node name="main" type="Node2D" groups=["player_died"]]
 script = ExtResource("1_qw60k")
+
+[node name="BackgroudMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_2a143")
+autoplay = true
+bus = &"Music"
 
 [node name="Rooms" type="Node" parent="."]
 
