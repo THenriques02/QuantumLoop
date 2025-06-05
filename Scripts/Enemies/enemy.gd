@@ -10,6 +10,8 @@ class_name Enemy
 var player: Player
 var move_dir: Vector2 = Vector2.ZERO
 
+var enemy_type
+
 var cardinal_directions: Array = [
 	Vector2.UP,
 	Vector2(1, -1).normalized(),
@@ -26,7 +28,7 @@ func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player")
 
 	state_machine.initialize(self)
-
+	
 	if self.name == "Boss_Knight":
 		add_to_group("boss")
 

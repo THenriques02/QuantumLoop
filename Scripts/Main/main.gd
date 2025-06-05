@@ -47,6 +47,7 @@ var player = null
 
 var difficulty_modifier = 0
 var era = 0
+var negative_eras = 0
 var eras_rooms = {}
 var eras_paths = {}
 var path_switch = []
@@ -60,6 +61,9 @@ var base_slime_percentage = 0.8
 var base_loot_box_percentage = 0.6
 var base_loot_percentage = 0.6
 var base_non_loot_weapons_percentage = 0.7
+
+var high_score = 0
+signal high_score_changed(new_value: int)
 
 func _ready():
 	randomize()
@@ -126,6 +130,7 @@ func _input(event):
 		ui_instance.get_node("UI/RifleAmmo/Label").connect_rifle(player.get_node("Rifle"))
 		ui_instance.get_node("UI/ShotgunAmmo/Label").connect_shotgun(player.get_node("Shotgun"))
 		ui_instance.get_node("UI/SniperAmmo/Label").connect_sniper(player.get_node("Sniper"))
+		ui_instance.get_node("UI/HighScore/Value").connect_main(self)
 		$minimap.add_child(ui_instance)
 
 		play_mode = true	
@@ -166,8 +171,10 @@ func spawn_enemies():
 				var enemy
 				if randf() < max(base_slime_percentage - 0.025 * difficulty_modifier, 0.4):
 					enemy = Slime.instantiate()
+					connect_slime_health_component(enemy.get_node("HealthComponent"))
 				else:
-					enemy = Knight.instantiate()	
+					enemy = Knight.instantiate()
+					connect_knight_health_component(enemy.get_node("HealthComponent"))	
 				
 				var half_w = room.size.x / 2 - ( 2 * tile_size)
 				var half_h = room.size.y / 2 - ( 2 * tile_size)
@@ -498,14 +505,17 @@ func find_end_room():
 
 func player_died():
 	death.play()
+	player_killed_score()
 	store_era()
 	store_corpse()
 	era -= 1
+	negative_eras += 1
 	difficulty_modifier = min(difficulty_modifier - 1, 0)
 	new_dungeon()
 	
 func player_passed():
 	next_level.play()
+	boss_killed_score()
 	store_era()
 	era += 1
 	difficulty_modifier += 1
@@ -579,3 +589,28 @@ func new_dungeon():
 	else:	
 		await make_rooms()
 	await make_map()
+	
+
+func connect_slime_health_component(s):
+	var slime_dead = s
+	slime_dead.connect("enemy_killed", Callable(self, "_on_slime_killed"))
+	
+func connect_knight_health_component(k):
+	var knight_dead = k
+	knight_dead.connect("enemy_killed", Callable(self, "_on_knight_killed"))
+	
+func _on_slime_killed():
+	high_score += 10 + int(10 * (difficulty_modifier / 5))
+	emit_signal("high_score_changed", high_score)
+
+func _on_knight_killed():
+	high_score += 50 + int(10 * (difficulty_modifier / 5))
+	emit_signal("high_score_changed", high_score)
+	
+func boss_killed_score():
+	high_score += 500 + int(10 * (difficulty_modifier / 5))
+	emit_signal("high_score_changed", high_score)
+	
+func player_killed_score():
+	high_score -= 1000
+	emit_signal("high_score_changed", high_score)

@@ -10,6 +10,8 @@ var current_health: float
 signal health_changed(current: float)
 signal died
 
+signal enemy_killed
+
 func _ready() -> void:
 	current_health = max_health
 	emit_signal("health_changed", current_health)
@@ -32,6 +34,7 @@ func damage(attack: Attack) -> void:
 		var parent = get_parent()
 		if not parent.is_in_group("player"):
 			if not parent.is_in_group("boss"):
+				emit_signal("enemy_killed")	
 				die()
 			else:
 				get_tree().call_group("player_died", "boss_died")
