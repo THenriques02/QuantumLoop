@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://csvknfu77302"]
+[gd_scene load_steps=6 format=3 uid="uid://csvknfu77302"]
 
 [ext_resource type="Texture2D" uid="uid://bn3qm418kvmv0" path="res://Assets/Weapons/Guns/SawedOffShotgun.png" id="1_orl7l"]
 [ext_resource type="Script" uid="uid://cw5joex8vhnyx" path="res://Scripts/Weapons/shotgun.gd" id="1_vm7cu"]
 [ext_resource type="Texture2D" uid="uid://cbr3v6bbata86" path="res://Assets/Player/hand.png" id="2_xvtdo"]
 [ext_resource type="AudioStream" uid="uid://5gp6sm5x4cg1" path="res://Assets/Music/shotgun_shot.wav" id="4_2dwm4"]
+[ext_resource type="AudioStream" uid="uid://cv117275s7e4n" path="res://Assets/Music/shotgun_reload.wav" id="5_l8wsf"]
 
 [node name="Shotgun" type="Node2D" groups=["picked_loot", "weapon_choice"]]
 script = ExtResource("1_vm7cu")
@@ -31,5 +32,10 @@ position = Vector2(17.3333, -2.66667)
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_2dwm4")
+volume_db = 10.0
+bus = &"SFX"
+
+[node name="GrabBullets" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_l8wsf")
 volume_db = 10.0
 bus = &"SFX"
