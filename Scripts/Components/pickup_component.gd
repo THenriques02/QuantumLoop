@@ -1,6 +1,8 @@
 class_name PickupComponent
 extends Area2D
 
+@onready var skelly: AudioStreamPlayer2D = $Skelly
+
 func _ready() -> void:
 	area_entered.connect(_on_hitbox_area_entered)
 
@@ -27,6 +29,12 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 		elif loot == "sniper":
 			get_tree().call_group("picked_loot","picked_sniper")
 			get_tree().call_group("picked_loot","picked_ammo_sniper")
+			get_tree().call_group("picked_loot","picked_ammo_rifle")
+
+		elif loot == "sniper":
+			get_tree().call_group("picked_loot","picked_sniper")
+			get_tree().call_group("picked_loot","picked_ammo_sniper")
+
 			
 		elif loot == "corpse_loot":
 			var health_potions = get_parent().health_potions

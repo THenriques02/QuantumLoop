@@ -4,6 +4,7 @@ class_name Player
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var state_machine: PlayerStateMachine = $StateMachine
+@onready var grab_heal: AudioStreamPlayer2D = $GrabHeal
 
 var move_dir: Vector2 = Vector2.ZERO
 var look_dir: Vector2 = Vector2.ZERO
@@ -119,5 +120,6 @@ func update_animation(state: String) -> void:
 	animation_player.play(animation_name)
 
 func picked_health():
+	grab_heal.play()
 	health_potions += 1
 	emit_signal("health_potions_changed", health_potions)

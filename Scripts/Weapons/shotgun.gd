@@ -8,6 +8,7 @@ extends Node2D
 @onready var picked = false
 @onready var selected = false
 @onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
+@onready var grab_bullets: AudioStreamPlayer2D = $GrabBullets
 
 @export var radius: float = 1.0
 @export var shoot_speed: float = 1.0  # Slower than revolver
@@ -91,6 +92,7 @@ func picked_ammo_shotgun():
 	emit_signal("shotgun_ammo_changed", ammo)	
 	
 func picked_shotgun():
+	grab_bullets.play()
 	picked = true	
 	
 func selected_revolver():
