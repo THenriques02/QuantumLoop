@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://b7pklj2b3jukh"
-path="res://.godot/imported/fight-for-the-future-336841.wav-9af98dc3b6898997fede290653a9f066.sample"
+path="res://.godot/imported/BackgroundMusic.wav-5608e0b4978c68aec3095df3f2c3b839.sample"
 
 [deps]
 
-source_file="res://Assets/Music/fight-for-the-future-336841.wav"
-dest_files=["res://.godot/imported/fight-for-the-future-336841.wav-9af98dc3b6898997fede290653a9f066.sample"]
+source_file="res://Assets/Music/BackgroundMusic.wav"
+dest_files=["res://.godot/imported/BackgroundMusic.wav-5608e0b4978c68aec3095df3f2c3b839.sample"]
 
 [params]
 

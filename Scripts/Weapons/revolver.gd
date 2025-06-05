@@ -5,6 +5,7 @@ extends Node2D
 @onready var muzzle: Marker2D = $Revolver/Marker2D
 @onready var shoot_timer: Timer = $ShootSpeedTimer
 @onready var selected = true
+@onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 @export var radius: float = 1.0
 @export var shoot_speed: float = 4.0
@@ -54,6 +55,8 @@ func _process(_delta: float) -> void:
 func shoot() -> void:
 	if not can_shoot or !selected:
 		return
+
+	audio_stream_player_2d.play()
 
 	can_shoot = false
 	shoot_timer.start()

@@ -1,6 +1,22 @@
-[gd_scene load_steps=2 format=3 uid="uid://dnpefp4irehtm"]
+[gd_scene load_steps=5 format=3 uid="uid://dnpefp4irehtm"]
 
 [ext_resource type="Script" uid="uid://dp14iqjsr3bhx" path="res://Scripts/Components/pickup_component.gd" id="1_8hb8d"]
+[ext_resource type="AudioStream" uid="uid://c5ay7eob6xtlj" path="res://Assets/Music/grab_ammo.wav" id="2_n7beg"]
+[ext_resource type="AudioStream" uid="uid://dka74ioeook2t" path="res://Assets/Music/grab_heal.wav" id="3_0al3e"]
+[ext_resource type="AudioStream" uid="uid://de3fsmluq2tcx" path="res://Assets/Music/skelly.wav" id="4_5jgo4"]
 
 [node name="pickedup_component" type="Area2D"]
 script = ExtResource("1_8hb8d")
+
+[node name="GrabBullets" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_n7beg")
+volume_db = 24.0
+bus = &"SFX"
+
+[node name="GrabHeal" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_0al3e")
+bus = &"SFX"
+
+[node name="Skelly" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_5jgo4")
+bus = &"SFX"

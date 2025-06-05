@@ -30,11 +30,11 @@ var ui_instance
 
 var tile_size = 16 # size of tile in the TileMap
 var margin_tiles = 500
-var num_rooms = 100 # numer of rooms to generate
+var num_rooms = 40 # numer of rooms to generate
 var min_size = 20   # minimum room size ( in tiles)
 var max_size = 40  # maximum room size (in tiles )
 var hspread = 20   # horizontal spread ( in pixels )
-var cull = 0.5     # chance to cull the room
+var cull = 0.25     # chance to cull the room
 var seed = randi()
 
 var path           # AStar pathfinding object
@@ -191,7 +191,7 @@ func spawn_objects():
 				
 				var object
 				var loot
-				if randf() < 0:
+				if randf() < 0.9:
 					object = Chest.instantiate()
 					if randf() < 0.4:
 						if randf() < 0.5:

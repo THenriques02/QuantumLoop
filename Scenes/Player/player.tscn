@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cjutlarv06cxk"]
+[gd_scene load_steps=26 format=3 uid="uid://cjutlarv06cxk"]
 
 [ext_resource type="Texture2D" uid="uid://cyyrwpt4yxpev" path="res://Assets/Player/player.png" id="1_17twk"]
 [ext_resource type="Script" uid="uid://cs4ishnr5c4i3" path="res://Scripts/Player/player.gd" id="2_56n2e"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://csvknfu77302" path="res://Scenes/Weapons/shotgun.tscn" id="10_jhyir"]
 [ext_resource type="PackedScene" uid="uid://b3ypykpck0usy" path="res://Scenes/Weapons/rifle.tscn" id="10_oikmp"]
 [ext_resource type="Texture2D" uid="uid://dggt38esqw238" path="res://Assets/Player/Shadow.png" id="13_06tpx"]
+[ext_resource type="AudioStream" uid="uid://b7pklj2b3jukh" path="res://Assets/Music/BackgroundMusic.wav" id="13_7g0yx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ao7q3"]
 radius = 5.09902
@@ -245,3 +246,7 @@ position = Vector2(-6, 7)
 
 [node name="Revolver" parent="." instance=ExtResource("8_5jul8")]
 position = Vector2(-6, 7)
+
+[node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_7g0yx")
+autoplay = true

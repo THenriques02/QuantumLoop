@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://du8sbtfgix8x3"]
+[gd_scene load_steps=21 format=3 uid="uid://du8sbtfgix8x3"]
 
 [ext_resource type="Script" uid="uid://dloke04p406ot" path="res://Scripts/Enemies/enemy.gd" id="1_fddkl"]
 [ext_resource type="Texture2D" uid="uid://ec3jlq8g35xo" path="res://Assets/Enemies/Knight_Boss.png" id="2_fddkl"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://b1jhewo6rw78i" path="res://Scenes/Components/hitbox_component.tscn" id="8_umsoo"]
 [ext_resource type="PackedScene" uid="uid://8icgu3rrerpu" path="res://Scenes/Components/attack_component.tscn" id="9_kwe5v"]
 [ext_resource type="PackedScene" uid="uid://c3bdlrfwspavj" path="res://Scenes/UI/healthbar.tscn" id="10_bgjfy"]
+[ext_resource type="AudioStream" uid="uid://lfl1m80kmgpf" path="res://Assets/Music/BossMusic.wav" id="11_rye87"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_if7hu"]
 radius = 5.0
@@ -172,3 +173,9 @@ offset_left = -10.0
 offset_top = -24.0
 offset_right = 10.0
 offset_bottom = -23.0
+
+[node name="BattleMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_rye87")
+autoplay = true
+max_distance = 1000.0
+bus = &"Music"

@@ -1,7 +1,10 @@
 class_name HealthComponent
 extends Node2D
 
+@onready var healing: AudioStreamPlayer2D = $Heal
+
 @export var max_health: float = 100.0
+
 var current_health: float
 
 signal health_changed(current: float)
@@ -12,6 +15,8 @@ func _ready() -> void:
 	emit_signal("health_changed", current_health)
 
 func heal(amount: float) -> void:
+	healing.play()
+	
 	if amount <= 0.0 or current_health == max_health:
 		return
 

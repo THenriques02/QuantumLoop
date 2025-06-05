@@ -7,7 +7,7 @@ extends Node2D
 @onready var ammo = 0
 @onready var picked = false
 @onready var selected = false
-
+@onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 @export var radius: float = 1.0
 @export var shoot_speed: float = 8.0  # Faster than revolver
@@ -59,6 +59,9 @@ func _process(_delta: float) -> void:
 func shoot() -> void:
 	if not can_shoot or ammo < 1 or !picked or !selected:
 		return
+		
+	audio_stream_player_2d.play()	
+	
 	ammo -= 1
 	emit_signal("rifle_ammo_changed", ammo)	
 
