@@ -148,7 +148,7 @@ func spawn_enemies():
 		if room == end_room:
 			var boss = Boss_Knight.instantiate()
 			boss.position = room.position
-			#boss.get_node("HealthComponent").health *= 1 + (difficulty_modifier*0.25)
+			boss.get_node("HealthComponent").max_health *= 1 + (difficulty_modifier*0.25)
 			$Enemies.add_child(boss)
 			
 		elif room != start_room:	
