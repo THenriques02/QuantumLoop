@@ -44,6 +44,7 @@ var start_room = null
 var end_room = null
 var play_mode = false
 var player = null
+var map_completed = false
 
 var difficulty_modifier = 0
 var era = 0
@@ -64,6 +65,8 @@ var base_non_loot_weapons_percentage = 0.7
 
 var high_score = 0
 signal high_score_changed(new_value: int)
+const savefile = "user://savefile.save"
+var save_name = "Miguel"
 
 func _ready():
 	randomize()
@@ -96,17 +99,23 @@ func _process(delta):
 """		
 func _input(event):
 	if event.is_action_pressed("ui_page_down") and player:
+		map_completed = false
 		_show_death_ui()
 		player_died()
 		
 	if event.is_action_pressed("ui_page_up") and player:
+		map_completed = false
 		_show_survive_ui()
 		player_passed()
 			
 	if event.is_action_pressed('ui_cancel'):
+		save_score()
 		get_tree().quit()
 				
 	if event.is_action_pressed('ui_accept'):
+		if play_mode or !map_completed:
+			return
+			
 		spawn_enemies()
 		spawn_objects()
 		spawn_corpses()
@@ -136,10 +145,12 @@ func _input(event):
 		play_mode = true	
 
 func i_died():
+	map_completed = false
 	_show_death_ui()
 	player_died()
 
 func boss_died():
+	map_completed = false
 	_show_survive_ui()
 	player_passed()
 
@@ -354,6 +365,7 @@ func make_map():
 	$Background.visible = false
 	$Maintext.visible = false
 	$Subtext.visible = false
+	map_completed = true
 						 
 func carve_path(pos1, pos2):
 	# Carve a path between 2 points
@@ -616,3 +628,30 @@ func boss_killed_score():
 func player_killed_score():
 	high_score -= 1000
 	emit_signal("high_score_changed", high_score)
+
+func save_score():
+	var scores = load_scores()  # Load existing scores
+	scores.append([save_name, high_score])  # Add the new one
+
+	var file = FileAccess.open(savefile, FileAccess.WRITE)
+	if file:
+		file.store_var(scores)
+		file.close()
+	
+func load_scores() -> Array:
+	if not FileAccess.file_exists(savefile):
+		return []
+
+	var file = FileAccess.open(savefile, FileAccess.READ)
+	if file == null:
+		push_error("Failed to open save file.")
+		return []
+
+	var scores = file.get_var()
+	file.close()
+
+	# Make sure it's a valid list of scores
+	if scores is Array:
+		return scores
+	else:
+		return []
